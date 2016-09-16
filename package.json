@@ -65,7 +65,8 @@
     "start": "node scripts/build.js && node server-start",
     "build": "node scripts/build.js",
     "postinstall": "node scripts/build.js",
-    "test": "jest --watch --env=jsdom"
+    "test-watch": "jest --watch --env=jsdom",
+    "test": "jest --env=jsdom"
   },
   "eslintConfig": {
     "extends": "./config/eslint.js"

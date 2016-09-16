@@ -1,1 +1,1 @@
-CI=true && npm run test
+npm run test
