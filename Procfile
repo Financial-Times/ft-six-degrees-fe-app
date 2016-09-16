@@ -1,1 +1,1 @@
-web: node build/server-start.js
+web: node server-start.js
