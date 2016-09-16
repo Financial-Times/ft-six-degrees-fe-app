@@ -1,1 +1,1 @@
-# ft-six-degrees-fe-app
+#FT Six Degrees
