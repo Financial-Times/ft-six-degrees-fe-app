@@ -6,6 +6,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var url = require('url');
 var paths = require('./paths');
 var env = require('./env');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 // Assert this just to be safe.
 // Development builds of React are slow and not intended for production.
@@ -226,6 +227,10 @@ module.exports = {
       }
     }),
     // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
-    new ExtractTextPlugin('static/css/[name].[contenthash:8].css')
+    new ExtractTextPlugin('static/css/[name].[contenthash:8].css'),
+    new CopyWebpackPlugin([
+        // {output}/to/directory/file.txt
+        { from: 'server-start.js', to: '../build' }
+    ])
   ]
 };
