@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/Financial-Times/six-degrees-app.git"
   },
-  "devDependencies": {
+  "dependencies": {
     "autoprefixer": "6.4.0",
     "babel-core": "6.14.0",
     "babel-eslint": "6.1.2",
@@ -55,9 +55,7 @@
     "url-loader": "0.5.7",
     "webpack": "1.13.2",
     "webpack-dev-server": "1.15.1",
-    "whatwg-fetch": "1.0.0"
-  },
-  "dependencies": {
+    "whatwg-fetch": "1.0.0",
     "pushstate-server": "^2.0.0",
     "react": "^15.3.1",
     "react-dom": "^15.3.1"
@@ -66,6 +64,7 @@
     "start-dev": "node scripts/start.js",
     "start": "node scripts/build.js & node server-start",
     "build": "node scripts/build.js",
+    "postinstall": "node scripts/build.js",
     "test": "jest --watch --env=jsdom"
   },
   "eslintConfig": {
