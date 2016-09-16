@@ -1,5 +1,7 @@
 ## Customize the test machine
 machine:
+  environment:
+    CI: true
   node:
     version: 5.11.0
 
@@ -14,7 +16,7 @@ dependencies:
 ## Customize test commands
 test:
   override:
-    #- npm run test
+    - npm run test
 
 ## Customize deployment
 deployment:
@@ -22,11 +24,3 @@ deployment:
     branch: develop
     commands:
       #- sh ./deployment/build_release.sh
-    staging:
-        branch: staging
-        commands:
-         #- sh ./deployment/build_release.sh
-  release:
-    branch: master
-    commands:
-      #- sh ./deployment/deploy_to_heroku.sh
