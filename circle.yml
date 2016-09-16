@@ -16,11 +16,11 @@ dependencies:
 ## Customize test commands
 test:
   override:
-    - npm run test
+    - sh ./scripts/ci/run_tests.sh
 
 ## Customize deployment
 deployment:
   develop:
     branch: develop
     commands:
-      - sh ./scripts/push_to_staging.sh
+      - sh ./scripts/ci/push_to_staging.sh
