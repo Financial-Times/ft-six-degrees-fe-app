@@ -58,11 +58,13 @@
     "whatwg-fetch": "1.0.0"
   },
   "dependencies": {
+    "pushstate-server": "^2.0.0",
     "react": "^15.3.1",
     "react-dom": "^15.3.1"
   },
   "scripts": {
-    "start": "node scripts/start.js",
+    "start-dev": "node scripts/start.js",
+    "start": "node scripts/build.js & node server-start",
     "build": "node scripts/build.js",
     "test": "jest --watch --env=jsdom"
   },
