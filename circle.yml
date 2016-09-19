@@ -7,11 +7,8 @@ machine:
 
 checkout:
   post:
-    - ./scripts/ci/configure_github.sh
-
-dependencies:
-  pre:
     - chmod +x ./scripts/ci/configure_github.sh
+    - ./scripts/ci/configure_github.sh
 
 ## Customize test commands
 test:
