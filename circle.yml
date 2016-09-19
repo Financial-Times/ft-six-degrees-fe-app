@@ -7,8 +7,8 @@ machine:
 
 checkout:
   post:
-    - chmod +x ./scripts/ci/configure_github.sh
-    - ./scripts/ci/configure_github.sh
+    #- chmod +x ./scripts/ci/configure_github.sh
+    #- ./scripts/ci/configure_github.sh
 
 ## Customize test commands
 test:
