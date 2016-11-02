@@ -1,0 +1,24 @@
+.sub-page {
+    text-align: center;
+}
+
+.sub-page h2 {
+  color: #27757b;
+  text-align: center;
+}
+
+.sub-page table {
+    width: 90%;
+    text-align: left;
+    margin: 20px auto;
+}
+
+.sub-page table td {
+    padding: 5px 10px;
+    vertical-align: top;
+}
+
+.sub-page table td:first-child {
+    width: 70%;
+    font-style: italic;
+}

@@ -1,0 +1,11 @@
+.home-page h2 {
+  color: #27757b;
+  text-align: center;
+}
+
+.home-page .subheader {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    font-style: italic;
+}
