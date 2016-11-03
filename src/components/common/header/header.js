@@ -9,7 +9,8 @@ const Header = () => {
                 <div className="o-header-services__top o-header-services__container">
                     <div className="o-header-services__ftlogo"></div>
                     <div className="o-header-services__title animated fadeIn">
-                        <h1 className="o-header-services__product-name">Six Degrees</h1><span className="o-header-subrand__product-tagline ">Internal debugging tool</span>
+                        <h1 className="o-header-services__product-name">Six Degrees</h1>
+                        <span className="o-header-subrand__product-tagline ">Make the right connections</span>
                     </div>
                 </div>
             </header>
