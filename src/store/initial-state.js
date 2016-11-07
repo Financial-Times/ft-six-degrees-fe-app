@@ -1,4 +1,10 @@
 export default {
     ajaxCallsInProgress: 0,
-    sentences: []
+    sentences: [],
+    hint: '',
+    legend: {
+        topLabel: '',
+        bottomLabel: '',
+        inner: null
+    }
 };

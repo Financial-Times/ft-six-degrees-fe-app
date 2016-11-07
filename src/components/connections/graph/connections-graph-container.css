@@ -1,0 +1,10 @@
+.connections-graph-container {
+    /* TEMPORARY */
+    background: #f6e9d8;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin-top: 20px 0;
+}

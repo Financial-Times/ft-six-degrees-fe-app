@@ -1,12 +1,16 @@
 import React from 'react';
-import {Route, IndexRoute} from 'react-router';
+import {Route, IndexRedirect, Redirect} from 'react-router';
 import Layout from './components/layout.js';
-import HomePage from './components/pages/home/home-page';
-import SubPage from './components/pages/example/sub-page';
+
+import PeopleContainer from './components/people/graph/people-graph-container';
+import ConnectionsContainer from './components/connections/graph/connections-graph-container';
 
 export default (
     <Route path="/" component={Layout}>
-        <IndexRoute component={HomePage} />
-        <Route path="subpage" component={SubPage} />
+        <IndexRedirect to="people" />
+        <Route path="connections" component={ConnectionsContainer} />
+        <Route path="connections/:id" component={ConnectionsContainer} />
+        <Route path="people" component={PeopleContainer} />
+        <Redirect from="*" to="people" />
     </Route>
 );
