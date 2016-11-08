@@ -1,0 +1,7 @@
+.people-subheader-select span {
+    display: inline-block;
+}
+
+.people-subheader-select select {
+    padding-left: 15px;
+}

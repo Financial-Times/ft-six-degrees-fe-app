@@ -4,3 +4,18 @@
     border-top: solid 1px #CEC6B9;
     padding: 0 10px;
 }
+
+.connections-subheader-hint {
+    float: left;
+    font-size: 30px;
+}
+
+.connections-subheader-startoverbtn {
+    float: right;
+}
+
+.connections-subheader-startoverbtn em {
+    font-style: normal;
+    display: inline-block;
+    margin-left: 10px;
+}

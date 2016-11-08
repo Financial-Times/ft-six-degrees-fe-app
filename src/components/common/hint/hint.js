@@ -6,20 +6,22 @@ import './hint.css';
 
 class Hint extends React.Component {
 
-    determineInitialHint(location) {
-        this.props.actions.change(location === '/people' ? '1. Select a person from below to discover their associations, based on who they have appeared in the same stories with' : '2. Select one of [PERSON]\'s associations to discover their linked stories and other people connected to them');
+    getHintText() {
+        return this.props.location === '/people' ? '1. Select a person from below to discover their associations, based on who they have appeared in the same stories with' : '2. Select one of Hillary Clinton\'s associations to discover their linked stories and other people connected to them'
+    }
+
+    componentDidUpdate() {
+        this.props.actions.change(this.getHintText());
     }
 
     componentDidMount() {
-        this.determineInitialHint(this.props.location);
+        this.props.actions.change(this.getHintText());
     }
 
     render() {
-        const {hint} = this.props;
-
         return (
             <div className="hint">
-                {hint}
+                {this.props.hint}
             </div>
         );
     }
@@ -27,6 +29,7 @@ class Hint extends React.Component {
 
 Hint.propTypes = {
     hint: PropTypes.string.isRequired,
+    location: PropTypes.string.isRequired,
     actions: PropTypes.object.isRequired
 }
 

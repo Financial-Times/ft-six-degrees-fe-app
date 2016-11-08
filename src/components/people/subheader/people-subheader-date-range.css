@@ -1,0 +1,7 @@
+.people-subheader-date-range .o-buttons__group {
+    display: inline-block;
+}
+
+.people-subheader-date-range .o-buttons {
+    text-transform: capitalize;
+}

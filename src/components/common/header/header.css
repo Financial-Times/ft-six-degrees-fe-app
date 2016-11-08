@@ -13,3 +13,33 @@
     display: block;
     margin: 10px;
 }
+
+.page-people .page-people-inner,
+.page-connections .page-connections-inner {
+    position: relative;
+    display: inline-block;
+    font-family: 'Metric';
+}
+
+.header-copy-inner em {
+    font-style: normal;
+}
+
+.page-people .page-people-inner em,
+.page-connections .page-connections-inner em {
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+    font-weight: 600;
+}
+
+.page-people .page-people-inner b,
+.page-connections .page-connections-inner b {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 12px;
+    background: #ffff00;
+    z-index: 0;
+}
