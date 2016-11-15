@@ -8,6 +8,6 @@ it('renders without crashing', () => {
     store = configureStore();
 
   render(
-    <PeopleSubHeaderLoginArea store={store}/>
+    <PeopleSubHeaderLoginArea store={store} />
   , div);
 });

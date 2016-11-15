@@ -88,6 +88,7 @@ module.exports = {
         test: /\.(js|jsx)$/,
         loader: 'eslint',
         include: paths.appSrc,
+        exclude: [paths.appSrc + '/assets/js/vendor/d3.v3.min.js']
       }
     ],
     loaders: [

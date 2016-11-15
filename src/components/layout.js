@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import '../assets/js/vendor/d3.v3.min.js';
 import Cookies from '../assets/js/services/cookies.utils.js';
 import Header from './common/header/header';
 import Footer from './common/footer/footer';
@@ -12,6 +13,7 @@ import initialState from '../store/initial-state';
 import * as loginStateActions from '../actions/login-state-actions';
 import * as peopleGroupActions from '../actions/people-group-actions';
 import '../assets/css/font-awesome.min.css';
+import '../assets/css/animate.css';
 import './layout.css';
 
 class Layout extends Component {

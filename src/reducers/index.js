@@ -8,6 +8,8 @@ import hintReducer from './hint-reducer';
 import legendReducer from './legend-reducer';
 import dateRangeReducer from './date-range-reducer';
 import peopleGroupReducer from './people-group-reducer';
+import peopleRangeReducer from './people-range-reducer';
+import peopleDataReducer from './people-data-reducer';
 
 const rootReducer = combineReducers({
     loginState: loginStateReducer,
@@ -16,6 +18,8 @@ const rootReducer = combineReducers({
     legend: legendReducer,
     dateRange: dateRangeReducer,
     peopleGroup: peopleGroupReducer,
+    peopleRange: peopleRangeReducer,
+    peopleData: peopleDataReducer,
     sentences: sentencesReducer,
     ajaxCallsInProgress: ajaxStatusReducer
 });

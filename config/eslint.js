@@ -23,6 +23,10 @@ module.exports = {
     node: true
   },
 
+  globals: {
+    d3: true
+  },
+
   parserOptions: {
     ecmaVersion: 6,
     sourceType: 'module',

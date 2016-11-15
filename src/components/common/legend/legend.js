@@ -42,6 +42,13 @@ class Legend extends React.Component {
         this.determineLegendLabels(this.props.location);
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.location !== this.props.location) {
+            this.determineLegendLabels(nextProps.location);
+        }
+        return true;
+    }
+
     render() {
         return (
             <div className="legend-container">
