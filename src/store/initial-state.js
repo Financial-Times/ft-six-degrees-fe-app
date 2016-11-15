@@ -4,7 +4,7 @@ export default {
     loginState: false,
     hint: '1. Select a person from below to discover their associations, based on who they have appeared in the same stories with',
     dateRange: 'day', // day, week, month, year
-    peopleRange: 5, // 1, 5, 10, 20
+    peopleRange: 10, // 1, 5, 10, 20
     peopleGroup: 'mentioned in FT articles', //mentioned in FT articles, based on my behaviour
     peopleData: [],
     legend: {
@@ -12,5 +12,5 @@ export default {
         bottomLabel: '',
         inner: null
     },
-    user: {}
+    user: null
 };

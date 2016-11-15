@@ -5,8 +5,12 @@ import Layout from './components/layout.js';
 import PeopleContainer from './components/people/graph/people-graph-container';
 import ConnectionsContainer from './components/connections/graph/connections-graph-container';
 
+function onRouteChange() {
+    window.scrollTo(0, 0);
+}
+
 export default (
-    <Route path="/" component={Layout}>
+    <Route path="/" component={Layout} onChange={onRouteChange}>
         <IndexRedirect to="people" />
         <Route path="connections" component={ConnectionsContainer} />
         <Route path="connections/:id" component={ConnectionsContainer} />

@@ -7,7 +7,7 @@ function getUserDetailsEvent(user) {
     };
 }
 
-export function change(user) {
+export function update(user) {
     return function (dispatch) {
         dispatch(getUserDetailsEvent(user));
     }

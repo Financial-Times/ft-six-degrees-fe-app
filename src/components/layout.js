@@ -11,6 +11,7 @@ import Share from './common/share/share';
 import Legend from './common/legend/legend';
 import initialState from '../store/initial-state';
 import * as loginStateActions from '../actions/login-state-actions';
+import * as userActions from '../actions/user-details-actions';
 import * as peopleGroupActions from '../actions/people-group-actions';
 import '../assets/css/font-awesome.min.css';
 import '../assets/css/animate.css';
@@ -18,7 +19,7 @@ import './layout.css';
 
 class Layout extends Component {
 
-    componentDidMount() {
+    componentWillMount() {
         const ftSessionCookie = Cookies.read('FTSession'),
             loggedIn = typeof ftSessionCookie === 'string' && ftSessionCookie !== '';
 
@@ -27,7 +28,16 @@ class Layout extends Component {
         if (!loggedIn) {
             this.props.actions.peopleGroupActions.change(initialState.peopleGroup);
         } else {
-            console.warn('get user details');
+            this.props.actions.peopleGroupActions.change('based on my behaviour');
+            //TEMPORARY
+            setTimeout(() => {
+                console.warn('got user details');
+                this.props.actions.userActions.update({
+                    id: 'xyz',
+                    prefLabel: 'Tomasz Libich'
+                });
+            }, 1000)
+
         }
     }
 
@@ -77,6 +87,7 @@ function mapDispatchToProps(dispatch) {
     return {
         actions: {
             loginActions: bindActionCreators(loginStateActions, dispatch),
+            userActions: bindActionCreators(userActions, dispatch),
             peopleGroupActions: bindActionCreators(peopleGroupActions, dispatch)
         }
     };

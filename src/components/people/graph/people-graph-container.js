@@ -2,7 +2,6 @@ import React, {PropTypes} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as peopleDataActions from '../../../actions/people-data-actions';
-import {Link} from 'react-router';
 import Graph from './people-graph';
 import PeopleDataUtils from '../../../assets/js/services/people-data.utils';
 import './people-graph-container.css';
@@ -134,10 +133,30 @@ class PeopleGraphContainer extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.data = props.peopleData;
+        this.nodeClickCallback = this.nodeClickCallback.bind(this);
     }
 
     hasChanged(itemOne, itemTwo) {
         return JSON.stringify(itemOne) !== JSON.stringify(itemTwo);
+    }
+
+    addUser(data) {
+        const maxArticles = data && data.length ? parseInt(data[0].articles, 10) : 0,
+            user = Object.assign({}, this.props.user, {
+            abbrName: PeopleDataUtils.getAbbreviatedName(this.props.user.prefLabel),
+            initials: PeopleDataUtils.getNameInitials(this.props.user.prefLabel),
+            articles: maxArticles + Math.ceil(maxArticles * 0.25),
+            user: true
+        });
+        data.unshift(user);
+        return data;
+    }
+
+    removeUser(data) {
+        if (data && data.length && data[0].user) {
+            data.shift();
+        }
+        return data;
     }
 
     parseData(data) {
@@ -150,20 +169,27 @@ class PeopleGraphContainer extends React.Component {
     }
 
     updateData() {
-        return this.props.peopleData.slice(0, this.props.peopleRange || 1);
+        let data = this.props.peopleData.slice(0, this.props.peopleRange || 1);
+
+        if (this.props.loginState && this.props.user && this.props.peopleGroup === 'based on my behaviour') {
+            data = this.addUser(data);
+        } else {
+            data = this.removeUser(data);
+        }
+
+        return data;
     }
 
     updateGraph() {
-        this.graph = new Graph();
+        this.graph = new Graph(this.nodeClickCallback);
         this.graph.draw(this.updateData(), this.props.peopleRange);
     }
 
-    componentDidUpdate() {
-        //update graph
-        this.updateGraph();
+    nodeClickCallback(data) {
+        this.props.router.push('/connections');
     }
 
-    componentDidMount() {
+    initializeGraph() {
         this.updateGraph();
 
         //temporary
@@ -174,26 +200,53 @@ class PeopleGraphContainer extends React.Component {
         }, 1000);
     }
 
+    checkUser() {
+        if (!this.props.loginState || (this.props.loginState && this.props.user)) {
+            this.initializeGraph();
+        } else {
+            this.interval = setInterval(() => {
+                if (this.props.user) {
+                    this.initializeGraph();
+                    clearInterval(this.interval);
+                }
+            }, 1000);
+        }
+    }
+
+    componentDidUpdate() {
+        //update graph
+        this.updateGraph();
+    }
+
+    componentDidMount() {
+        this.checkUser();
+    }
+
     render() {
         return (
             <div className="people-graph-container">
                 <div id="people-graph" className="people-graph"></div>
-                <p>
-                    <Link to="/connections" className="o-typography-link" activeClassName="active">Hillary Clinton</Link>
-                </p>
             </div>
         );
     }
 }
 
 PeopleGraphContainer.propTypes = {
-    peopleRange: PropTypes.number.isRequired
+    loginState: PropTypes.bool.isRequired,
+    peopleGroup: PropTypes.string.isRequired,
+    peopleRange: PropTypes.number.isRequired,
+    peopleData: PropTypes.array.isRequired,
+    router: React.PropTypes.object.isRequired,
+    user: React.PropTypes.object
 }
 
 function mapStateToProps(state, ownProps) {
     return {
+        loginState: state.loginState,
+        peopleGroup: state.peopleGroup,
         peopleRange: state.peopleRange,
-        peopleData: state.peopleData
+        peopleData: state.peopleData,
+        user: state.user
     };
 }
 

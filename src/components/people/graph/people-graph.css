@@ -6,12 +6,17 @@
 .circle-node {
     opacity: 1;
     fill: #9E2F50;
+    cursor: pointer;
 
     -webkit-transition: opacity 0.5s ease-in;
     -moz-transition: opacity 0.5s ease-in;
     -o-transition: opacity 0.5s ease-in;
     -ms-transition: opacity 0.5s ease-in;
     transition: opacity 0.5s ease-in;
+}
+
+.circle-node.user {
+    fill: #333333;
 }
 
 .text-node {
@@ -21,10 +26,30 @@
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
 }
 
+.text-hint {
+    visibility: hidden;
+    fill: #000;
+    text-shadow: 0 0 1px rgba(255, 255, 255, 1);
+}
+
+.text-hint.visible,
 .text-node.visible {
     visibility: visible;
 }
 
-.node.hide-plain .circle-node {
+.node.hide-plain .circle-node,
+.node.no-pic .circle-gradient {
     opacity: 0;
+}
+
+.stop-top {
+    stop-color: transparent;
+}
+
+.stop-middle {
+    stop-color: transparent;
+}
+
+.stop-bottom {
+    stop-color: rgba(0, 0, 0, 1);
 }

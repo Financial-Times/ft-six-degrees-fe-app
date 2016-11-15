@@ -7,8 +7,15 @@ let SVG, SVG_WIDTH, SVG_HEIGHT, MAX_MENTIONS;
 
 class Graph {
 
-    constructor() {
+    constructor(nodeClickCallback) {
+        this.nodeClickCallback = nodeClickCallback;
         this.forceDependants = [];
+    }
+
+    toggleHint(circleElement, visible, empty) {
+        if (empty) {
+            d3.select(circleElement.parentNode).selectAll('.text-hint').classed('visible', visible);
+        }
     }
 
     createImgId(name) {
@@ -114,6 +121,29 @@ class Graph {
         return imageAnchor;
     }
 
+    addGradientDef() {
+        const gradient = this.defs
+            .append('linearGradient')
+            .attr('id', 'linear-gradient')
+            .attr('x1', '0%')
+            .attr('y1', '0%')
+            .attr('x2', '0%')
+            .attr('y2', '100%');
+
+        gradient.append('stop')
+            .attr('class', 'stop-top')
+            .attr('offset', '0');
+
+        gradient.append('stop')
+            .attr('class', 'stop-middle')
+            .attr('offset', '0.5');
+
+        gradient.append('stop')
+            .attr('class', 'stop-bottom')
+            .attr('offset', '1');
+
+    }
+
      createForce(width, height, tick) {
         return d3.layout.force()
             .nodes(this.nodes)
@@ -133,6 +163,45 @@ class Graph {
         });
 
         this.circles.call(force.drag);
+    }
+
+    addHints() {
+        const hintContainers = d3.selectAll('g.node')
+            .append('g')
+            .attr('class', 'text-hint');
+
+        this.hints = hintContainers.append('text')
+            .text(d => {
+                return d.name.abbrName;
+            });
+
+        this.forceDependants.push((e) => {
+            this.hints
+                .attr('dx', d => d.x + 10)
+                .attr('dy', d => d.y + 10);
+        });
+    }
+
+    addGradients() {
+        this.addGradientDef();
+
+        this.gradients = d3.selectAll('g.node')
+            .each(function (d) {
+                if (d.empty || !d.img) {
+                    d3.select(this)
+                        .classed('no-pic', true);
+                }
+            })
+            .insert('circle', ':first-child')
+            .attr('class', 'circle-gradient')
+            .style('fill', 'url(#linear-gradient)')
+            .attr('r', d => d.radius);
+
+        this.forceDependants.push((e) => {
+            this.gradients
+                .attr('cx', d => d.x)
+                .attr('cy', d => d.y);
+        });
     }
 
     addPictures() {
@@ -158,6 +227,13 @@ class Graph {
         });
     }
 
+    finalize() {
+        d3.selectAll('.text-node').attr('class', 'text-node visible animated fadeIn');
+        this.addGradients();
+        this.addPictures();
+        this.addHints();
+    }
+
     addLabels() {
 
         function fitsTheCircle(textNode, d) {
@@ -174,6 +250,7 @@ class Graph {
 
                 if (!fitsTheCircle(textNode, d)) {
                     d3.select(textNode).text(d.name.initials);
+                    d.name.initialsInUse = true;
 
                     if (!fitsTheCircle(textNode, d)) {
                         d3.select(textNode).text(null);
@@ -186,7 +263,7 @@ class Graph {
             this.labels
                 .attr('dx', d => d.x)
                 .attr('dy', d => {
-                    return d.y + d.radius / 3
+                    return d.y + d.radius / (d.name.initialsInUse ? 1.75 : 2.5)
                 });
         });
 
@@ -194,6 +271,7 @@ class Graph {
     }
 
     createCircles() {
+        const self = this;
         let node, nodeEnter;
 
         node = SVG.select('.nodes').selectAll('g.node').data(this.nodes);
@@ -204,13 +282,29 @@ class Graph {
 
         this.circles = nodeEnter
             .append('svg:circle')
-            .attr('class', 'circle-node')
+            .attr('class', (d, index) => {
+                if (index === 0) {
+                    d.fixed = true;
+                    d.x = SVG_WIDTH / 2;
+                    d.y = SVG_HEIGHT / 2;
+                }
+                return d.user ? 'circle-node user' : 'circle-node';
+            })
             .attr('r', d => d.radius)
             .attr('cx', d => {
                 return d.radius;
             })
             .attr('cy', d => {
                 return d.radius;
+            })
+            .on('click', (data) => {
+                this.nodeClickCallback(data.id);
+            })
+            .on('mouseover', function (d) {
+                self.toggleHint(this, true, d.empty);
+            })
+            .on('mouseout', function (d) {
+                self.toggleHint(this, false, d.empty);
             });
 
         this.forceDependants.push((e) => {
@@ -239,6 +333,7 @@ class Graph {
             }
 
             this.node = {
+                id: person.id,
                 radius: radius,
                 cluster: 0,
                 index: index,
@@ -249,6 +344,10 @@ class Graph {
                     initials: person.initials,
                     abbrName: person.abbrName
                 }
+            }
+
+            if (person.user) {
+                this.node.user = true;
             }
 
             return this.node;
@@ -279,7 +378,7 @@ class Graph {
                 .append('svg:g')
                 .attr('class', 'g-wrapper');
 
-        this.defs = SVG.append('svg:defs');
+        this.defs = d3.select('#svg').append('svg:defs');
 
         window.onresize = function () {
             d3.select('#' + graphId + ' svg:first-child').attr('width', element.parentNode.offsetWidth).attr('height', element.parentNode.offsetHeight);
@@ -295,13 +394,8 @@ class Graph {
         this.createNodes();
     }
 
-    finalize() {
-        d3.selectAll('.text-node').attr('class', 'text-node visible animated fadeIn');
-        this.addPictures();
-    }
-
     draw(data, peopleRange) {
-        if (data && data.length) {
+        if (data && data.length && data.length > 1) {
             SVG = null;
             d3.select('#people-graph').html(null);
             this.peopleRange = peopleRange;

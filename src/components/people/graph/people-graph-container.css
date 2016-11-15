@@ -1,13 +1,7 @@
 .people-graph-container {
     margin: 20px 0;
     position: relative;
-    /* TEMPORARY */
-    background: #f6e9d8;
     min-height: 500px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
 }
 
 .people-graph {
