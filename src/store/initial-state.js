@@ -1,11 +1,13 @@
+import {CONFIG} from '../config-constants';
+
 export default {
     ajaxCallsInProgress: 0,
     sentences: [],
     loginState: false,
-    hint: '1. Select a person from below to discover their associations, based on who they have appeared in the same stories with',
-    dateRange: 'day', // day, week, month, year
+    hint: CONFIG.TEXT.HINT.SELECT_PERSON,
+    dateRange: CONFIG.TEXT.DATE_RANGE.MONTH,
     peopleRange: 10, // 1, 5, 10, 20
-    peopleGroup: 'mentioned in FT articles', //mentioned in FT articles, based on my behaviour
+    peopleGroup: CONFIG.TEXT.PEOPLE_GROUP.MENTIONED,
     peopleData: [],
     legend: {
         topLabel: '',

@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import '../assets/js/vendor/d3.v3.min.js';
-import Cookies from '../assets/js/services/cookies.utils.js';
+import Cookies from '../services/cookies.utils.js';
 import Header from './common/header/header';
 import Footer from './common/footer/footer';
 import SubHeader from './common/subheader/subheader';

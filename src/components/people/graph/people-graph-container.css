@@ -4,6 +4,11 @@
     min-height: 500px;
 }
 
+.people-graph-container.withLogo {
+    background: url('https://www.ft.com/__origami/service/image/v2/images/raw/ftlogo:brand-ft-logo-square-coloured?width=50&source=origami-registry') no-repeat center center;
+    background-size: 20% auto;
+}
+
 .people-graph {
     position: absolute;
     top: 0;

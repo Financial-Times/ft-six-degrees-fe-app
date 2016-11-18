@@ -1,6 +1,6 @@
 import * as types from './action-types';
 
-function getPeopleDataEvent(data) {
+function getPeopleDataUpdateEvent(data) {
     return {
         type: types.PEOPLE_DATA_UPDATE,
         peopleData: data
@@ -9,6 +9,6 @@ function getPeopleDataEvent(data) {
 
 export function update(data) {
     return function (dispatch) {
-        dispatch(getPeopleDataEvent(data));
+        dispatch(getPeopleDataUpdateEvent(data));
     }
 }

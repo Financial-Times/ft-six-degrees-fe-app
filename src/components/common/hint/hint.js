@@ -1,17 +1,14 @@
 import React, {PropTypes} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {CONFIG} from '../../../config-constants';
 import * as hintActions from '../../../actions/hint-actions';
 import './hint.css';
 
 class Hint extends React.Component {
 
     getHintText() {
-        return this.props.location === '/people' ? '1. Select a person from below to discover their associations, based on who they have appeared in the same stories with' : '2. Select one of Hillary Clinton\'s associations to discover their linked stories and other people connected to them'
-    }
-
-    componentDidUpdate() {
-        this.props.actions.change(this.getHintText());
+        return this.props.location === '/people' ? CONFIG.TEXT.HINT.SELECT_PERSON : CONFIG.TEXT.HINT.SELECT_ASSOCIATION
     }
 
     componentDidMount() {

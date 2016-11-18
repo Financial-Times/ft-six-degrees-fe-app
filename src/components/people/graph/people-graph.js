@@ -12,8 +12,8 @@ class Graph {
         this.forceDependants = [];
     }
 
-    toggleHint(circleElement, visible, empty) {
-        if (empty) {
+    toggleHint(circleElement, visible, emptyOrInitials) {
+        if (emptyOrInitials) {
             d3.select(circleElement.parentNode).selectAll('.text-hint').classed('visible', visible);
         }
     }
@@ -71,8 +71,8 @@ class Graph {
                         y = d.y - quad.point.y,
                         l = Math.sqrt(x * x + y * y),
                         r = d.radius + quad.point.radius + SPACE_BETWEEN_CIRCLES,
-                        m = Math.pow(quad.point.radius, 4),
-                        mq = Math.pow(d.radius, 4),
+                        m = Math.pow(quad.point.radius, 1),
+                        mq = Math.pow(d.radius, 1),
                         mT = m + mq;
 
                     if (l < r) {
@@ -301,10 +301,10 @@ class Graph {
                 this.nodeClickCallback(data.id);
             })
             .on('mouseover', function (d) {
-                self.toggleHint(this, true, d.empty);
+                self.toggleHint(this, true, d.empty || d.name.initialsInUse);
             })
             .on('mouseout', function (d) {
-                self.toggleHint(this, false, d.empty);
+                self.toggleHint(this, false, d.empty || d.name.initialsInUse);
             });
 
         this.forceDependants.push((e) => {
@@ -363,7 +363,7 @@ class Graph {
         SVG_WIDTH = element.parentNode.offsetWidth;
         SVG_HEIGHT = element.parentNode.offsetHeight;
 
-        const zoom = d3.behavior.zoom().scaleExtent([0.5, 2]).on('zoom', zoomed);
+        const zoom = d3.behavior.zoom().scaleExtent([0.5, 1]).on('zoom', zoomed);
 
         SVG = d3.select('#' + graphId)
                 .append('svg:svg')
@@ -395,13 +395,17 @@ class Graph {
     }
 
     draw(data, peopleRange) {
-        if (data && data.length && data.length > 1) {
-            SVG = null;
-            d3.select('#people-graph').html(null);
+        this.clear();
+        if (data) {
             this.peopleRange = peopleRange;
             this.data = data;
             this.createSvg();
         }
+    }
+
+    clear() {
+        SVG = null;
+        d3.select('#people-graph').html(null);
     }
 }
 
