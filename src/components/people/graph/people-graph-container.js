@@ -78,6 +78,10 @@ class PeopleGraphContainer extends React.Component {
         }
     }
 
+    needFtLogo() {
+        return !this.props.loginState && !this.props.peopleData.length ? ' withLogo' : '';
+    }
+
     componentDidUpdate(prevProps) {
         this.checkUser();
     }
@@ -85,7 +89,7 @@ class PeopleGraphContainer extends React.Component {
     render() {
 
         return (
-            <div className={(() => "people-graph-container" + (!this.props.peopleData.length ? ' withLogo' : ''))()}>
+            <div className={(() => "people-graph-container" + this.needFtLogo())()}>
                 <div className="people-graph-data-loader">
                     <PeopleGraphDataLoader />
                 </div>
