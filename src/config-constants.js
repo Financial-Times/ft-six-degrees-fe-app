@@ -2,7 +2,7 @@ const storedSixDegreesApiUrl = window.localStorage && window.localStorage.getIte
 
 export const CONFIG = {
     URL: {
-        API: storedSixDegreesApiUrl || 'http://ft-six-degrees-be-app.herokuapp.com/',
+        API: storedSixDegreesApiUrl || 'https://ft-six-degrees-be-app.herokuapp.com/',
     },
     TEXT: {
         DATE_RANGE: {
