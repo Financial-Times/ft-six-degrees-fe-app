@@ -1,14 +1,27 @@
 import * as types from './action-types';
 
-function getPeopleDataUpdateEvent(data) {
+function getMentionedPeopleDataUpdateEvent(data) {
     return {
-        type: types.PEOPLE_DATA_UPDATE,
-        peopleData: data
+        type: types.MENTIONED_PEOPLE_DATA_UPDATE,
+        mentionedPeopleData: data
     };
 }
 
-export function update(data) {
+function getPersonalisedPeopleDataUpdateEvent(data) {
+    return {
+        type: types.PERSONALISED_PEOPLE_DATA_UPDATE,
+        personalisedPeopleData: data
+    };
+}
+
+export function updateMentioned(data) {
     return function (dispatch) {
-        dispatch(getPeopleDataUpdateEvent(data));
+        dispatch(getMentionedPeopleDataUpdateEvent(data));
+    }
+}
+
+export function updatePersonalised(data) {
+    return function (dispatch) {
+        dispatch(getPersonalisedPeopleDataUpdateEvent(data));
     }
 }

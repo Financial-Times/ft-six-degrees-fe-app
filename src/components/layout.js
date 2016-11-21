@@ -9,6 +9,7 @@ import SubHeader from './common/subheader/subheader';
 import Hint from './common/hint/hint';
 import Share from './common/share/share';
 import Legend from './common/legend/legend';
+import UserDetails from './user/user-data';
 import initialState from '../store/initial-state';
 import * as loginStateActions from '../actions/login-state-actions';
 import * as userActions from '../actions/user-details-actions';
@@ -29,15 +30,6 @@ class Layout extends Component {
             this.props.actions.peopleGroupActions.change(initialState.peopleGroup);
         } else {
             this.props.actions.peopleGroupActions.change('based on my behaviour');
-            //TEMPORARY
-            setTimeout(() => {
-                console.warn('got user details');
-                this.props.actions.userActions.update({
-                    id: 'xyz',
-                    prefLabel: 'Tomasz Libich'
-                });
-            }, 1000)
-
         }
     }
 
@@ -67,6 +59,7 @@ class Layout extends Component {
                     </aside>
                 </div>
                 <Footer />
+                <UserDetails />
             </div>
         );
     }

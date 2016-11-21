@@ -395,11 +395,14 @@ class Graph {
     }
 
     draw(data, peopleRange) {
-        this.clear();
-        if (data) {
-            this.peopleRange = peopleRange;
-            this.data = data;
-            this.createSvg();
+        if (!this.dataCache || (this.dataCache && JSON.stringify(this.dataCache) !== JSON.stringify(data))) {
+            this.dataCache = Object.assign({}, data);
+            this.clear();
+            if (data) {
+                this.peopleRange = peopleRange;
+                this.data = data;
+                this.createSvg();
+            }
         }
     }
 

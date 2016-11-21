@@ -36,10 +36,16 @@ class PeopleGraphContainer extends React.Component {
         return data;
     }
 
-    updateData() {
-        let data = this.props.peopleData.slice(0, this.props.peopleRange || 1);
+    updateData(personalisedData) {
+        const sourceData =  personalisedData ? this.props.personalisedPeopleData : this.props.mentionedPeopleData;
 
-        if (this.props.loginState && this.props.user && this.props.peopleGroup === 'based on my behaviour') {
+        let data = sourceData.slice(0, sourceData.length).sort((a, b) => {
+            return b.articles > a.articles;
+        });
+
+        data = data.slice(0, this.props.peopleRange || 1);
+
+        if (personalisedData) {
             data = this.addUser(data);
         } else {
             data = this.removeUser(data);
@@ -49,7 +55,7 @@ class PeopleGraphContainer extends React.Component {
     }
 
     updateGraph() {
-        const data = this.updateData();
+        const data = this.updateData(this.props.loginState && this.props.user && this.props.peopleGroup === CONFIG.TEXT.PEOPLE_GROUP.BEHAVIOUR);
 
         this.graph = new Graph(this.nodeClickCallback);
         this.graph.draw(data, this.props.peopleRange);
@@ -65,25 +71,12 @@ class PeopleGraphContainer extends React.Component {
         this.props.router.push('/connections');
     }
 
-    checkUser() {
-        if (!this.props.loginState || (this.props.loginState && this.props.user)) {
-            this.updateGraph();
-        } else {
-            this.timeout = setTimeout(() => {
-                if (this.props.user) {
-                    this.updateGraph();
-                    clearTimeout(this.timeout);
-                }
-            }, 1000);
-        }
-    }
-
     needFtLogo() {
-        return !this.props.loginState && !this.props.peopleData.length ? ' withLogo' : '';
+        return this.props.peopleGroup === CONFIG.TEXT.PEOPLE_GROUP.MENTIONED && !this.props.mentionedPeopleData.length ? ' withLogo' : '';
     }
 
     componentDidUpdate(prevProps) {
-        this.checkUser();
+        this.updateGraph();
     }
 
     render() {
@@ -101,9 +94,10 @@ class PeopleGraphContainer extends React.Component {
 
 PeopleGraphContainer.propTypes = {
     loginState: PropTypes.bool.isRequired,
+    mentionedPeopleData: PropTypes.array.isRequired,
     peopleGroup: PropTypes.string.isRequired,
     peopleRange: PropTypes.number.isRequired,
-    peopleData: PropTypes.array.isRequired,
+    personalisedPeopleData: PropTypes.array,
     router: React.PropTypes.object.isRequired,
     user: React.PropTypes.object
 }
@@ -111,9 +105,10 @@ PeopleGraphContainer.propTypes = {
 function mapStateToProps(state, ownProps) {
     return {
         loginState: state.loginState,
+        mentionedPeopleData: state.mentionedPeopleData,
         peopleGroup: state.peopleGroup,
         peopleRange: state.peopleRange,
-        peopleData: state.peopleData,
+        personalisedPeopleData: state.personalisedPeopleData,
         user: state.user
     };
 }

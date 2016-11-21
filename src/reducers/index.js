@@ -9,7 +9,8 @@ import legendReducer from './legend-reducer';
 import dateRangeReducer from './date-range-reducer';
 import peopleGroupReducer from './people-group-reducer';
 import peopleRangeReducer from './people-range-reducer';
-import peopleDataReducer from './people-data-reducer';
+import personalisedPeopleDataReducer from './people-data-personalised-reducer';
+import mentionedPeopleDataReducer from './people-data-mentioned-reducer';
 
 const rootReducer = combineReducers({
     loginState: loginStateReducer,
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
     dateRange: dateRangeReducer,
     peopleGroup: peopleGroupReducer,
     peopleRange: peopleRangeReducer,
-    peopleData: peopleDataReducer,
+    personalisedPeopleData: personalisedPeopleDataReducer,
+    mentionedPeopleData: mentionedPeopleDataReducer,
     sentences: sentencesReducer,
     ajaxCallsInProgress: ajaxStatusReducer
 });

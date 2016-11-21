@@ -23,7 +23,7 @@ export const CONFIG = {
             YEAR: 'year'
         },
         HINT: {
-            NO_PEOPLE_MENTIONED: 'No data about people mentioned within given period of time',
+            NO_PEOPLE_MENTIONED: 'No data about people mentioned within given period of time, try a different timescale',
             SELECT_PERSON: '1. Select a person from below to discover their associations, based on who they have appeared in the same stories with',
             SELECT_ASSOCIATION: '2. Select one of Hillary Clinton\'s associations to discover their linked stories and other people connected to them'
         },
