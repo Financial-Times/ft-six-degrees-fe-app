@@ -1,6 +1,5 @@
 import {combineReducers} from 'redux';
 import ajaxStatusReducer from './ajax-status-reducer';
-import sentencesReducer from './sentences-reducer';
 
 import loginStateReducer from './login-state-reducer';
 import userDetailsReducer from './user-details-reducer';
@@ -26,7 +25,6 @@ const rootReducer = combineReducers({
     mentionedPeopleData: mentionedPeopleDataReducer,
     connectedPeopleChain: connectedPeopleChainReducer,
     connectionsRoot: connectionsRootReducer,
-    sentences: sentencesReducer,
     ajaxCallsInProgress: ajaxStatusReducer
 });
 

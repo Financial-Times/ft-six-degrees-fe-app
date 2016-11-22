@@ -9,38 +9,32 @@ import './connections-graph-container.css';
 
 class ConnectionsGraphContainer extends React.Component {
 
-    updateConnectionsRootPerson(uuid) {
-        const peopleData = [].concat(this.props.personalisedPeopleData, this.props.mentionedPeopleData);
-
-        if (peopleData.length) {
-            const person = peopleData.filter(person => {
-                return person.id.indexOf(uuid) !== -1;
-            })[0];
-
-            this.props.actions.connectionsRoot.change(person);
-            this.props.actions.hint.change(CONFIG.TEXT.HINT.SELECT_ASSOCIATION.replace('####', person.abbrName));
-        }
+    updateHint(name) {
+        this.props.actions.hint.change(CONFIG.TEXT.HINT.SELECT_ASSOCIATION.replace('####', name));
     }
 
-    updateConnectedPeopleChain(uuid) {
-        const connectedPeopleChain = [].concat(this.props.connectedPeopleChain);
+    updateConnectionsRootPerson(uuid, peopleData) {
+        const person = peopleData.filter(person => {
+            return person.id.indexOf(uuid) !== -1;
+        })[0];
 
-        uuid = uuid || this.props.router.params.id;
-
-        if (!connectedPeopleChain.length || connectedPeopleChain.indexOf(uuid) !== -1) {
-            connectedPeopleChain.push(uuid);
-            this.updateConnectionsRootPerson(connectedPeopleChain[0]);
-        }
+        this.props.actions.connectionsRoot.change(person);
+        this.props.actions.connectedPeopleChain.update([person]);
+        this.updateHint(person.abbrName);
     }
 
     componentDidUpdate() {
-        if (!this.props.connectedPeopleChain.length) {
-            this.updateConnectedPeopleChain();
+        const peopleData = [].concat(this.props.personalisedPeopleData, this.props.mentionedPeopleData);
+
+        if (!this.props.connectionsRoot.id && peopleData.length) {
+            this.updateConnectionsRootPerson(this.props.router.params.id, peopleData);
+        } else {
+            this.updateHint(this.props.connectionsRoot.abbrName);
         }
     }
 
     componentDidMount() {
-        this.updateConnectedPeopleChain();
+        this.props.actions.connectionsRoot.change({});
     }
 
     render() {
@@ -54,7 +48,7 @@ class ConnectionsGraphContainer extends React.Component {
 
 ConnectionsGraphContainer.propTypes = {
     connectedPeopleChain: PropTypes.array.isRequired,
-    connectionsRoot: PropTypes.object,
+    connectionsRoot: PropTypes.object.isRequired,
     router: React.PropTypes.object.isRequired
 }
 
@@ -70,7 +64,7 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
     return {
         actions: {
-            connectedPeople: bindActionCreators(connectedPeopleChainActions, dispatch),
+            connectedPeopleChain: bindActionCreators(connectedPeopleChainActions, dispatch),
             connectionsRoot: bindActionCreators(connectionsRootActions, dispatch),
             hint: bindActionCreators(hintActions, dispatch)
         }

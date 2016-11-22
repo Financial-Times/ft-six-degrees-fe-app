@@ -2,7 +2,6 @@ import {CONFIG} from '../config-constants';
 
 export default {
     ajaxCallsInProgress: 0,
-    sentences: [],
     loginState: false,
     hint: CONFIG.TEXT.HINT.SELECT_PERSON,
     dateRange: CONFIG.TEXT.DATE_RANGE.MONTH,

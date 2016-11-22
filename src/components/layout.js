@@ -10,6 +10,7 @@ import Hint from './common/hint/hint';
 import Share from './common/share/share';
 import Legend from './common/legend/legend';
 import UserDetails from './user/user-data';
+import RelatedContent from './related-content/related-content';
 import DataLoader from './data-loader';
 import initialState from '../store/initial-state';
 import * as loginStateActions from '../actions/login-state-actions';
@@ -61,6 +62,7 @@ class Layout extends Component {
                         <Share />
                         <Legend location={this.props.location.pathname} />
                     </aside>
+                    <RelatedContent location={this.props.location.pathname} />
                 </div>
                 <Footer />
                 <UserDetails />
