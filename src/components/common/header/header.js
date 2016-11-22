@@ -2,6 +2,10 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import './header.css';
 
+function getNameFromLocation(location) {
+    return location.indexOf('people') !== -1 ? 'people' : 'connections';
+}
+
 class Header extends React.Component {
 
     getHeaderCopyInner() {
@@ -9,7 +13,7 @@ class Header extends React.Component {
     }
 
     render() {
-        const pageClassName = this.props.location ? 'page-' + this.props.location.replace('/', '') : 'page-people';
+        const pageClassName = this.props.location ? 'page-' + getNameFromLocation(this.props.location) : 'page-people';
 
         return (
             <div className="header-main">
@@ -29,7 +33,7 @@ class Header extends React.Component {
                 <div className="o-grid-container">
                     <div className="o-grid-row">
                         <div className={pageClassName} data-o-grid-colspan="12">
-                            <h2 className="o-typography-heading1">Use Six Degree's to figure out <span className="header-copy-inner page-people-inner"><em>{this.getHeaderCopyInner()}</em><b></b></span>, <span className="header-copy-inner page-connections-inner"><em>discover their associations</em><b></b></span> and unearth the stories that connect them</h2>
+                            <h2 className="o-typography-heading1">Use Six Degree's to figure out <span className="header-copy-inner page-people-inner"><em>{this.getHeaderCopyInner()}</em><b></b></span>, <span className="header-copy-inner page-connections-inner"><em>discover their associations</em><b></b></span> and <span className="header-copy-inner page-unearth-inner"><em>unearth the stories that connect them</em><b></b></span></h2>
                         </div>
                     </div>
                 </div>

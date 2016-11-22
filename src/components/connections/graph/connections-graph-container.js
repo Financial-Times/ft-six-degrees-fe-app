@@ -46,7 +46,7 @@ class ConnectionsGraphContainer extends React.Component {
     render() {
         return (
             <div className="connections-graph-container">
-                Connections graph
+                Connections graph - {this.props.connectionsRoot.abbrName} as a starting point
             </div>
         );
     }
