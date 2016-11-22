@@ -6,7 +6,7 @@ import ConnectionsSubheader from '../../connections/subheader/connections-subhea
 
 class SubHeader extends React.Component {
     render() {
-        if (this.props.location === '/connections') {
+        if (this.props.location.indexOf('/connections') !== -1) {
             return <ConnectionsSubheader />;
         } else {
             return <PeopleSubheader />;

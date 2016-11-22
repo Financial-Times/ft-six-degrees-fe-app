@@ -6,7 +6,6 @@ import * as peopleDataActions from '../../../actions/people-data-actions';
 import * as hintActions from '../../../actions/hint-actions';
 import Graph from './people-graph';
 import PeopleDataUtils from '../../../services/people-data.utils';
-import PeopleGraphDataLoader from './people-graph-data-loader';
 
 import './people-graph-container.css';
 
@@ -71,8 +70,9 @@ class PeopleGraphContainer extends React.Component {
         }
     }
 
-    nodeClickCallback(data) {
-        this.props.router.push('/connections');
+    nodeClickCallback(id) {
+        const uuid = id.replace('http://api.ft.com/things/', '');
+        this.props.router.push('/connections/' + uuid);
     }
 
     needFtLogo() {
@@ -87,9 +87,6 @@ class PeopleGraphContainer extends React.Component {
 
         return (
             <div className={(() => "people-graph-container" + this.needFtLogo())()}>
-                <div className="people-graph-data-loader">
-                    <PeopleGraphDataLoader />
-                </div>
                 <div id="people-graph" className="people-graph"></div>
             </div>
         );

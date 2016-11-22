@@ -10,6 +10,7 @@ import Hint from './common/hint/hint';
 import Share from './common/share/share';
 import Legend from './common/legend/legend';
 import UserDetails from './user/user-data';
+import DataLoader from './data-loader';
 import initialState from '../store/initial-state';
 import * as loginStateActions from '../actions/login-state-actions';
 import * as userActions from '../actions/user-details-actions';
@@ -36,6 +37,9 @@ class Layout extends Component {
     render() {
          return (
             <div className="layout-wrapper">
+                <div className="data-loader">
+                    <DataLoader />
+                </div>
                 <Header location={this.props.location.pathname} />
                 <div className="o-grid-container">
                     <div className="o-grid-row">

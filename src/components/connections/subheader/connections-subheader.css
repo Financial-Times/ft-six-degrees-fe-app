@@ -1,17 +1,27 @@
 .connections-subheader {
-    height: 75px;
-    line-height: 75px;
     border-top: solid 1px #CEC6B9;
-    padding: 0 10px;
+    padding: 10px;
+    overflow: auto;
 }
 
 .connections-subheader-hint {
     float: left;
     font-size: 30px;
+    line-height: 1.3em;
+    font-family: 'FinancierDisplayWeb', serif;
+}
+
+.connections-subheader-hint b {
+    font-weight: normal;
+    color: #9E2F50;
+    font-family: 'MetricWeb', sans-serif;
+    text-transform: uppercase;
+    font-size: 0.9em;
 }
 
 .connections-subheader-startoverbtn {
     float: right;
+    margin-top: 2px;
 }
 
 .connections-subheader-startoverbtn em {

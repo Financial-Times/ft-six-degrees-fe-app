@@ -12,7 +12,6 @@ function onRouteChange() {
 export default (
     <Route path="/" component={Layout} onChange={onRouteChange}>
         <IndexRedirect to="people" />
-        <Route path="connections" component={ConnectionsContainer} />
         <Route path="connections/:id" component={ConnectionsContainer} />
         <Route path="people" component={PeopleContainer} />
         <Redirect from="*" to="people" />

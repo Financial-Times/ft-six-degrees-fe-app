@@ -1,14 +1,14 @@
 import React, {PropTypes} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import * as peopleDataActions from '../../../actions/people-data-actions';
-import * as ajaxStatusActions from '../../../actions/ajax-status-actions';
-import PeopleDataAjax from '../../../services/people-data-ajax';
-import PeoplePersonalisedDataAjax from '../../../services/people-personalised-data-ajax';
-import Loader from '../../common/loader/loader';
-import './people-graph-data-loader.css'
+import * as peopleDataActions from '../actions/people-data-actions';
+import * as ajaxStatusActions from '../actions/ajax-status-actions';
+import PeopleDataAjax from '../services/people-data-ajax';
+import PeoplePersonalisedDataAjax from '../services/people-personalised-data-ajax';
+import Loader from './common/loader/loader';
+import './data-loader.css'
 
-class PeopleGraphDataLoader extends React.Component {
+class DataLoader extends React.Component {
 
     fetchMentioned(key) {
         PeopleDataAjax.fetchMentioned(key).then(people => {
@@ -53,7 +53,7 @@ class PeopleGraphDataLoader extends React.Component {
     }
 }
 
-PeopleGraphDataLoader.propTypes = {
+DataLoader.propTypes = {
     dateRange: PropTypes.string.isRequired,
     loginState: PropTypes.bool.isRequired,
     user: PropTypes.object
@@ -76,5 +76,5 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PeopleGraphDataLoader);
+export default connect(mapStateToProps, mapDispatchToProps)(DataLoader);
 

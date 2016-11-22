@@ -11,6 +11,8 @@ import peopleGroupReducer from './people-group-reducer';
 import peopleRangeReducer from './people-range-reducer';
 import personalisedPeopleDataReducer from './people-data-personalised-reducer';
 import mentionedPeopleDataReducer from './people-data-mentioned-reducer';
+import connectedPeopleChainReducer from './connected-people-chain-reducer';
+import connectionsRootReducer from './connections-root-reducer';
 
 const rootReducer = combineReducers({
     loginState: loginStateReducer,
@@ -22,6 +24,8 @@ const rootReducer = combineReducers({
     peopleRange: peopleRangeReducer,
     personalisedPeopleData: personalisedPeopleDataReducer,
     mentionedPeopleData: mentionedPeopleDataReducer,
+    connectedPeopleChain: connectedPeopleChainReducer,
+    connectionsRoot: connectionsRootReducer,
     sentences: sentencesReducer,
     ajaxCallsInProgress: ajaxStatusReducer
 });

@@ -1,8 +1,0 @@
-.people-graph-data-loader {
-    text-align: center;
-    visibility: hidden;
-}
-
-.people-graph-data-loader.visible {
-    visibility: visible;
-}
