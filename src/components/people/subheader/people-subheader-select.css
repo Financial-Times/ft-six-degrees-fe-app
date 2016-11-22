@@ -5,3 +5,7 @@
 .people-subheader-select select {
     padding-left: 15px;
 }
+
+.people-subheader-select .o-forms {
+    margin-bottom: 0;
+}
