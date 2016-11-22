@@ -39,9 +39,13 @@ class PeopleGraphContainer extends React.Component {
     updateData(personalisedData) {
         const sourceData =  personalisedData ? this.props.personalisedPeopleData : this.props.mentionedPeopleData;
 
-        let data = sourceData.slice(0, sourceData.length).sort((a, b) => {
-            return b.articles > a.articles;
-        });
+        let data = sourceData.slice(0, sourceData.length);
+
+        if (personalisedData) {
+            data = data.sort((a, b) => {
+                return b.articles > a.articles;
+            });
+        }
 
         data = data.slice(0, this.props.peopleRange || 1);
 
