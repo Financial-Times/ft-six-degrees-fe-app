@@ -16,7 +16,7 @@ class RelatedContentSingle extends React.Component {
         return (
             <div className="related-content-single-wrapper">
                 {!this.props.relatedContentSingle.length && <Loader />}
-                {this.props.relatedContentSingle.length &&
+                {this.props.relatedContentSingle.length > 0 &&
                     <section className="related-content-single-inner">
                         <div className="related-content-single-header">
                             <figure className="related-content-single-image" style={backgroundImage}></figure>
