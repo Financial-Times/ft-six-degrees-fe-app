@@ -1,11 +1,12 @@
 .connections-graph-container {
-    margin: 20px 0;
-    /* TEMPORARY */
-    background: #f6e9d8;
+    margin: 0;
+    position: relative;
     min-height: 500px;
+
+    /* TEMPORARY */
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    margin-top: 20px 0;
 }

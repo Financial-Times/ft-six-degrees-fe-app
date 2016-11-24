@@ -3,12 +3,24 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as peopleDataActions from '../actions/people-data-actions';
 import * as ajaxStatusActions from '../actions/ajax-status-actions';
+import ConnectionsDataAjax from '../services/connections-data-ajax';
 import PeopleDataAjax from '../services/people-data-ajax';
 import PeoplePersonalisedDataAjax from '../services/people-personalised-data-ajax';
 import Loader from './common/loader/loader';
 import './data-loader.css'
 
 class DataLoader extends React.Component {
+
+    fetchConnections() {
+        const uuid = this.props.router.params.id,
+            location = this.props.router.location.pathname;
+
+        if (location.indexOf('connections') !== -1 && uuid) {
+            ConnectionsDataAjax.fetch(uuid, 'month').then(connections => {
+                console.warn('connections response', connections);
+            });
+        }
+    }
 
     fetchMentioned(key) {
         PeopleDataAjax.fetchMentioned(key).then(people => {
@@ -42,10 +54,12 @@ class DataLoader extends React.Component {
 
     componentDidUpdate() {
         this.fetch(this.props.dateRange);
+        this.fetchConnections();
     }
 
     componentDidMount() {
         this.fetch();
+        this.fetchConnections();
     }
 
     render() {
@@ -56,6 +70,7 @@ class DataLoader extends React.Component {
 DataLoader.propTypes = {
     dateRange: PropTypes.string.isRequired,
     loginState: PropTypes.bool.isRequired,
+    router: PropTypes.object.isRequired,
     user: PropTypes.object
 }
 

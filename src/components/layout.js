@@ -22,6 +22,10 @@ import './layout.css';
 
 class Layout extends Component {
 
+    isConnectionsPage() {
+        return this.props.location.pathname.indexOf('connections') !== -1;
+    }
+
     componentWillMount() {
         const ftSessionCookie = Cookies.read('FTSession'),
             loggedIn = typeof ftSessionCookie === 'string' && ftSessionCookie !== '';
@@ -39,7 +43,7 @@ class Layout extends Component {
          return (
             <div className="layout-wrapper">
                 <div className="data-loader">
-                    <DataLoader />
+                    <DataLoader router={this.props.router} />
                 </div>
                 <Header location={this.props.location.pathname} />
                 <div className="o-grid-container">
@@ -62,8 +66,8 @@ class Layout extends Component {
                         <Share />
                         <Legend location={this.props.location.pathname} />
                     </aside>
-                    <RelatedContent location={this.props.location.pathname} />
                 </div>
+                {this.isConnectionsPage() && <RelatedContent location={this.props.location.pathname} />}
                 <Footer />
                 <UserDetails />
             </div>

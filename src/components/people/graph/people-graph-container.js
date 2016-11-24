@@ -71,8 +71,10 @@ class PeopleGraphContainer extends React.Component {
     }
 
     nodeClickCallback(id) {
-        const uuid = id.replace('http://api.ft.com/things/', '');
-        this.props.router.push('/connections/' + uuid);
+        if (id) {
+            const uuid = id.replace('http://api.ft.com/things/', '');
+            this.props.router.push('/connections/' + uuid);
+        }
     }
 
     needFtLogo() {

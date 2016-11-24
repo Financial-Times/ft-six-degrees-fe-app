@@ -12,6 +12,7 @@ import personalisedPeopleDataReducer from './people-data-personalised-reducer';
 import mentionedPeopleDataReducer from './people-data-mentioned-reducer';
 import connectedPeopleChainReducer from './connected-people-chain-reducer';
 import connectionsRootReducer from './connections-root-reducer';
+import relatedContentSingleReducer from './related-content-single-reducer';
 
 const rootReducer = combineReducers({
     loginState: loginStateReducer,
@@ -25,7 +26,8 @@ const rootReducer = combineReducers({
     mentionedPeopleData: mentionedPeopleDataReducer,
     connectedPeopleChain: connectedPeopleChainReducer,
     connectionsRoot: connectionsRootReducer,
-    ajaxCallsInProgress: ajaxStatusReducer
+    ajaxCallsInProgress: ajaxStatusReducer,
+    relatedContentSingle: relatedContentSingleReducer
 });
 
 export default rootReducer;

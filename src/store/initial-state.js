@@ -11,6 +11,7 @@ export default {
     connectionsRoot: {},
     mentionedPeopleData: [],
     personalisedPeopleData: [],
+    relatedContentSingle: [],
     legend: {
         topLabel: '',
         bottomLabel: '',
