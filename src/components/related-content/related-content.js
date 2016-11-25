@@ -1,11 +1,13 @@
 import React, {PropTypes} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import Loader from '../common/loader/loader';
 import PersonArticlesAjax from '../../services/person-articles-ajax';
 import UuidUtils from '../../services/uuid.utils';
 import RelatedContentSingle from './related-content-single';
 import RelatedContentMultiple from './related-content-multiple';
 import * as relatedContentSingleActions from '../../actions/related-content-single-actions';
+import * as ajaxStatusActions from '../../actions/ajax-status-actions';
 import './related-content.css';
 
 class RelatedContent extends React.Component {
@@ -22,8 +24,9 @@ class RelatedContent extends React.Component {
 
             //related content single
             if (connectedPeople.length === 1) {
-                this.props.actions.relatedContentSingle.update([]);
+                this.props.actions.ajaxStatus.beginAjaxCall();
                 PersonArticlesAjax.fetch(UuidUtils.extract(connectedPeople[0].id), this.props.dateRange).then(response => {
+                    this.props.actions.ajaxStatus.ajaxCallSuccess();
                     this.props.actions.relatedContentSingle.update(response);
                 })
             }
@@ -46,6 +49,7 @@ class RelatedContent extends React.Component {
                 <div className="o-grid-container">
                     <div className="o-grid-row">
                         <div className="related-content" data-o-grid-colspan="12">
+                            {this.props.ajaxCallsInProgress > 0 && <Loader />}
                             {this.props.connectedPeopleChain.length === 1 && <RelatedContentSingle />}
                             {this.props.connectedPeopleChain.length > 1 && <RelatedContentMultiple />}
                         </div>
@@ -60,6 +64,7 @@ class RelatedContent extends React.Component {
 }
 
 RelatedContent.propTypes = {
+    ajaxCallsInProgress: PropTypes.number.isRequired,
     connectionsRoot: PropTypes.object.isRequired,
     dateRange: PropTypes.string.isRequired,
     location: PropTypes.string.isRequired,
@@ -69,13 +74,15 @@ RelatedContent.propTypes = {
 function mapDispatchToProps(dispatch) {
     return {
         actions: {
-            relatedContentSingle: bindActionCreators(relatedContentSingleActions, dispatch)
+            relatedContentSingle: bindActionCreators(relatedContentSingleActions, dispatch),
+            ajaxStatus: bindActionCreators(ajaxStatusActions, dispatch)
         }
     };
 }
 
 function mapStateToProps(state) {
     return {
+        ajaxCallsInProgress: state.ajaxCallsInProgress,
         connectedPeopleChain: state.connectedPeopleChain,
         connectionsRoot: state.connectionsRoot,
         dateRange: state.dateRange,

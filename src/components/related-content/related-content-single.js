@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
-import Loader from '../common/loader/loader';
 import RelatedContentLink from './related-content-link';
 import './related-content-single.css';
 
@@ -15,7 +14,6 @@ class RelatedContentSingle extends React.Component {
         };
         return (
             <div className="related-content-single-wrapper">
-                {!this.props.relatedContentSingle.length && <Loader />}
                 {this.props.relatedContentSingle.length > 0 &&
                     <section className="related-content-single-inner">
                         <div className="related-content-single-header">
@@ -31,6 +29,7 @@ class RelatedContentSingle extends React.Component {
                         </div>
                     </section>
                 }
+                {(!this.props.relatedContentSingle || this.props.relatedContentSingle.length === 0) && <p className="no-articles-message">No articles found</p>}
             </div>
         );
     }

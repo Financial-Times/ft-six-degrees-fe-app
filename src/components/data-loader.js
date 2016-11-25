@@ -2,7 +2,6 @@ import React, {PropTypes} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as peopleDataActions from '../actions/people-data-actions';
-import * as ajaxStatusActions from '../actions/ajax-status-actions';
 import ConnectionsDataAjax from '../services/connections-data-ajax';
 import PeopleDataAjax from '../services/people-data-ajax';
 import PeoplePersonalisedDataAjax from '../services/people-personalised-data-ajax';
@@ -17,7 +16,7 @@ class DataLoader extends React.Component {
 
         if (location.indexOf('connections') !== -1 && uuid) {
             ConnectionsDataAjax.fetch(uuid, 'month').then(connections => {
-                console.warn('connections response', connections);
+                console.log('connections response', connections);
             });
         }
     }
@@ -25,9 +24,8 @@ class DataLoader extends React.Component {
     fetchMentioned(key) {
         PeopleDataAjax.fetchMentioned(key).then(people => {
             this.props.actions.data.updateMentioned(people.people);
-            this.props.actions.ajax.ajaxCallSuccess();
         }).catch(error => {
-            this.props.actions.ajax.ajaxCallError();
+            console.error('[data-loader] Fetch mentioned error', error);
         });
     }
 
@@ -35,16 +33,13 @@ class DataLoader extends React.Component {
         if (this.props.user) {
             PeoplePersonalisedDataAjax.fetch(key, this.props.user.uuid).then(people => {
                 this.props.actions.data.updatePersonalised(people);
-                this.props.actions.ajax.ajaxCallSuccess();
             }).catch(error => {
-                this.props.actions.ajax.ajaxCallError();
+                console.error('[data-loader] Fetch personalised error', error);
             });
         }
     }
 
     fetch(key) {
-        this.props.actions.ajax.beginAjaxCall();
-
         this.fetchMentioned(key);
 
         if (this.props.loginState) {
@@ -85,7 +80,6 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
     return {
         actions: {
-            ajax: bindActionCreators(ajaxStatusActions, dispatch),
             data: bindActionCreators(peopleDataActions, dispatch)
         }
     };
