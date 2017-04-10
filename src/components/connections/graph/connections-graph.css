@@ -1,0 +1,11 @@
+.connection-node {
+    cursor: pointer;
+    stroke: #000;
+    stroke-width: 3px;
+}
+
+.connection-link {
+    fill: none;
+    stroke: #9E2F50;
+    stroke-width: 3px;
+}
