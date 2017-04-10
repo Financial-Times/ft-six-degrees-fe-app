@@ -5,6 +5,7 @@ import {CONFIG} from '../../../config-constants';
 import * as connectedPeopleChainActions from '../../../actions/connected-people-chain-actions';
 import * as connectionsRootActions from '../../../actions/connections-root-actions';
 import * as hintActions from '../../../actions/hint-actions';
+import Graph from './connections-graph';
 import './connections-graph-container.css';
 
 class ConnectionsGraphContainer extends React.Component {
@@ -19,7 +20,7 @@ class ConnectionsGraphContainer extends React.Component {
         })[0];
 
         this.props.actions.connectionsRoot.change(person);
-        this.props.actions.connectedPeopleChain.update([person]);
+        // this.props.actions.connectedPeopleChain.update([person]);
         this.updateHint(person.abbrName);
     }
 
@@ -34,13 +35,18 @@ class ConnectionsGraphContainer extends React.Component {
     }
 
     componentDidMount() {
-        this.props.actions.connectionsRoot.change({});
+        let people = this.props.connectedPeopleChain.slice(0, 10).map(d => Object.assign({}, d.person));
+        let connections = Object.assign({}, this.props.connectionsRoot, {children: people});
+	    this.props.actions.connectionsRoot.change({});
+        this.graph = new Graph();
+        this.graph.draw(connections);
     }
 
     render() {
         return (
             <div className="connections-graph-container">
-                Connections graph - {this.props.connectionsRoot.abbrName} as a starting point
+				<div id="connections-graph" className="connections-graph"></div>
+                {/*Connections graph - {this.props.connectionsRoot.abbrName} as a starting point*/}
             </div>
         );
     }
@@ -50,7 +56,7 @@ ConnectionsGraphContainer.propTypes = {
     connectedPeopleChain: PropTypes.array.isRequired,
     connectionsRoot: PropTypes.object.isRequired,
     router: React.PropTypes.object.isRequired
-}
+};
 
 function mapStateToProps(state, ownProps) {
     return {
