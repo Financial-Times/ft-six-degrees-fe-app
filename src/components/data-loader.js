@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as peopleDataActions from '../actions/people-data-actions';
+import * as connectedPeopleDataActions from '../actions/connected-people-chain-actions';
 import ConnectionsDataAjax from '../services/connections-data-ajax';
 import PeopleDataAjax from '../services/people-data-ajax';
 import PeoplePersonalisedDataAjax from '../services/people-personalised-data-ajax';
@@ -16,14 +17,16 @@ class DataLoader extends React.Component {
 
         if (location.indexOf('connections') !== -1 && uuid) {
             ConnectionsDataAjax.fetch(uuid, 'month').then(connections => {
-                console.log('connections response', connections);
+	            this.props.actions.connectedPeopeleDataActions.update(connections);
+            }).catch(error => {
+	            console.error('[data-loader] Fetch connections error', error);
             });
         }
     }
 
     fetchMentioned(key) {
         PeopleDataAjax.fetchMentioned(key).then(people => {
-            this.props.actions.data.updateMentioned(people.people);
+            this.props.actions.peopleDataActions.updateMentioned(people.people);
         }).catch(error => {
             console.error('[data-loader] Fetch mentioned error', error);
         });
@@ -32,7 +35,7 @@ class DataLoader extends React.Component {
     fetchPersonalised(key) {
         if (this.props.user) {
             PeoplePersonalisedDataAjax.fetch(key, this.props.user.uuid).then(people => {
-                this.props.actions.data.updatePersonalised(people);
+                this.props.actions.peopleDataActions.updatePersonalised(people);
             }).catch(error => {
                 console.error('[data-loader] Fetch personalised error', error);
             });
@@ -67,7 +70,7 @@ DataLoader.propTypes = {
     loginState: PropTypes.bool.isRequired,
     router: PropTypes.object.isRequired,
     user: PropTypes.object
-}
+};
 
 function mapStateToProps(state, ownProps) {
     return {
@@ -80,7 +83,8 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
     return {
         actions: {
-            data: bindActionCreators(peopleDataActions, dispatch)
+            peopleDataActions: bindActionCreators(peopleDataActions, dispatch),
+            connectedPeopeleDataActions: bindActionCreators(connectedPeopleDataActions, dispatch)
         }
     };
 }
