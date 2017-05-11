@@ -25,21 +25,22 @@ class ConnectionsGraphContainer extends React.Component {
     }
 
     componentDidUpdate() {
-        const peopleData = [].concat(this.props.personalisedPeopleData, this.props.mentionedPeopleData);
+		const peopleData = [].concat(this.props.personalisedPeopleData, this.props.mentionedPeopleData);
 
-        if (!this.props.connectionsRoot.id && peopleData.length) {
+		if (!this.props.connectionsRoot.id && peopleData.length) {
             this.updateConnectionsRootPerson(this.props.router.params.id, peopleData);
-        } else {
+		} else {
             this.updateHint(this.props.connectionsRoot.abbrName);
-        }
+		}
+		if (this.props.connectedPeopleChain && this.props.connectedPeopleChain.length) {
+			let connections = Object.assign({}, this.props.connectionsRoot, {children: this.props.connectedPeopleChain.map(p => p.person)});
+			this.graph = new Graph();
+			this.graph.draw(connections);
+		}
     }
 
     componentDidMount() {
-        let people = this.props.connectedPeopleChain.slice(0, 10).map(d => Object.assign({}, d.person));
-        let connections = Object.assign({}, this.props.connectionsRoot, {children: people});
 	    this.props.actions.connectionsRoot.change({});
-        this.graph = new Graph();
-        this.graph.draw(connections);
     }
 
     render() {
