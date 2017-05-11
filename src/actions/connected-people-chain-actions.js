@@ -7,7 +7,7 @@ function getUpdateConnectedPeopleEvent(connectedPeople) {
     };
 }
 
-export function update(connectedPeople) {
+ export function update(connectedPeople) {
     return function (dispatch) {
         dispatch(getUpdateConnectedPeopleEvent(connectedPeople));
     }

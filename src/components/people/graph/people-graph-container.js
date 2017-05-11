@@ -103,7 +103,7 @@ PeopleGraphContainer.propTypes = {
     personalisedPeopleData: PropTypes.array,
     router: React.PropTypes.object.isRequired,
     user: React.PropTypes.object
-}
+};
 
 function mapStateToProps(state, ownProps) {
     return {
