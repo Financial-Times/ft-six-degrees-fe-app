@@ -1,7 +1,8 @@
 import React from 'react';
 import './people-subheader.css';
 
-import PeopleSelect from './people-subheader-select';
+// import PeopleSelect from './people-subheader-select';
+import PeopleSelect from './people-subheader-select.container';
 import PeopleGroup from './people-subheader-group';
 import PeopleDateRange from './people-subheader-date-range';
 import PeopleLoginArea from './people-subheader-login-area';

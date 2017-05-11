@@ -5,9 +5,9 @@ export default function connectedPeopleChainReducer(state = initialState.connect
 
     switch (action.type) {
         case types.CONNECTED_PEOPLE_CHAIN_UPDATE:
-        return action.connectedPeopleChain;
-    default:
-        return state;
+            return action.connectedPeopleChain;
+		default:
+			return state;
     }
 
 }

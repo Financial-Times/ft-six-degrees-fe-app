@@ -1,4 +1,4 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 import ajaxStatusReducer from './ajax-status-reducer';
 
 import loginStateReducer from './login-state-reducer';
@@ -14,6 +14,9 @@ import connectedPeopleChainReducer from './connected-people-chain-reducer';
 import connectionsRootReducer from './connections-root-reducer';
 import relatedContentSingleReducer from './related-content-single-reducer';
 
+import initialState from '../store/initial-state';
+
+
 const rootReducer = combineReducers({
     loginState: loginStateReducer,
     user: userDetailsReducer,
@@ -22,6 +25,7 @@ const rootReducer = combineReducers({
     dateRange: dateRangeReducer,
     peopleGroup: peopleGroupReducer,
     peopleRange: peopleRangeReducer,
+    peopleRangeList: () => initialState.peopleRangeList,
     personalisedPeopleData: personalisedPeopleDataReducer,
     mentionedPeopleData: mentionedPeopleDataReducer,
     connectedPeopleChain: connectedPeopleChainReducer,

@@ -6,20 +6,21 @@ import './people-subheader-select.css';
 
 class PeopleSubheaderSelect extends React.Component {
 
-    constructor(props, context) {
-        super(props, context);
-        this.updateRange = this.updateRange.bind(this);
-    }
+	constructor(props, context) {
+		super(props, context);
+		this.updateRange = this.updateRange.bind(this);
+	}
 
-    updateRange(event) {
-        this.props.actions.change(parseInt(event.target.value, 10));
-    }
+	updateRange(event) {
+		let { peopleRangeUpdate } = this.props;
+		peopleRangeUpdate(parseInt(event.target.value, 10));
+	}
 
-    render() {
-        return (
-            <div className="people-subheader-item people-subheader-select">
-                <span>Select</span>
-                <span className="o-forms">
+	render() {
+		return (
+			<div className="people-subheader-item people-subheader-select">
+				<span>Select</span>
+				<span className="o-forms">
                     <select id="o-forms__select-standard" className="o-forms__select" defaultValue={this.props.peopleRange} onChange={this.updateRange}>
                         <option value="20">20</option>
                         <option value="10">10</option>
@@ -27,27 +28,27 @@ class PeopleSubheaderSelect extends React.Component {
                         <option value="1">1</option>
                     </select>
                 </span>
-                <span>people</span>
-            </div>
-        );
-    }
+				<span>people</span>
+			</div>
+		);
+	}
 };
 
 PeopleSubheaderSelect.propTypes = {
-    peopleRange: PropTypes.number.isRequired,
-    actions: PropTypes.object.isRequired
-}
+	peopleRange: PropTypes.number.isRequired,
+	peopleRangeUpdate: PropTypes.func.isRequired
+};
 
-function mapStateToProps(state, ownProps) {
-    return {
-        peopleRange: state.peopleRange
-    };
+function mapStateToProps(state) {
+	return {
+		peopleRange: state.peopleRange
+	};
 }
 
 function mapDispatchToProps(dispatch) {
-    return {
-        actions: bindActionCreators(peopleRangeActions, dispatch)
-    };
+	return {
+		peopleRangeUpdate: (val) => dispatch(peopleRangeActions.change(val))
+	};
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PeopleSubheaderSelect);
