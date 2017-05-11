@@ -1,7 +1,9 @@
 import './connections-graph.css';
 import cloneDeep from 'lodash/cloneDeep';
 let SVG, SVG_WIDTH, SVG_HEIGHT;
-let connectionsData = null;
+let connectionsData = null, defs = null;
+let nodeRadius = 30;
+let rootNodeRadius = 40;
 
 export default class Graph {
 
@@ -15,16 +17,41 @@ export default class Graph {
 			}
 		}
 
+		const createImgId = (name) => {
+			return name.toLowerCase().replace(/ /g, '-');
+		};
+		const addImageDef = (person) => {
+			let padding = nodeRadius * 0.75;
+			let imageAnchor = createImgId(person.prefLabel);
+			if (!document.getElementById(imageAnchor)) {
+				defs
+					.append('svg:pattern')
+					.attr('id', imageAnchor)
+					.attr('width', 1)
+					.attr('height', 1)
+					.attr('viewBox', '0 0 ' + nodeRadius * 2 + ' ' + nodeRadius * 2)
+					.append('svg:image')
+					.attr('xlink:href', person.img)
+					.attr('width', nodeRadius * 2 + padding)
+					.attr('height', nodeRadius * 2 + padding)
+					.attr('x', - nodeRadius / 3)
+					.attr('y', - nodeRadius / 3);
+			}
+			return imageAnchor;
+		};
+
 		const graphId = 'connections-graph',
 		      element = document.getElementById(graphId),
 		      maxNodeSize = 50,
-
 		      SVG_WIDTH = element.parentNode.offsetWidth;
-		SVG_HEIGHT = element.parentNode.offsetHeight;
+		      SVG_HEIGHT = element.parentNode.offsetHeight;
 
 		SVG = d3.select(`#${graphId}`).append('svg')
 			.attr('width', SVG_WIDTH)
-			.attr('height', SVG_HEIGHT);
+			.attr('height', SVG_HEIGHT)
+			.attr('id', 'svg');
+
+		defs = d3.select('#svg').append('svg:defs');
 
 		const force = d3.layout.force();
 
@@ -71,23 +98,21 @@ export default class Graph {
 				.on("click", click)
 				.call(force.drag);
 
+
 			// Append a circle
 			nodeEnter.append("svg:circle")
-				.attr("r", (d) => d.children ? 40 : 30)
-				.style('fill', '#9e2f50');
+				.attr("r", (d) => d.children ? rootNodeRadius : nodeRadius)
+				.attr('stroke', '#000')
+				.attr('stroke-width', 2)
+				.style('fill', d => {
+					return d.img ? 'url(#' + addImageDef(d) + ')' : '#9E2F50' ;
+				});
 
-
-			nodeEnter.append('svg:pattern')
-				.attr('width', 1)
-				.attr('height', 1)
-				.attr('viewBox', '0 0 ' + 60 + ' ' + 60);
-			// Append images
-			nodeEnter.append("svg:image")
-				.attr("xlink:href",  function(d) { return d.img; })
-				.attr("x", function(d) { return -25;})
-				.attr("y", function(d) { return -25;})
-				.attr("height", 50)
-				.attr("width", 50);
+			//Append labels
+			nodeEnter.append('text')
+				.attr('text-anchor', 'middle')
+				.attr('dy', (d) => d.children ? (rootNodeRadius + 10) : (nodeRadius + 15))
+				.text(function(d) { return d.prefLabel});
 
 			// Exit any old nodes.
 			node.exit().remove();
