@@ -76,6 +76,9 @@
     "test-watch": "jest --watch --env=jsdom",
     "test": "CI=true jest --env=jsdom"
   },
+  "engines": {                                                                                                
+    "node": "^6.11.1"                                                                                         
+  },   
   "eslintConfig": {
     "extends": "./config/eslint.js"
   },
