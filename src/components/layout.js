@@ -13,7 +13,7 @@ import UserDetails from './user/user-data';
 import RelatedContent from './related-content/related-content';
 import DataLoader from './data-loader';
 import initialState from '../store/initial-state';
-import * as loginStateActions from '../actions/login-state-actions';
+import { loginStateUpdate } from '../actions/login-state-actions';
 import * as userActions from '../actions/user-details-actions';
 import * as peopleGroupActions from '../actions/people-group-actions';
 import '../assets/css/font-awesome.min.css';
@@ -26,11 +26,11 @@ class Layout extends Component {
         return this.props.location.pathname.indexOf('connections') !== -1;
     }
 
-    componentWillMount() {
+    componentDidMount() {
         const ftSessionCookie = Cookies.read('FTSession'),
             loggedIn = typeof ftSessionCookie === 'string' && ftSessionCookie !== '';
 
-        this.props.actions.loginActions.loginStateUpdate(loggedIn);
+        this.props.actions.loginStateUpdate(loggedIn);
 
         if (!loggedIn) {
             this.props.actions.peopleGroupActions.change(initialState.peopleGroup);
@@ -89,7 +89,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         actions: {
-            loginActions: bindActionCreators(loginStateActions, dispatch),
+            loginStateUpdate: bindActionCreators(loginStateUpdate, dispatch),
             userActions: bindActionCreators(userActions, dispatch),
             peopleGroupActions: bindActionCreators(peopleGroupActions, dispatch)
         }

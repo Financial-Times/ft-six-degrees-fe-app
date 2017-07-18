@@ -1,14 +1,13 @@
-import initialState from '../store/initial-state';
 import * as types from '../actions/action-types';
 
-export default function loginStateReducer(state = initialState.loginState, action) {
+export default function loginStateReducer(state = false, action) {
 
-    switch (action.type) {
-        case types.LOGIN_STATE_CHANGE:
-        return action.loginState;
+	switch (action.type) {
+		case types.LOGIN_STATE_CHANGE:
+			return action.loginState;
 
-    default:
-        return state;
-    }
+		default:
+			return state;
+	}
 
 }
