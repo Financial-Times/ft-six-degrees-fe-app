@@ -1,29 +1,30 @@
 class Cookies {
-    set(cookieName, cookieValue, cookieExpirationTime) {
-        document.cookie = cookieName + '=' + cookieValue + '; expires=' + cookieExpirationTime;
-    }
 
-    read(cookieName) {
-        const name = cookieName + '=',
-            cookiesArray = document.cookie.split(';');
+	set(cookieName, cookieValue, cookieExpirationTime) {
+		document.cookie = cookieName + '=' + cookieValue + '; expires=' + cookieExpirationTime;
+	}
 
-        let cookieValue = '';
+	read(cookieName) {
+		const name = cookieName + '=',
+		      cookiesArray = document.cookie.split(';');
 
-        cookiesArray.forEach(cookie => {
-            while (cookie.charAt(0) === ' ') {
-                cookie = cookie.substring(1);
-            }
-            if (cookie.indexOf(name) === 0) {
-                cookieValue = cookie.substring(name.length, cookie.length);
-            }
-        });
+		let cookieValue = '';
 
-        return cookieValue;
-    }
+		cookiesArray.forEach(cookie => {
+			while (cookie.charAt(0) === ' ') {
+				cookie = cookie.substring(1);
+			}
+			if (cookie.indexOf(name) === 0) {
+				cookieValue = cookie.substring(name.length, cookie.length);
+			}
+		});
 
-    remove(cookieName) {
-        document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-    }
+		return cookieValue;
+	}
+
+	remove(cookieName) {
+		document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+	}
 }
 
 export default new Cookies();
