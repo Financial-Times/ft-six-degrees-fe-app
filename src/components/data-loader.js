@@ -11,23 +11,24 @@ import './data-loader.css'
 
 class DataLoader extends React.Component {
 
-    fetchConnections() {
-        const uuid = this.props.router.params.id,
-            location = this.props.router.location.pathname;
-
-        if (location.indexOf('connections') !== -1 && uuid) {
-            ConnectionsDataAjax.fetch(uuid, 'month').then(connections => {
-	            this.props.actions.connectedPeopeleDataActions.update(connections);
-            }).catch(error => {
-	            console.error('[data-loader] Fetch connections error', error);
-            });
-        }
-    }
+    // fetchConnections() {
+    //     const uuid = this.props.router.params.id,
+    //         location = this.props.router.location.pathname;
+    //
+    //     if (location.indexOf('connections') !== -1 && uuid) {
+    //         ConnectionsDataAjax.fetch(uuid, 'month').then(connections => {
+	 //            this.props.actions.connectedPeopeleDataActions.update(connections);
+    //         }).catch(error => {
+	 //            console.error('[data-loader] Fetch connections error', error);
+    //         });
+    //     }
+    // }
 
     fetchMentioned(key) {
         PeopleDataAjax.fetchMentioned(key).then(people => {
             this.props.actions.peopleDataActions.updateMentioned(people.people);
         }).catch(error => {
+            console.log(error);
             console.error('[data-loader] Fetch mentioned error', error);
         });
     }
@@ -52,12 +53,12 @@ class DataLoader extends React.Component {
 
     componentDidUpdate() {
         this.fetch(this.props.dateRange);
-        this.fetchConnections();
+        // this.fetchConnections();
     }
 
     componentDidMount() {
         this.fetch();
-        this.fetchConnections();
+        // this.fetchConnections();
     }
 
     render() {
