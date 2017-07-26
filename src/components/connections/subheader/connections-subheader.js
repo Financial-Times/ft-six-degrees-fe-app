@@ -1,9 +1,8 @@
 import React, {PropTypes} from 'react';
 import moment from 'moment';
-import {bindActionCreators} from 'redux';
+import { browserHistory } from 'react-router';
 import {connect} from 'react-redux';
-import {browserHistory} from 'react-router';
-import * as connectionsRootActions from '../../../actions/connections-root-actions';
+import { resetConnections } from '../../../actions/dd-connections-actions';
 import './connections-subheader.css';
 
 function getToday() {
@@ -18,6 +17,7 @@ class ConnectionsSubheader extends React.Component {
     startOver(event) {
         event.preventDefault();
         event.stopPropagation();
+        this.props.resetConnections();
         browserHistory.push('/');
     }
 
@@ -50,7 +50,7 @@ class ConnectionsSubheader extends React.Component {
             <div className="connections-subheader">
                 <div className="connections-subheader-hint">{this.props.connectionsRoot.abbrName} has <b>10</b> direct associations <span>from <b>{range[0]}</b></span> {range[1] && <span>to <b>{range[1]}</b></span>}</div>
                 <div className="connections-subheader-startoverbtn">
-                    <a href="/people" onClick={this.startOver} className="o-buttons o-buttons--standout o-buttons--big">
+                    <a onClick={(e) => this.startOver(e)} className="o-buttons o-buttons--standout o-buttons--big">
                         <i className="fa fa-times"></i>
                         <em>Start over</em>
                     </a>
@@ -58,12 +58,12 @@ class ConnectionsSubheader extends React.Component {
             </div>
         );
     }
-};
+}
 
 ConnectionsSubheader.propTypes = {
     connectionsRoot: PropTypes.object,
     dateRange: PropTypes.string.isRequired
-}
+};
 
 function mapStateToProps(state, ownProps) {
     return {
@@ -72,10 +72,12 @@ function mapStateToProps(state, ownProps) {
     };
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        actions: bindActionCreators(connectionsRootActions, dispatch)
-    };
-}
+const mapDispatchToProps = dispatch => {
+	return {
+		resetConnections: () => {
+			dispatch(resetConnections());
+		}
+	};
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConnectionsSubheader);

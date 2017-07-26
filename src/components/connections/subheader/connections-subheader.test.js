@@ -5,9 +5,8 @@ import ConnectionsSubHeader from './connections-subheader';
 
 it('renders without crashing', () => {
   const div = document.createElement('div'),
-    store = configureStore()
+    store = configureStore();
 
   render(
-    <ConnectionsSubHeader store={store} />
-  , div);
+    <ConnectionsSubHeader store={store} />, div);
 });
