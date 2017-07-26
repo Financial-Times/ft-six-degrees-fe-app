@@ -8,8 +8,10 @@ export default {
     peopleRangeList: [1, 5, 10, 20],
     peopleRange: 10, // 1, 5, 10, 20
     peopleGroup: CONFIG.TEXT.PEOPLE_GROUP.MENTIONED,
-    connectedPeopleChain: [],
+    connectedPeopleChain: {},
+    rootConnection: {},
     connectionsRoot: {},
+    activeRootConnection: {},
     mentionedPeopleData: [],
     personalisedPeopleData: [],
     relatedContentSingle: [],
