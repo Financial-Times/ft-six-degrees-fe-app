@@ -1,7 +1,10 @@
 class UuidUtils {
 
     extract(id) {
-        return id.replace('http://api.ft.com/things/', '');
+        if (id.indexOf('http') > -1) {
+	        return id.replace('http://api.ft.com/things/', '');
+        }
+        return id;
     }
 
 }
