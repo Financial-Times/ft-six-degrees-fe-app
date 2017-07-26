@@ -13,6 +13,8 @@ import mentionedPeopleDataReducer from './people-data-mentioned-reducer';
 import connectedPeopleChainReducer from './connected-people-chain-reducer';
 import connectionsRootReducer from './connections-root-reducer';
 import relatedContentSingleReducer from './related-content-single-reducer';
+import rootConnectionReducer from './dd-root-connection-reducer';
+import activeRootConnectionReducer from './dd-active-root-connection-reducer';
 
 import initialState from '../store/initial-state';
 
@@ -31,7 +33,9 @@ const rootReducer = combineReducers({
     connectedPeopleChain: connectedPeopleChainReducer,
     connectionsRoot: connectionsRootReducer,
     ajaxCallsInProgress: ajaxStatusReducer,
-    relatedContentSingle: relatedContentSingleReducer
+    relatedContentSingle: relatedContentSingleReducer,
+    activeRootConnection: activeRootConnectionReducer,
+    rootConnection: rootConnectionReducer
 });
 
 export default rootReducer;
