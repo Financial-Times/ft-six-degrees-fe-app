@@ -67,7 +67,7 @@ class Layout extends Component {
                         <Legend location={this.props.location.pathname} />
                     </aside>
                 </div>
-                {this.isConnectionsPage() && <RelatedContent location={this.props.location.pathname} />}
+                {/*{this.isConnectionsPage() && <RelatedContent location={this.props.location.pathname} />}*/}
                 <Footer />
                 <UserDetails />
             </div>
