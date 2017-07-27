@@ -1,8 +1,8 @@
 class UuidUtils {
 
-    extract(id) {
-        if (id.indexOf('http') > -1) {
-	        return id.replace('http://api.ft.com/things/', '');
+    extract(id = '') {
+        if (id.length > 36) {
+            return id.substring(id.lastIndexOf('/') + 1);
         }
         return id;
     }
