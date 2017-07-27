@@ -1,28 +1,15 @@
-import React, {PropTypes} from 'react';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import * as peopleDataActions from '../actions/people-data-actions';
 import * as connectedPeopleDataActions from '../actions/connected-people-chain-actions';
-import ConnectionsDataAjax from '../services/connections-data-ajax';
 import PeopleDataAjax from '../services/people-data-ajax';
 import PeoplePersonalisedDataAjax from '../services/people-personalised-data-ajax';
 import Loader from './common/loader/loader';
 import './data-loader.css'
 
 class DataLoader extends React.Component {
-
-    // fetchConnections() {
-    //     const uuid = this.props.router.params.id,
-    //         location = this.props.router.location.pathname;
-    //
-    //     if (location.indexOf('connections') !== -1 && uuid) {
-    //         ConnectionsDataAjax.fetch(uuid, 'month').then(connections => {
-	 //            this.props.actions.connectedPeopeleDataActions.update(connections);
-    //         }).catch(error => {
-	 //            console.error('[data-loader] Fetch connections error', error);
-    //         });
-    //     }
-    // }
 
     fetchMentioned(key) {
         PeopleDataAjax.fetchMentioned(key).then(people => {

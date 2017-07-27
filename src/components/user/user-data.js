@@ -1,10 +1,11 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import fetch from 'isomorphic-fetch';
-import Cookies from '../../services/cookies.utils.js';
-import {CONFIG} from '../../config-constants';
-import * as userActions from '../../actions/user-details-actions';
+import Cookies from 'services/cookies.utils.js';
+import {CONFIG} from 'config-constants';
+import * as userActions from 'actions/user-details-actions';
 
 class UserData extends React.Component {
 

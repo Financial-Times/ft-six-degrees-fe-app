@@ -1,5 +1,6 @@
-import React, {PropTypes} from 'react';
-import {connect} from 'react-redux';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import './hint.css';
 
 class Hint extends React.Component {
@@ -10,13 +11,13 @@ class Hint extends React.Component {
             </div>
         );
     }
-};
+}
 
 Hint.propTypes = {
     hint: PropTypes.string.isRequired,
     location: PropTypes.string.isRequired,
     connectionsRoot: PropTypes.object
-}
+};
 
 function mapStateToProps(state, ownProps) {
     return {

@@ -1,6 +1,7 @@
-import React, {PropTypes} from 'react';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import * as legendActions from '../../../actions/legend-actions';
 import './legend.css';
 
@@ -60,14 +61,14 @@ class Legend extends React.Component {
             </div>
         );
     }
-};
+}
 
 Legend.propTypes = {
     legend: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
-}
+};
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
     return {
         legend: state.legend
     };

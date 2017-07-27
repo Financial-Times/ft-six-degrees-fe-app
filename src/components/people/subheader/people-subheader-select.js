@@ -1,7 +1,7 @@
-import React, {PropTypes} from 'react';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import * as peopleRangeActions from '../../../actions/people-range-actions';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import * as peopleRangeActions from 'actions/people-range-actions';
 import './people-subheader-select.css';
 
 class PeopleSubheaderSelect extends React.Component {
@@ -32,7 +32,7 @@ class PeopleSubheaderSelect extends React.Component {
 			</div>
 		);
 	}
-};
+}
 
 PeopleSubheaderSelect.propTypes = {
 	peopleRange: PropTypes.number.isRequired,

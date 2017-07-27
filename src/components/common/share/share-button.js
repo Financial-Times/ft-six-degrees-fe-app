@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import './share-button.css';
 
 class ShareButton extends React.Component {
@@ -9,7 +10,7 @@ class ShareButton extends React.Component {
             <a href={this.props.href} className={iconClassName} target="_blank">{this.props.label}</a>
         );
     }
-};
+}
 
 ShareButton.propTypes = {
     href: PropTypes.string.isRequired,

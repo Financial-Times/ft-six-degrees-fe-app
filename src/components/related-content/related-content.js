@@ -1,13 +1,14 @@
-import React, {PropTypes} from 'react';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import Loader from '../common/loader/loader';
-import PersonArticlesAjax from '../../services/person-articles-ajax';
-import UuidUtils from '../../services/uuid.utils';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import Loader from 'components/common/loader/loader';
+import PersonArticlesAjax from 'services/person-articles-ajax';
+import UuidUtils from 'services/uuid.utils';
 import RelatedContentSingle from './related-content-single';
 import RelatedContentMultiple from './related-content-multiple';
-import * as relatedContentSingleActions from '../../actions/related-content-single-actions';
-import * as ajaxStatusActions from '../../actions/ajax-status-actions';
+import * as relatedContentSingleActions from 'actions/related-content-single-actions';
+import * as ajaxStatusActions from 'actions/ajax-status-actions';
 import './related-content.css';
 
 class RelatedContent extends React.Component {
@@ -56,7 +57,7 @@ class RelatedContent extends React.Component {
                     </div>
                 </div>
             </div>
-        };
+        }
 
         return template;
     }

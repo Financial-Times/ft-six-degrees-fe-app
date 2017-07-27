@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import './subheader.css';
 
 import PeopleSubheader from '../../people/subheader/people-subheader';
@@ -17,6 +18,6 @@ class SubHeader extends React.Component {
 
 SubHeader.propTypes = {
     location: PropTypes.string.isRequired
-}
+};
 
 export default SubHeader;

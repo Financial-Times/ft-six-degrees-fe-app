@@ -1,11 +1,12 @@
-import React, {PropTypes} from 'react';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import {CONFIG} from '../../../config-constants';
-import * as peopleDataActions from '../../../actions/people-data-actions';
-import * as hintActions from '../../../actions/hint-actions';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { CONFIG } from 'config-constants';
+import * as peopleDataActions from 'actions/people-data-actions';
+import * as hintActions from 'actions/hint-actions';
 import Graph from './people-graph';
-import PeopleDataUtils from '../../../services/people-data.utils';
+import PeopleDataUtils from 'services/people-data.utils';
 
 import './people-graph-container.css';
 

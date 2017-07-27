@@ -1,9 +1,10 @@
-import React, {PropTypes} from 'react';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import * as dateRangeActions from '../../../actions/date-range-actions';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as dateRangeActions from 'actions/date-range-actions';
 import './people-subheader-date-range.css';
-import FtButton from '../../common/origami/ft-button';
+import FtButton from 'components/common/origami/ft-button';
 
 class PeopleSubheaderDateRange extends React.Component {
 
@@ -34,12 +35,12 @@ class PeopleSubheaderDateRange extends React.Component {
         );
     }
 
-};
+}
 
 PeopleSubheaderDateRange.propTypes = {
     dateRange: PropTypes.string.isRequired,
     actions: PropTypes.object.isRequired
-}
+};
 
 function mapStateToProps(state, ownProps) {
     return {

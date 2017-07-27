@@ -1,8 +1,9 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import { browserHistory } from 'react-router';
-import {connect} from 'react-redux';
-import { resetConnections } from '../../../actions/dd-connections-actions';
+import { connect } from 'react-redux';
+import { getDirectConnectionsNumberForActiveRoot } from 'selectors';
 import './connections-subheader.css';
 
 function getToday() {
@@ -17,7 +18,6 @@ class ConnectionsSubheader extends React.Component {
     startOver(event) {
         event.preventDefault();
         event.stopPropagation();
-        this.props.resetConnections();
         browserHistory.push('/');
     }
 
@@ -45,10 +45,14 @@ class ConnectionsSubheader extends React.Component {
     }
 
     render() {
-        const range = this.getTimescaleString();
+	    const range = this.getTimescaleString();
+	    const {
+		          activeRootConnection,
+		          directConnectionsNumberForActiveRoot
+	          } = this.props;
         return (
             <div className="connections-subheader">
-                <div className="connections-subheader-hint">{this.props.connectionsRoot.abbrName} has <b>10</b> direct associations <span>from <b>{range[0]}</b></span> {range[1] && <span>to <b>{range[1]}</b></span>}</div>
+                <div className="connections-subheader-hint">{activeRootConnection.abbrName} has <b>{directConnectionsNumberForActiveRoot}</b> direct associations <span>from <b>{range[0]}</b></span> {range[1] && <span>to <b>{range[1]}</b></span>}</div>
                 <div className="connections-subheader-startoverbtn">
                     <a onClick={(e) => this.startOver(e)} className="o-buttons o-buttons--standout o-buttons--big">
                         <i className="fa fa-times"></i>
@@ -66,18 +70,14 @@ ConnectionsSubheader.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
+	let directConnectionsNumberForActiveRoot = getDirectConnectionsNumberForActiveRoot();
     return {
-        connectionsRoot: state.connectionsRoot,
+        directConnectionsNumberForActiveRoot: directConnectionsNumberForActiveRoot(state, ownProps),
+        activeRootConnection:
+                state.activeRootConnection.person ||
+                state.activeRootConnection,
         dateRange: state.dateRange
     };
 }
 
-const mapDispatchToProps = dispatch => {
-	return {
-		resetConnections: () => {
-			dispatch(resetConnections());
-		}
-	};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ConnectionsSubheader);
+export default connect(mapStateToProps)(ConnectionsSubheader);

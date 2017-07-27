@@ -1,9 +1,10 @@
-import React, {PropTypes} from 'react';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import * as peopleGroupActions from '../../../actions/people-group-actions';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as peopleGroupActions from 'actions/people-group-actions';
 import './people-subheader-group.css';
-import FtButton from '../../common/origami/ft-button';
+import FtButton from 'components/common/origami/ft-button';
 
 class PeopleSubheaderGroup extends React.Component {
 
@@ -42,13 +43,13 @@ class PeopleSubheaderGroup extends React.Component {
             </div>
         );
     }
-};
+}
 
 PeopleSubheaderGroup.propTypes = {
     loginState: PropTypes.bool.isRequired,
     peopleGroup: PropTypes.string.isRequired,
     actions: PropTypes.object.isRequired
-}
+};
 
 function mapStateToProps(state, ownProps) {
     return {

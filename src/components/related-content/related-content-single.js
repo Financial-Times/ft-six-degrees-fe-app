@@ -1,5 +1,6 @@
-import React, {PropTypes} from 'react';
-import {connect} from 'react-redux';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import RelatedContentLink from './related-content-link';
 import './related-content-single.css';
 
@@ -33,7 +34,7 @@ class RelatedContentSingle extends React.Component {
             </div>
         );
     }
-};
+}
 
 RelatedContentSingle.propTypes = {
     connectionsRoot: PropTypes.object.isRequired,
