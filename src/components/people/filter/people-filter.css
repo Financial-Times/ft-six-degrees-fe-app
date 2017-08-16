@@ -1,0 +1,19 @@
+.people-filter-wrapper {
+    font-family: 'MetricWeb', sans-serif;
+    color: #333333;
+    margin: 40px auto 100px auto;
+    max-width: 55%;
+}
+.people-filter-form legend {
+    text-align: center;
+    padding: 0 20px;
+}
+.people-filter-form fieldset {
+    border: 1px solid #CEC6B9;
+}
+.people-filter-section {
+    text-align: left;
+}
+.people-filter-section .o-buttons__group {
+    margin: 10px 0;
+}
