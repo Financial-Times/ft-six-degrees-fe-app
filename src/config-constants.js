@@ -12,6 +12,8 @@ function isDevOrTest() {
 }
 
 export const CONFIG = {
+    IMG_SERVICE_URL: 'https://www.ft.com/__origami/service/image/v2/images/raw/',
+    PLACEHOLDER_IMG: 'https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif',
     URL: {
         API: storedSixDegreesApiUrl || isDevOrTest() || 'https://ft-six-degrees-be-app.herokuapp.com/',
     },
