@@ -8,11 +8,10 @@ import Header from './common/header/header';
 import Footer from './common/footer/footer';
 import SubHeader from './common/subheader/subheader';
 import Hint from './common/hint/hint';
-import Share from './common/share/share';
-import Legend from './common/legend/legend';
+// import Share from './common/share/share';
+// import Legend from './common/legend/legend';
 import UserDetails from './user/user-data';
-import RelatedContent from './related-content/related-content';
-import DataLoader from './data-loader';
+// import DataLoader from './data-loader';
 import initialState from '../store/initial-state';
 import { loginStateUpdate } from '../actions/login-state-actions';
 import * as userActions from '../actions/user-details-actions';
@@ -43,9 +42,9 @@ class Layout extends Component {
     render() {
          return (
             <div className="layout-wrapper">
-                <div className="data-loader">
-                    <DataLoader router={this.props.router} />
-                </div>
+                {/*<div className="data-loader">*/}
+                    {/*<DataLoader router={this.props.router} />*/}
+                {/*</div>*/}
                 <Header location={this.props.location.pathname} />
                 <div className="o-grid-container">
                     <div className="o-grid-row">
@@ -54,19 +53,19 @@ class Layout extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="o-grid-container">
-                    <div className="o-grid-row">
-                        <div data-o-grid-colspan="12">
-                            <Hint location={this.props.location.pathname} />
-                        </div>
-                    </div>
-                </div>
+                {/*<div className="o-grid-container">*/}
+                    {/*<div className="o-grid-row">*/}
+                        {/*<div data-o-grid-colspan="12">*/}
+                            {/*<Hint location={this.props.location.pathname} />*/}
+                        {/*</div>*/}
+                    {/*</div>*/}
+                {/*</div>*/}
                 <div className="o-grid-container main-container">
                     {this.props.children}
-                    <aside className="aside">
-                        <Share />
-                        <Legend location={this.props.location.pathname} />
-                    </aside>
+                    {/*<aside className="aside">*/}
+                        {/*<Share />*/}
+                        {/*<Legend location={this.props.location.pathname} />*/}
+                    {/*</aside>*/}
                 </div>
                 {/*{this.isConnectionsPage() && <RelatedContent location={this.props.location.pathname} />}*/}
                 <Footer />
