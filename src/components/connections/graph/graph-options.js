@@ -1,10 +1,9 @@
 const graphOptions = {
-	height: '600px',
+	height: '500px',
 	layout: {
 		hierarchical: false
 	},
 	autoResize: true,
-	// smoothCurves: true,
 	// physics: {
 	// 	repulsion: {
 	// 		centralGravity: 0.1,
@@ -16,13 +15,21 @@ const graphOptions = {
 	// },
 	// stabilizationIterations: 1000,
 	physics: {
+		timestep: 0.3,
 		forceAtlas2Based: {
-			gravitationalConstant: -138,
-			centralGravity: 0.02,
-			springLength: 100
+			gravitationalConstant: -150,
+			centralGravity: 0.03,
+			springLength: 150
 		},
-		minVelocity: 0.75,
+		minVelocity: 0.50,
 		solver: 'forceAtlas2Based',
+		stabilization: {
+			enabled: true,
+			iterations: 300,
+			updateInterval: 10,
+			fit: true
+		},
+		adaptiveTimestep: true
 	},
 	// physics: {
 	// 	barnesHut: {
@@ -46,7 +53,12 @@ const graphOptions = {
 	// 		fit: true
 	// 	}
 	// },
+	interaction: {
+		hover: true,
+		selectable: true
+	},
 	edges: {
+		smooth: false,
 		color: "#000000"
 	}
 };
