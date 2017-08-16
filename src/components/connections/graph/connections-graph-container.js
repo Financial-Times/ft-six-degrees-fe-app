@@ -9,12 +9,19 @@ import { setRootConnection } from 'actions/dd-root-connection-actions';
 import { setActiveRootConnection } from 'actions/dd-active-root-connection-actions';
 import { loadPeople } from 'actions/people-data-actions';
 import { resetConnections } from 'actions/dd-connections-actions';
+import RelatedContent from 'components/dd-related-content/related-content';
+import Loader from 'components/common/loader/loader';
 import Graph from 'react-graph-vis';
 import './connections-graph-container.css';
 import { getGraphNodes, getGraphEdges } from 'selectors';
 import graphOptions from './graph-options';
 
 class ConnectionsGraphContainer extends React.Component {
+
+	constructor() {
+		super();
+		this.setNetworkInstance = this.setNetworkInstance.bind(this);
+	}
 
 	graphEvents() {
 		const { loadConnections, setActiveRootConnection } = this.props;
@@ -28,7 +35,7 @@ class ConnectionsGraphContainer extends React.Component {
 				let rootId = nodes[0];
 				console.log('rootId', rootId);
 				loadConnections(UuidUtils.extract(rootId))
-					.then(() => setActiveRootConnection(rootId));
+					.then(res => res && setActiveRootConnection(rootId));
 			}
 		};
 	}
@@ -43,8 +50,8 @@ class ConnectionsGraphContainer extends React.Component {
 		} = this.props;
 		loadPeople()
 			.then(() => loadConnections(routeParams.id))
-			.then(() => setRootConnection(routeParams.id))
-			.then(() => setActiveRootConnection(routeParams.id));
+			.then(res => setRootConnection(routeParams.id))
+			.then(res => setActiveRootConnection(routeParams.id));
 	}
 
 	componentDidMount() {
@@ -57,10 +64,25 @@ class ConnectionsGraphContainer extends React.Component {
 			&& nextProps.activeRootConnection !== this.props.activeRootConnection;
 	}
 
+	setNetworkInstance(nw) {
+		this.network = nw;
+	}
+
+	componentDidUpdate() {
+		const nw = this.network;
+		nw.fit();
+		nw.stabilize(300);
+		nw.on('stabilizationProgress', params => {
+			if (params.iterations > params.total - 10) {
+				nw.stopSimulation();
+			}
+		});
+	}
+
 	componentWillUnmount() {
 		this.props.resetConnections();
-		this.props.setActiveRootConnection();
-		this.props.setRootConnection();
+		this.props.setActiveRootConnection(null);
+		this.props.setRootConnection(null);
 	}
 
 	getGraph() {
@@ -73,20 +95,26 @@ class ConnectionsGraphContainer extends React.Component {
 	render() {
 		let style = {
 			width: '100%',
-			height: '600px'
+			height: '100%',
+			autoSize: true
 		};
 
-		console.log('render, render');
 
 		if(!Object.keys(this.props.connectedPeopleChain).length) {
-			return <div>Loadin...</div>;
+			return <Loader />;
 		}
 
 		return (
-			<div className="connections-graph-container">
-				<div id="connections-graph" className="connections-graph">
-					<Graph style={style} graph={this.getGraph()} options={graphOptions} events={this.graphEvents()} />
+			<div>
+				<div className="connections-graph-container">
+					<Graph
+						style={style}
+						graph={this.getGraph()}
+						options={graphOptions}
+						events={this.graphEvents()}
+						getNetwork={this.setNetworkInstance} />
 				</div>
+				<RelatedContent />
 			</div>
 		);
 	}
@@ -102,17 +130,16 @@ ConnectionsGraphContainer.propTypes = {
 const makeMapStateToProps = (state, ownProps) => {
 	const graphNodes = getGraphNodes();
 	const graphEdges = getGraphEdges();
-	const mapStateToProps = (state, ownProps) => ({
-		graphNodes: graphNodes(state, ownProps),
-		graphEdges: graphEdges(state, ownProps),
+	return (state, ownProps) => ({
+		graphNodes: graphNodes(state),
+		graphEdges: graphEdges(state),
 		connectedPeopleChain: state.connectedPeopleChain,
 		connectionsRoot: state.connectionsRoot,
 		mentionedPeopleData: state.mentionedPeopleData,
+		personalisedPeopleData: state.personalisedPeopleData,
 		activeRootConnection: state.activeRootConnection,
-		loginState: state.loginState,
-		personalisedPeopleData: state.personalisedPeopleData
+		loginState: state.loginState
 	});
-	return mapStateToProps;
 };
 
 export default connect(
