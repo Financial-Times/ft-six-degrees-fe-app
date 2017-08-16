@@ -2,7 +2,8 @@ import React from 'react';
 import {Route, IndexRedirect, Redirect} from 'react-router';
 import Layout from './components/layout.js';
 
-import PeopleContainer from './components/people/graph/people-graph-container';
+// import PeopleContainer from './components/people/graph/people-graph-container';
+import PeopleContainer from 'components/people/main';
 import ConnectionsContainer from './components/connections/graph/connections-graph-container';
 
 function onRouteChange() {
