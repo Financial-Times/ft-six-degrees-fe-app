@@ -11,7 +11,7 @@
     "autoprefixer": "6.4.0",
     "babel-core": "6.14.0",
     "babel-eslint": "6.1.2",
-    "babel-jest": "15.0.0",
+    "babel-jest": "^20.0.3",
     "babel-loader": "6.2.5",
     "babel-plugin-transform-class-properties": "6.11.5",
     "babel-plugin-transform-object-rest-spread": "6.8.0",
@@ -42,7 +42,7 @@
     "html-loader": "0.4.3",
     "html-webpack-plugin": "2.22.0",
     "http-proxy-middleware": "0.17.1",
-    "jest": "15.1.1",
+    "jest": "^20.0.4",
     "json-loader": "0.5.4",
     "lodash": "^4.17.4",
     "moment": "^2.16.0",
@@ -53,12 +53,14 @@
     "promise": "7.1.1",
     "prop-types": "^15.5.10",
     "pushstate-server": "^2.0.0",
+    "query-string": "^5.0.0",
     "react": "^15.3.1",
     "react-dom": "^15.3.1",
     "react-graph-vis": "^0.1.2",
     "react-redux": "^4.4.5",
     "react-router": "^3.0.0",
     "react-router-redux": "^4.0.6",
+    "react-view-pager": "^0.5.1",
     "recursive-readdir": "2.0.0",
     "redux": "^3.6.0",
     "redux-api-middleware": "^1.0.3",
@@ -78,8 +80,9 @@
     "start": "node server-start",
     "build": "node scripts/build.js",
     "postinstall": "node scripts/build.js",
+    "unit-test": "jest --env=jsdom src/__tests__",
     "test-watch": "jest --watch --env=jsdom",
-    "test": "CI=true jest --env=jsdom"
+    "test": "CI=true jest"
   },
   "engines": {
     "node": "^6.11.1"
@@ -97,7 +100,9 @@
       "^[./a-zA-Z0-9$_-]+\\.(jpg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm)$": "<rootDir>/config/jest/FileStub.js",
       "^[./a-zA-Z0-9$_-]+\\.css$": "<rootDir>/config/jest/CSSStub.js"
     },
-    "scriptPreprocessor": "<rootDir>/config/jest/transform.js",
+    "transform": {
+      ".*": "<rootDir>/config/jest/transform.js"
+    },
     "setupFiles": [
       "<rootDir>/config/polyfills.js"
     ],
