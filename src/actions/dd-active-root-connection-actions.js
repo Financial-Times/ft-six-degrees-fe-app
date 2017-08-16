@@ -14,10 +14,21 @@ const getActiveRootConnection = (id, { connectedPeopleChain }) => {
 };
 
 export const setActiveRootConnection = (personId) => (dispatch, getState) => {
-	let rootPerson = getActiveRootConnection(personId, getState());
-	if (!rootPerson) {
-		rootPerson = getState().rootConnection;
+
+	if (personId === null) {
+		return Promise.resolve(dispatch(activeRootConnection({})));
 	}
+
+	if(!personId) {
+		return null;
+	}
+
+	let rootPerson = getActiveRootConnection(personId, getState());
+
+	if (!rootPerson) {
+		rootPerson = { person: getState().rootConnection };
+	}
+
 	return Promise.resolve(dispatch(activeRootConnection(rootPerson)));
 };
 
