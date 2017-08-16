@@ -2,14 +2,9 @@ import * as types from './action-types';
 import {CONFIG} from '../config-constants';
 import { CALL_API, getJSON } from 'redux-api-middleware';
 
-import { setActiveRootConnection } from './dd-active-root-connection-actions';
-
 const API_ROOT = `${CONFIG.URL.API}api`;
 
-//TODO: make the key dynamic
-const key = 'month';
-
-const fetchConnections = rootId => ({
+const fetchConnections = (rootId, key = 'month') => ({
 	[CALL_API]: {
 		types: [
 			types.CONNECTIONS_REQUEST,
@@ -26,9 +21,12 @@ const fetchConnections = rootId => ({
 });
 
 export const loadConnections = (rootId) => (dispatch, getState) => {
-
-	return Promise.resolve(dispatch(fetchConnections(rootId)))
-		.then(() => dispatch(setActiveRootConnection(rootId)));
+	const key = getState().dateRange;
+	const rootIds = Object.keys(getState().connectedPeopleChain);
+	if (rootId && rootIds.indexOf(rootId) === -1) {
+		return Promise.resolve(dispatch(fetchConnections(rootId, key)));
+	}
+	return Promise.resolve(null);
 };
 
 export const resetConnections = () => ({
