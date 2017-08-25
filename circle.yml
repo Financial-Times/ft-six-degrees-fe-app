@@ -13,11 +13,11 @@ checkout:
 ## Customize test commands
 test:
   override:
-    - sh ./scripts/ci/run_tests.sh
+    - npm test
 
 ## Customize deployment
-deployment:
-  develop:
-    branch: develop
-    commands:
-      - sh ./scripts/ci/push_to_staging.sh
+#deployment:
+#  develop:
+#    branch: develop
+#    commands:
+#      - sh ./scripts/ci/push_to_staging.sh

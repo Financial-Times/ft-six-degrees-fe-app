@@ -1,16 +1,26 @@
-import 'babel-polyfill';
 import React from 'react';
-import {render} from 'react-dom';
-import {Router, browserHistory} from 'react-router';
-import {Provider} from 'react-redux';
-import configureStore from './store/configure-store';
-import routes from './routes';
+import ReactDOM from 'react-dom';
+import thunk from 'redux-thunk';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
+import { apiMiddleware } from 'redux-api-middleware';
+import * as reducers from './redux/modules';
+import './index.css';
+import App from './App';
 
-const store = configureStore();
+const middlewares = [thunk, apiMiddleware];
 
-render(
-    <Provider store={store}>
-        <Router history={browserHistory} routes={routes} />
-    </Provider>,
-    document.getElementById('root')
+const store = createStore(
+	combineReducers(reducers),
+	compose(
+		applyMiddleware(...middlewares),
+		window.devToolsExtension ? window.devToolsExtension() : f => f
+	)
+);
+
+ReactDOM.render(
+	<Provider store={store}>
+		<App />
+	</Provider>,
+	document.getElementById('root')
 );

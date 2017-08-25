@@ -1,0 +1,13 @@
+.six-deg-icon {
+    width: 40px;
+    height: 40px;
+}
+.six-deg-icon-label {
+    line-height: 40px;
+}
+.six-deg-restart {
+    display: flex;
+    color: #000;
+    font-size: 18px;
+    text-decoration: none;
+}
