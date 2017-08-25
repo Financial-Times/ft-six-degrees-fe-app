@@ -45,9 +45,11 @@ class ConnectionsGraph extends Component {
 	}
 
 	shouldComponentUpdate(nextProps) {
-		return !isEmpty(nextProps.connectionsChain)
-			&& !isEmpty(nextProps.activeRootConnection)
-			&& nextProps.activeRootConnection !== this.props.activeRootConnection;
+		return (
+			!isEmpty(nextProps.connectionsChain) &&
+			!isEmpty(nextProps.activeRootConnection) &&
+			nextProps.activeRootConnection !== this.props.activeRootConnection
+		);
 	}
 
 	componentDidUpdate() {

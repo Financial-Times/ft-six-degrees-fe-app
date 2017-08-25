@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { PEOPLE_SELECTOR } from '../../config';
-import { getUserData } from '../../redux/modules/user'
+import { getUserData } from '../../redux/modules/user';
 import {
 	loadPeople,
 	setFocusedPersonIndex,

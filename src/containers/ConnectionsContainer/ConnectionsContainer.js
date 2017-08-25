@@ -53,7 +53,9 @@ class ConnectionsContainer extends Component {
 				<ConnectionsGraph
 					loading={this.props.connections.isFetching}
 					connectionsChain={this.props.connections.connectionsChain}
-					activeRootConnection={this.props.connections.activeRootConnection}
+					activeRootConnection={
+						this.props.connections.activeRootConnection
+					}
 					rootConnection={this.props.connections.rootConnection}
 					graphNodes={this.props.graphNodes}
 					graphEdges={this.props.graphEdges}
