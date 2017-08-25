@@ -18,32 +18,33 @@ class ConnectionsContainer extends Component {
 		const {
 			loadConnections,
 			setRootConnection,
-			loadPeople,
 			people,
+			history,
 			setActiveRootConnection
 		} = this.props;
 
 		const { id } = this.props.match.params;
 
-		const init =
-			people[`${people.peopleSelector}People`].length > 0
-				? Promise.resolve()
-				: loadPeople();
-
-		init
-			.then(() => loadConnections(id))
-			.then(() => setRootConnection(id))
-			.then(() => setActiveRootConnection(id));
+		if (people[`${people.peopleSelector}People`].length > 0) {
+			loadConnections(id)
+				.then(() => setRootConnection(id))
+				.then(() => setActiveRootConnection(id));
+		} else {
+			history.push('/people');
+		}
 	}
+
 	componentDidMount() {
 		this.loadData();
 	}
 
 	render() {
 		const { rootConnection } = this.props.connections;
+		const { people } = this.props;
 		const titleText = isEmpty(rootConnection)
 			? ''
 			: `${rootConnection.abbrName}'s connections`;
+
 		return (
 			<div>
 				<PageTitle>

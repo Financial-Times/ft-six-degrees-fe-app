@@ -1,29 +1,13 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { Home } from './components';
 import {
 	HeaderContainer,
 	PeopleContainer,
 	ConnectionsContainer
 } from './containers';
-import { getUserData } from './redux/modules/user';
-import {
-	loadMentionedPeople,
-	loadPersonalisedPeople,
-	peopleSelectorChange
-} from './redux/modules/people';
-import { PEOPLE_SELECTOR } from './config';
 
 class App extends Component {
-	componentDidMount() {
-		const { getUserData, peopleSelectorChange } = this.props;
-		getUserData().then(() => {
-			if (this.props.user.isAuthed) {
-				peopleSelectorChange(PEOPLE_SELECTOR.AUTHED.VAL);
-			}
-		});
-	}
 	render() {
 		return (
 			<div>
@@ -43,13 +27,4 @@ class App extends Component {
 	}
 }
 
-const mapStateToProps = state => ({
-	user: state.user
-});
-
-export default connect(mapStateToProps, {
-	getUserData,
-	loadPersonalisedPeople,
-	loadMentionedPeople,
-	peopleSelectorChange
-})(App);
+export default App;
