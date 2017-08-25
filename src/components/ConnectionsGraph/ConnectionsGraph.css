@@ -1,0 +1,8 @@
+.connections-graph {
+    margin: 0;
+    text-align: center;
+    position: relative;
+    min-height: 500px;
+    z-index: 2;
+    background-color: #FFF8EF;
+}
