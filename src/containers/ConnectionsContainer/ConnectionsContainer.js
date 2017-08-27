@@ -39,11 +39,10 @@ class ConnectionsContainer extends Component {
 	}
 
 	render() {
-		const { rootConnection } = this.props.connections;
-		const { people } = this.props;
-		const titleText = isEmpty(rootConnection)
+		const { rootConnectionPerson } = this.props.connections.rootConnection;
+		const titleText = isEmpty(rootConnectionPerson)
 			? ''
-			: `${rootConnection.abbrName}'s connections`;
+			: `${rootConnectionPerson.abbrName}'s connections`;
 
 		return (
 			<div>
