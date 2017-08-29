@@ -16,4 +16,4 @@ export {
 } from './ConnectionsGraph/ConnectionsGraph';
 export { default as Pager } from './Pager/Pager';
 export { default as RelatedContent } from './RelatedContent/RelatedContent';
-export { default as ArticleList} from './ArticleList/ArticleList';
+export { default as ArticleList } from './ArticleList/ArticleList';

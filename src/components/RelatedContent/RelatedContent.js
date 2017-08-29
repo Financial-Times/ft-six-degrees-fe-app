@@ -40,20 +40,20 @@ class RelatedContent extends Component {
 			<div className="o-grid-container">
 				<div className="o-grid-row">
 					<div data-o-grid-colspan="12">
-						{
-							tabsData
-								? tabsData.length > 1
+						{tabsData
+							? tabsData.length > 1
 								? <div>
-									<FtTabs content={tabsData} />
-								</div>
+										<FtTabs content={tabsData} />
+									</div>
 								: <div>
-									<PageTitle className="page-title--secondary">
-										{tabsData[0].title}
-									</PageTitle>
-									<ArticleList articles={tabsData[0].articles} />
-								</div>
-								: null
-						}
+										<PageTitle className="page-title--secondary">
+											{tabsData[0].title}
+										</PageTitle>
+										<ArticleList
+											articles={tabsData[0].articles}
+										/>
+									</div>
+							: null}
 					</div>
 				</div>
 			</div>

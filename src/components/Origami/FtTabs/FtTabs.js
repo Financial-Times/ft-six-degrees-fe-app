@@ -1,19 +1,27 @@
 import React, { Component } from 'react';
 import isEmpty from 'lodash/isEmpty';
-import {ArticleList} from '../../index';
-import {PageTitle} from '../../index';
+import { ArticleList } from '../../index';
+import { PageTitle } from '../../index';
 import './FtTabs.css';
 
-const showTabs = (content) => {
+const showTabs = content => {
 	if (!isEmpty(content)) {
 		return content.map((item, idx) => {
 			return (
-				<li key={item.id} role="tab" aria-selected={idx === content.length - 1}><a href={`#${item.id}`}>{item.label}</a></li>
+				<li
+					key={item.id}
+					role="tab"
+					aria-selected={idx === content.length - 1}
+				>
+					<a href={`#${item.id}`}>
+						{item.label}
+					</a>
+				</li>
 			);
 		});
 	}
 };
-const showTabPanels = (content) => {
+const showTabPanels = content => {
 	return content.map(item => {
 		return (
 			<div key={item.id} id={item.id} className="o-tabs__tabpanel">
