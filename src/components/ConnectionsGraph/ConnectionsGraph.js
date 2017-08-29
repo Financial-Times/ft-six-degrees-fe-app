@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Graph from 'react-graph-vis';
-import isEmpty from 'lodash/isEmpty';
 import graphOptions from './graphOptions';
-import { extractId } from '../../helpers/uuid';
 import './ConnectionsGraph.css';
 
 class ConnectionsGraph extends Component {
@@ -15,53 +14,13 @@ class ConnectionsGraph extends Component {
 		this.network = nw;
 	}
 
-	graphEvents() {
-		const { loadConnections, setActiveRootConnection } = this.props;
-		return {
-			select: event => {
-				let { nodes, edges } = event;
-				console.log('Selected nodes:');
-				console.log(nodes);
-				console.log('Selected edges:');
-				console.log(edges);
-				let rootId = nodes[0];
-				console.log('rootId', rootId);
-				loadConnections(extractId(rootId)).then(
-					res => res && setActiveRootConnection(rootId)
-				);
-			}
-		};
-	}
-
-	getGraph() {
-		return {
-			nodes: this.props.graphNodes,
-			edges: this.props.graphEdges
-		};
-	}
-
-	componentWillUnmount() {
-		this.props.resetConnections();
-	}
-
-	shouldComponentUpdate(nextProps) {
-		return (
-			!isEmpty(nextProps.connectionsChain) &&
-			!isEmpty(nextProps.activeRootConnection) &&
-			nextProps.activeRootConnection !== this.props.activeRootConnection
-		);
-	}
-
 	componentDidUpdate() {
 		const nw = this.network;
 		nw.fit();
-		// setTimeout(() => nw.stopSimulation(), 5000);
-		nw.on('stabilizationProgress', params => {
-			console.log(params);
-			if (params.iterations > params.total - 50) {
-				nw.stopSimulation();
-			}
-		});
+		clearTimeout(this.time);
+		this.time = setTimeout(() => {
+			nw.stopSimulation();
+		}, 5000);
 	}
 
 	render() {
@@ -70,7 +29,7 @@ class ConnectionsGraph extends Component {
 			height: '100%',
 			autoSize: true
 		};
-		const { loading } = this.props;
+		const { loading, graph, onNodeClick } = this.props;
 
 		return (
 			<div>
@@ -79,9 +38,9 @@ class ConnectionsGraph extends Component {
 						? <div>Loading...</div>
 						: <Graph
 								style={style}
-								graph={this.getGraph()}
+								graph={graph}
 								options={graphOptions}
-								events={this.graphEvents()}
+								events={onNodeClick}
 								getNetwork={this.setNetworkInstance}
 							/>}
 				</div>
@@ -89,5 +48,14 @@ class ConnectionsGraph extends Component {
 		);
 	}
 }
+
+ConnectionsGraph.PropTypes = {
+	loading: PropTypes.bool.isRequired,
+	graph: PropTypes.shape({
+		nodes: PropTypes.arrayOf(PropTypes.object),
+		edges: PropTypes.arrayOf(PropTypes.object)
+	}).isRequired,
+	onNodeClick: PropTypes.func.isRequired
+};
 
 export default ConnectionsGraph;
