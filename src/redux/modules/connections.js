@@ -19,9 +19,11 @@ export const CONTENT_FOR_ROOT_CONNECTION_FAILURE =
 export const SET_ACTIVE_ROOT_CONNECTION = 'SET_ACTIVE_ROOT_CONNECTION';
 export const SET_ROOT_CONNECTION = 'SET_ROOT_CONNECTION';
 export const RESET_CONNECTIONS = 'RESET_CONNECTIONS';
+export const UPDATE_CONNECTIONS = 'UPDATE_CONNECTIONS';
 
 const getConnections = (state, props) => state.connectionsChain;
 const getRootConnection = (state, props) => state.rootConnection;
+// const getActiveRootConnection = (state, props) => state.activeRootConnection;
 
 const fetchConnections = (rootId, key = 'month') => ({
 	[CALL_API]: {
@@ -70,31 +72,59 @@ const getPerson = (personId, people) => {
 	);
 };
 
+const updateConnections = connections => ({
+	type: UPDATE_CONNECTIONS,
+	connections
+});
+
 export const loadConnections = rootId => (dispatch, getState) => {
 	const key = getState().people.dateRange;
-	const rootIds = Object.keys(getState().connections.connectionsChain);
-	if (rootId && rootIds.indexOf(rootId) === -1) {
+	const connectionsChain = getState().connections.connectionsChain;
+	const rootIds = Object.keys(connectionsChain);
+	const rootIdIdx = rootIds.indexOf(rootId);
+	if (isEmpty(connectionsChain)) {
 		return Promise.resolve(dispatch(fetchConnections(rootId, key)));
+	} else {
+		const allowedIds = connectionsChain[
+			rootIds[rootIds.length - 1]
+		].map(c => extractId(c.person.id));
+		if (
+			rootIds.indexOf(rootId) === -1 &&
+			allowedIds.indexOf(rootId) !== -1
+		) {
+			return Promise.resolve(dispatch(fetchConnections(rootId, key)));
+		} else {
+			if (rootIdIdx !== -1) {
+				const updatedConnections = rootIds
+					.slice(0, rootIdIdx + 1)
+					.reduce((agg, id) => {
+						return { ...agg, [id]: connectionsChain[id] };
+					}, {});
+				return Promise.resolve(
+					dispatch(updateConnections(updatedConnections))
+				);
+			}
+		}
 	}
 	return Promise.resolve(null);
 };
 
-const getActiveRootConnection = (id, connectionsChain) => {
+const findActiveRootConnection = (id, connectionsChain) => {
 	const haystack = [].concat(...values(connectionsChain));
 	return haystack.find(c => extractId(c.person.id) === id);
 };
 
 export const setActiveRootConnection = personId => (dispatch, getState) => {
-	let rootPerson = getActiveRootConnection(
+	let connection = findActiveRootConnection(
 		personId,
 		getState().connections.connectionsChain
 	);
 
-	if (!rootPerson) {
-		rootPerson = { person: getState().connections.rootConnection.person };
+	if (!connection) {
+		connection = getState().connections.rootConnection;
 	}
 
-	return Promise.resolve(dispatch(activeRootConnection(rootPerson)));
+	return Promise.resolve(dispatch(activeRootConnection(connection)));
 };
 
 export const setRootConnection = rootPersonId => (dispatch, getState) => {
@@ -172,6 +202,22 @@ export const getGraphEdges = () => {
 	});
 };
 
+export const getRelatedContent = () => {
+	return createSelector(
+		[getRootConnection, getConnections],
+		(rootConnection, connections) => {
+			return Object.keys(connections).reduce((agg, rootId, connIdx) => {
+				const dataToAdd =
+					connIdx === 0
+						? rootConnection
+						: findActiveRootConnection(rootId, connections);
+				agg = { ...agg, [rootId]: dataToAdd };
+				return agg;
+			}, {});
+		}
+	);
+};
+
 const connection = {
 	person: {},
 	content: {}
@@ -213,6 +259,11 @@ export default (state = initialState, action) => {
 					...state.connectionsChain,
 					[action.meta]: isEmpty(action.payload) ? [] : action.payload
 				}
+			};
+		case UPDATE_CONNECTIONS:
+			return {
+				...state,
+				connectionsChain: action.connections
 			};
 		case CONTENT_FOR_ROOT_CONNECTION_FAILURE:
 			return {
