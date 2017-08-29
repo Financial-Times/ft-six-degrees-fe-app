@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { ViewPager, Frame, Track, View } from 'react-view-pager';
 import PeopleSliderItem from './PeopleSliderItem';
+import { Pager } from '../../components';
 import './PeopleSlider.css';
 
 const animations = [
@@ -59,7 +61,7 @@ class PeopleSlider extends Component {
 	}
 
 	render() {
-		const { peopleData, loading, error } = this.props;
+		const { peopleData, loading, error, focusedPersonIndex } = this.props;
 		return (
 			<div className="o-grid-row">
 				<div data-o-grid-colspan="12">
@@ -70,26 +72,41 @@ class PeopleSlider extends Component {
 								</div>
 							: loading || !peopleData.length
 								? <div>Loading....</div>
-								: <ViewPager tag="main">
-										<Frame className="frame">
-											<Track
-												currentView={0}
-												animations={animations}
-												ref={c => (this.track = c)}
-												viewsToShow="auto"
-												align={0.5}
-												className="track"
-											>
-												{this.createPeopleListView(
-													peopleData
-												)}
-											</Track>
-										</Frame>
-									</ViewPager>}
+								: <div>
+										<ViewPager tag="main">
+											<Frame className="frame">
+												<Track
+													currentView={0}
+													animations={animations}
+													ref={c => (this.track = c)}
+													viewsToShow="auto"
+													align={0.5}
+													className="track"
+												>
+													{this.createPeopleListView(
+														peopleData
+													)}
+												</Track>
+											</Frame>
+										</ViewPager>
+										<Pager
+											pages={peopleData.length}
+											current={focusedPersonIndex + 1}
+										/>
+									</div>}
 					</div>
 				</div>
 			</div>
 		);
 	}
 }
+
+PeopleSlider.PropTypes = {
+	error: PropTypes.string.isRequired,
+	loading: PropTypes.bool.isRequired,
+	peopleData: PropTypes.arrayOf(PropTypes.object),
+	cardClickHandler: PropTypes.func.isRequired,
+	focusedPersonIndex: PropTypes.number.isRequired
+};
+
 export default PeopleSlider;
