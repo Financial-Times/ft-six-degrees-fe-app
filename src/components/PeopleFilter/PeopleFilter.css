@@ -4,7 +4,11 @@
     margin: 40px auto 100px auto;
     max-width: 55%;
 }
+.people-filter-label {
+    font-size: 15px;
+}
 .people-filter-form legend {
+    font-size: 12px;
     text-align: center;
     padding: 0 20px;
 }
