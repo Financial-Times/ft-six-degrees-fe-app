@@ -200,9 +200,7 @@ export const getGraphEdges = () => {
 					...c.person,
 					isRoot: rootIds.indexOf(extractId(c.person.id)) > -1
 				}))
-				.map(person =>
-					getEdges(person, rootId)
-				);
+				.map(person => getEdges(person, rootId));
 			graphEdges.push(...edges);
 		});
 		return [...graphEdges];
