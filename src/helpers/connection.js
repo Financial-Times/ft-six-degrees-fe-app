@@ -6,3 +6,6 @@ export const getLastName = connection => {
 	const names = person.abbrName.split(' ');
 	return names.length > 0 ? names[names.length - 1] : '';
 };
+export const getArticleUrl = apiUrl => {
+	return apiUrl.replace('api', 'www');
+};
