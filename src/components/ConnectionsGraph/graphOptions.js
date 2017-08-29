@@ -27,7 +27,14 @@ const graphOptions = {
 	},
 	edges: {
 		smooth: false,
-		color: '#000000'
+		chosen: false,
+		width: 1,
+		arrows: {
+			to: { enabled: false },
+			middle: { enabled: false },
+			from: { enabled: false }
+		},
+		color: '#B8B5AE'
 	}
 };
 

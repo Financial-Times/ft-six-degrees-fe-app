@@ -183,6 +183,8 @@ export const getGraphNodes = () => {
 const getEdges = (node, rootId) => {
 	return {
 		from: rootId,
+		width: node.isRoot ? 2 : 1,
+		color: node.isRoot ? '#1A636B' : '#B8B5AE',
 		to: extractId(node.id),
 		length: 80
 	};
@@ -193,9 +195,14 @@ export const getGraphEdges = () => {
 		let graphEdges = [];
 		const rootIds = Object.keys(connections);
 		rootIds.forEach(rootId => {
-			let edges = connections[rootId].map(c =>
-				getEdges(c.person, rootId)
-			);
+			let edges = connections[rootId]
+				.map(c => ({
+					...c.person,
+					isRoot: rootIds.indexOf(extractId(c.person.id)) > -1
+				}))
+				.map(person =>
+					getEdges(person, rootId)
+				);
 			graphEdges.push(...edges);
 		});
 		return [...graphEdges];
