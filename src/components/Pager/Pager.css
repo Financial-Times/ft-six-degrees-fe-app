@@ -1,0 +1,17 @@
+.pager {
+    position: relative;
+    padding-bottom: 20px;
+    background-color: #FFF8F0;
+}
+.pager:after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    z-index: -1;
+    width: 100vw;
+    height: 100%;
+    background: #FFF8EF;
+    transform: translateX(-50%);
+}
