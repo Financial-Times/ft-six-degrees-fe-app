@@ -150,6 +150,8 @@ export const resetConnections = () => dispatch => {
 const getNodeProps = node => {
 	return {
 		id: extractId(node.id),
+		borderWidth: 3,
+		color: node.isRoot ? '#1A636B' : '#B8B5AE',
 		label: node.abbrName,
 		size: node.isRoot ? 40 : 20,
 		shape: 'circularImage',
@@ -184,9 +186,9 @@ const getEdges = (node, rootId) => {
 	return {
 		from: rootId,
 		width: node.isRoot ? 2 : 1,
+		length: node.isRoot ? undefined : 80,
 		color: node.isRoot ? '#1A636B' : '#B8B5AE',
-		to: extractId(node.id),
-		length: 80
+		to: extractId(node.id)
 	};
 };
 

@@ -16,11 +16,14 @@ class ConnectionsGraph extends Component {
 
 	componentDidUpdate() {
 		const nw = this.network;
-		nw.fit();
 		clearTimeout(this.time);
+		nw.fit();
+		nw.on('stabilized', () => {
+			nw.fit();
+		});
 		this.time = setTimeout(() => {
 			nw.stopSimulation();
-		}, 5000);
+		}, 4000);
 	}
 
 	render() {
