@@ -46,8 +46,10 @@ class RelatedContent extends Component {
 										<FtTabs content={tabsData} />
 									</div>
 								: <div>
-										<PageTitle className="page-title--secondary">
-											{tabsData[0].title}
+										<PageTitle>
+											<h1 className="related-content-title">
+												{tabsData[0].title}
+											</h1>
 										</PageTitle>
 										<ArticleList
 											articles={tabsData[0].articles}

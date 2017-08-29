@@ -25,8 +25,10 @@ const showTabPanels = content => {
 	return content.map(item => {
 		return (
 			<div key={item.id} id={item.id} className="o-tabs__tabpanel">
-				<PageTitle className="page-title--secondary">
-					{item.title}
+				<PageTitle>
+					<h1 className="related-content-title">
+						{item.title}
+					</h1>
 				</PageTitle>
 				<ArticleList articles={item.articles} />
 			</div>
