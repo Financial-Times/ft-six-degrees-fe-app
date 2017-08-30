@@ -1,19 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { extractId } from '../../helpers/uuid';
-import { getImageUrl } from '../../helpers/image';
+import { Image } from '../Origami';
 
-const PeopleDataItem = ({ person, personClickHandler }) =>
+const PeopleDataItem = ({ person, personClickHandler }) => (
 	<li className="people-data-card">
 		<div className="people-card-image">
-			<img
+			<Image
 				alt={`Portrait of ${person.abbrName}`}
-				src={getImageUrl(person.img)}
+				width={80}
+				gravity="faces"
+				source="six-degrees"
+				height={80}
+				src={person.img}
 			/>
 		</div>
-		<div className="people-card-name">
-			{person.abbrName}
-		</div>
+		<div className="people-card-name">{person.abbrName}</div>
 		<div className="people-card-details">
 			{person.articles} articles to read
 		</div>
@@ -25,5 +27,6 @@ const PeopleDataItem = ({ person, personClickHandler }) =>
 				View connections
 			</Link>
 		</div>
-	</li>;
+	</li>
+);
 export default PeopleDataItem;
