@@ -22,6 +22,8 @@ const graphOptions = {
 		adaptiveTimestep: true
 	},
 	interaction: {
+		dragView: false,
+		zoomView: false,
 		hover: true,
 		selectable: true
 	},
