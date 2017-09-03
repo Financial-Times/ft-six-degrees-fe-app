@@ -1,8 +1,8 @@
 .people-filter-wrapper {
     font-family: 'MetricWeb', sans-serif;
     color: #333333;
+    padding: 0;
     margin: 40px auto 100px auto;
-    max-width: 55%;
 }
 .people-filter-label {
     font-size: 15px;
@@ -17,6 +17,7 @@
 }
 .people-filter-section {
     text-align: left;
+    padding-left: 0;
 }
 .people-filter-section .o-buttons__group {
     margin: 10px 0;
