@@ -9,6 +9,14 @@ function isDevOrTest() {
 	return devTestUrl;
 }
 
+export const breakpoints = {
+	XS: 240,
+	S: 490,
+	M: 740,
+	L: 980,
+	XL: 1220
+};
+
 export const API_ROOT = isDevOrTest() || 'http://localhost:8080/api';
 export const IMG_SERVICE_URL =
 	'https://www.ft.com/__origami/service/image/v2/images/raw/';
