@@ -1,9 +1,9 @@
 import React from 'react';
 import './PageTitle.css';
 
-const PageTitle = ({ children }) =>
-	<div className="page-title">
-		{children}
-	</div>;
+const PageTitle = ({ className, children }) => {
+	const cls = className ? `page-title ${className}` : `page-title`;
+	return <div className={cls}>{children}</div>;
+};
 
 export default PageTitle;
