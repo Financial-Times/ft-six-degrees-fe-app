@@ -1,5 +1,7 @@
 import isEmpty from 'lodash/isEmpty';
 import values from 'lodash/values';
+import findLastKey from 'lodash/findLastKey';
+import find from 'lodash/find';
 import { CALL_API, getJSON } from 'redux-api-middleware';
 import { createSelector } from 'reselect';
 import { API_ROOT, PLACEHOLDER_IMG } from '../../config';
@@ -77,36 +79,44 @@ const updateConnections = connections => ({
 	connections
 });
 
+const getUpdatedConnectionsChain = (connectionsChain, rootIdIdx) =>
+	Object.keys(connectionsChain)
+		.slice(0, rootIdIdx + 1)
+		.reduce((agg, id) => {
+			return { ...agg, [id]: connectionsChain[id] };
+		}, {});
+
 export const loadConnections = rootId => (dispatch, getState) => {
 	const key = getState().people.dateRange;
 	const connectionsChain = getState().connections.connectionsChain;
 	const rootIds = Object.keys(connectionsChain);
-	const rootIdIdx = rootIds.indexOf(rootId);
+	let rootIdIdx = rootIds.indexOf(rootId);
 	if (isEmpty(connectionsChain)) {
 		return Promise.resolve(dispatch(fetchConnections(rootId, key)));
-	} else {
-		const allowedIds = connectionsChain[
-			rootIds[rootIds.length - 1]
-		].map(c => extractId(c.person.id));
-		if (
-			rootIds.indexOf(rootId) === -1 &&
-			allowedIds.indexOf(rootId) !== -1
-		) {
-			return Promise.resolve(dispatch(fetchConnections(rootId, key)));
-		} else {
-			if (rootIdIdx !== -1) {
-				const updatedConnections = rootIds
-					.slice(0, rootIdIdx + 1)
-					.reduce((agg, id) => {
-						return { ...agg, [id]: connectionsChain[id] };
-					}, {});
-				return Promise.resolve(
-					dispatch(updateConnections(updatedConnections))
-				);
-			}
-		}
 	}
-	return Promise.resolve(null);
+	if (rootIdIdx !== -1) {
+		return Promise.resolve(
+			dispatch(
+				updateConnections(
+					getUpdatedConnectionsChain(connectionsChain, rootIdIdx)
+				)
+			)
+		);
+	} else {
+		const rootIdParent = findLastKey(connectionsChain, c => {
+			return find(c, item => extractId(item.person.id) === rootId);
+		});
+		if (rootIdParent) {
+			rootIdIdx = rootIds.indexOf(rootIdParent);
+		}
+		return Promise.resolve(
+			dispatch(
+				updateConnections(
+					getUpdatedConnectionsChain(connectionsChain, rootIdIdx)
+				)
+			)
+		).then(() => dispatch(fetchConnections(rootId, key)));
+	}
 };
 
 const findActiveRootConnection = (id, connectionsChain) => {
