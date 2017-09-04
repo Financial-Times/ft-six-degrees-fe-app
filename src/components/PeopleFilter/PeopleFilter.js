@@ -5,7 +5,7 @@ import { FtButton } from '../../components';
 import { PEOPLE_SELECTOR, PEOPLE_DATE_RANGE, breakpoints } from '../../config';
 import './PeopleFilter.css';
 
-const { M } = breakpoints;
+const { M, L } = breakpoints;
 let peopleFilterWrapperStyles = {};
 
 const PeopleFilter = ({
@@ -35,23 +35,44 @@ const PeopleFilter = ({
 							<div className="people-filter-label">
 								Select people that appear
 							</div>
-							<div data-colspan="12" className="o-buttons__group">
-								{Object.keys(PEOPLE_SELECTOR).map(key => {
-									const label = PEOPLE_SELECTOR[key]['LABEL'];
-									const value = PEOPLE_SELECTOR[key]['VAL'];
+							<MediaQuery maxWidth={L}>
+								{matches => {
 									return (
-										<FtButton
-											key={key}
-											selected={peopleSelector === value}
-											label={label}
-											className="o-buttons"
-											onClick={selectorClickHandler(
-												value
-											)}
-										/>
+										<div className="o-buttons__group">
+											{Object.keys(
+												PEOPLE_SELECTOR
+											).map(key => {
+												const label =
+													PEOPLE_SELECTOR[key][
+														'LABEL'
+													];
+												const value =
+													PEOPLE_SELECTOR[key]['VAL'];
+												return (
+													<FtButton
+														key={key}
+														selected={
+															peopleSelector ===
+															value
+														}
+														label={label}
+														className={
+															matches ? (
+																'ft-button--half'
+															) : (
+																''
+															)
+														}
+														onClick={selectorClickHandler(
+															value
+														)}
+													/>
+												);
+											})}
+										</div>
 									);
-								})}
-							</div>
+								}}
+							</MediaQuery>
 						</div>
 						<div
 							className="people-filter-section"
@@ -67,7 +88,7 @@ const PeopleFilter = ({
 											key={r}
 											label={r}
 											selected={dateRange === r}
-											className="o-buttons ft-button--quarter"
+											className="ft-button--quarter"
 											onClick={e => {
 												e.preventDefault();
 												peopleDateRangeChange(r);

@@ -9,6 +9,7 @@
 }
 .people-filter-form legend {
     font-size: 12px;
+    font-weight: 600;
     text-align: center;
     padding: 0 20px;
 }

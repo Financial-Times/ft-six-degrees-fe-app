@@ -1,6 +1,9 @@
 .ft-button--quarter {
     width: 25%;
 }
+.ft-button--half {
+    width: 50%;
+}
 .ft-button:active,
 .ft-button:focus {
     outline: none;
