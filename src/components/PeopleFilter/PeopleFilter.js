@@ -15,7 +15,7 @@ const PeopleFilter = ({
 		peopleSelectorChange(val);
 	};
 	return (
-		<div className="o-grid-row">
+		<div className="o-grid-row o-grid-row--compact">
 			<div data-o-grid-colspan="12">
 				<div className="people-filter-wrapper">
 					<form className="people-filter-form">

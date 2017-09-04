@@ -5,7 +5,6 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import { apiMiddleware } from 'redux-api-middleware';
 import * as reducers from './redux/modules';
-import './index.css';
 import App from './App';
 
 const middlewares = [thunk, apiMiddleware];
