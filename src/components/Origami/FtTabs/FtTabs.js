@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import isEmpty from 'lodash/isEmpty';
 import { ArticleList } from '../../index';
-import { PageTitle } from '../../index';
+import { RelatedContentTitle } from '../../index';
 import './FtTabs.css';
 
 const showTabs = content => {
@@ -13,9 +13,7 @@ const showTabs = content => {
 					role="tab"
 					aria-selected={idx === content.length - 1}
 				>
-					<a href={`#${item.id}`}>
-						{item.label}
-					</a>
+					<a href={`#${item.id}`}>{item.label}</a>
 				</li>
 			);
 		});
@@ -25,11 +23,7 @@ const showTabPanels = content => {
 	return content.map(item => {
 		return (
 			<div key={item.id} id={item.id} className="o-tabs__tabpanel">
-				<PageTitle>
-					<h1 className="related-content-title">
-						{item.title}
-					</h1>
-				</PageTitle>
+				<RelatedContentTitle>{item.title}</RelatedContentTitle>
 				<ArticleList articles={item.articles} />
 			</div>
 		);

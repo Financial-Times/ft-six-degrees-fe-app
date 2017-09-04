@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { FtTabs } from '../Origami';
-import { PageTitle, ArticleList } from '../../components';
+import { RelatedContentTitle, ArticleList } from '../../components';
 import isEmpty from 'lodash/isEmpty';
 import { getLastName } from '../../helpers/connection';
-import './RelatedContent.css';
 
 class RelatedContent extends Component {
 	getTabsData(content) {
@@ -46,9 +45,9 @@ class RelatedContent extends Component {
 							</div>
 						) : (
 							<div>
-								<PageTitle className="related-content-title">
+								<RelatedContentTitle>
 									{tabsData[0].title}
-								</PageTitle>
+								</RelatedContentTitle>
 								<ArticleList articles={tabsData[0].articles} />
 							</div>
 						) : null}
