@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Header, InfoIcon, RestartIcon } from '../../components';
+import { Header, RestartIcon } from '../../components';
 
 const showLeftIcon = pathname => {
-	if (pathname === '/') {
-		return <InfoIcon />;
-	}
 	if (pathname.includes('/connections')) {
 		return <RestartIcon />;
 	}

@@ -63,38 +63,40 @@ class PeopleSlider extends Component {
 	render() {
 		const { peopleData, loading, error, focusedPersonIndex } = this.props;
 		return (
-			<div className="o-grid-row">
+			<div className="o-grid-row o-grid-row--compact">
 				<div data-o-grid-colspan="12">
 					<div className="people-data-wrapper">
-						{error.length > 0
-							? <div>
-									{error}
-								</div>
-							: loading || !peopleData.length
-								? <div>Loading....</div>
-								: <div>
-										<ViewPager tag="main">
-											<Frame className="frame">
-												<Track
-													currentView={0}
-													animations={animations}
-													ref={c => (this.track = c)}
-													viewsToShow="auto"
-													align={0.5}
-													className="track"
-												>
-													{this.createPeopleListView(
-														peopleData
-													)}
-												</Track>
-											</Frame>
-										</ViewPager>
-										<Pager
-											pages={peopleData.length}
-											current={focusedPersonIndex + 1}
-										/>
-									</div>}
+						{error.length > 0 ? (
+							<div>{error}</div>
+						) : loading || !peopleData.length ? (
+							<div>Loading....</div>
+						) : (
+							<div>
+								<ViewPager tag="main">
+									<Frame className="frame">
+										<Track
+											currentView={0}
+											animations={animations}
+											ref={c => (this.track = c)}
+											viewsToShow="auto"
+											align={0.5}
+											className="track"
+										>
+											{this.createPeopleListView(
+												peopleData
+											)}
+										</Track>
+									</Frame>
+								</ViewPager>
+							</div>
+						)}
 					</div>
+				</div>
+				<div data-o-grid-colspan="12">
+					<Pager
+						pages={peopleData.length}
+						current={focusedPersonIndex + 1}
+					/>
 				</div>
 			</div>
 		);
