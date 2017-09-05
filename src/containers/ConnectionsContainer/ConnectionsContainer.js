@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import MediaQuery from 'react-responsive';
 import isEmpty from 'lodash/isEmpty';
+import { getLastName } from '../../helpers/connection';
 import { extractId } from '../../helpers/uuid';
+import { breakpoints } from '../../config';
 import {
 	loadConnections,
 	setRootConnection,
@@ -12,14 +15,21 @@ import {
 	getRelatedContent,
 	setActiveRootConnection
 } from '../../redux/modules/connections';
+import { ConnectionsMobileViewContainer } from '../';
 import { loadPeople } from '../../redux/modules/people';
 import { PageTitle, ConnectionsGraph, RelatedContent } from '../../components';
+
+const { L } = breakpoints;
 
 class ConnectionsContainer extends Component {
 	constructor() {
 		super();
 		this.getGraph = this.getGraph.bind(this);
 		this.onNodeClick = this.onNodeClick.bind(this);
+		this.getTitleText = this.getTitleText.bind(this);
+		this.getGraph = this.getGraph.bind(this);
+		this.onNodeClick = this.onNodeClick.bind(this);
+		this.getTabsData = this.getTabsData.bind(this);
 	}
 	loadData() {
 		const {
@@ -103,6 +113,35 @@ class ConnectionsContainer extends Component {
 		return titleText;
 	}
 
+	getTabsData(content) {
+		if (!isEmpty(content)) {
+			const rootIds = Object.keys(content);
+			return rootIds.reduce((agg, rootId, idx) => {
+				let item = {};
+				item['id'] = rootId;
+				item['articles'] = content[rootId].content;
+				item['label'] =
+					idx > 0
+						? `${getLastName(
+								content[rootIds[idx - 1]]
+							)} & ${getLastName(content[rootId])}`
+						: getLastName(content[rootId]);
+				item['title'] =
+					idx > 0
+						? `${getLastName(
+								content[rootIds[idx - 1]]
+							)} appears in ${content[rootId].content
+								.length} articles with ${getLastName(
+								content[rootId]
+							)}`
+						: `${getLastName(content[rootId])} appears in ${content[
+								rootId
+							].content.length} articles`;
+				return [...agg, item];
+			}, []);
+		}
+	}
+
 	componentDidMount() {
 		this.loadData();
 	}
@@ -113,17 +152,33 @@ class ConnectionsContainer extends Component {
 
 	render() {
 		return (
-			<div>
-				<PageTitle>
-					{this.getTitleText()}
-				</PageTitle>
-				<ConnectionsGraph
-					loading={this.props.connections.isFetching}
-					graph={this.getGraph()}
-					onNodeClick={this.onNodeClick()}
-				/>
-				<RelatedContent content={this.props.relatedContent} />
-			</div>
+			<MediaQuery minWidth={L}>
+				{matches => {
+					return matches ? (
+						<div>
+							<PageTitle>{this.getTitleText()}</PageTitle>
+							<ConnectionsGraph
+								loading={this.props.connections.isFetching}
+								graph={this.getGraph()}
+								onNodeClick={this.onNodeClick()}
+							/>
+							<RelatedContent
+								tabsData={this.getTabsData(
+									this.props.relatedContent
+								)}
+							/>
+						</div>
+					) : (
+						<ConnectionsMobileViewContainer
+							{...this.props}
+							getTabsData={this.getTabsData}
+							getTitleText={this.getTitleText}
+							getGraph={this.getGraph}
+							onNodeClick={this.onNodeClick}
+						/>
+					);
+				}}
+			</MediaQuery>
 		);
 	}
 }

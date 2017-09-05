@@ -4,13 +4,14 @@ import { ArticleList } from '../../index';
 import { RelatedContentTitle } from '../../index';
 import './FtTabs.css';
 
-const showTabs = content => {
+const showTabs = (content, onTabClick = () => {}) => {
 	if (!isEmpty(content)) {
 		return content.map((item, idx) => {
 			return (
 				<li
 					key={item.id}
 					role="tab"
+					onClick={() => onTabClick(item.title)}
 					aria-selected={idx === content.length - 1}
 				>
 					<a href={`#${item.id}`}>{item.label}</a>
@@ -19,11 +20,15 @@ const showTabs = content => {
 		});
 	}
 };
-const showTabPanels = content => {
+const showTabPanels = (content, hideTitle = false) => {
 	return content.map(item => {
 		return (
 			<div key={item.id} id={item.id} className="o-tabs__tabpanel">
-				<RelatedContentTitle>{item.title}</RelatedContentTitle>
+				{hideTitle ? (
+					''
+				) : (
+					<RelatedContentTitle>{item.title}</RelatedContentTitle>
+				)}
 				<ArticleList articles={item.articles} />
 			</div>
 		);
@@ -39,7 +44,7 @@ class FtTabs extends Component {
 		this.tabs.selectTab(this.tabs.tabEls.length - 1);
 	}
 	render() {
-		const { content } = this.props;
+		const { content, hideTitle, onTabClick } = this.props;
 		return (
 			<div className="tabs-container">
 				<ul
@@ -47,9 +52,9 @@ class FtTabs extends Component {
 					className="o-tabs o-tabs--buttontabs"
 					role="tablist"
 				>
-					{showTabs(content)}
+					{showTabs(content, onTabClick)}
 				</ul>
-				{showTabPanels(content)}
+				{showTabPanels(content, hideTitle)}
 			</div>
 		);
 	}

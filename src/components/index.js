@@ -19,3 +19,6 @@ export {
 	default as RelatedContentTitle
 } from './RelatedContentTitle/RelatedContentTitle';
 export { default as ArticleList } from './ArticleList/ArticleList';
+export {
+	default as MobileViewSelector
+} from './MobileViewSelector/MobileViewSelector';
