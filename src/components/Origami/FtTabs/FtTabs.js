@@ -38,6 +38,9 @@ class FtTabs extends Component {
 	componentDidMount() {
 		this.tabs = window.Origami['o-tabs'].init()[0];
 	}
+	shouldComponentUpdate(nextProps) {
+		return this.props.content.length !== nextProps.content.length;
+	}
 	componentDidUpdate() {
 		this.tabs && this.tabs.destroy();
 		this.tabs = window.Origami['o-tabs'].init()[0];
