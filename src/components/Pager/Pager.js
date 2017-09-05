@@ -1,10 +1,9 @@
 import React from 'react';
 import './Pager.css';
 
-const Pager = props => (
+const Pager = props =>
 	<div className="pager">
 		<strong>{props.current}</strong> of {props.pages}
-	</div>
-);
+	</div>;
 
 export default Pager;

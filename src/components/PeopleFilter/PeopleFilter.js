@@ -57,11 +57,9 @@ const PeopleFilter = ({
 														}
 														label={label}
 														className={
-															matches ? (
-																'ft-button--half'
-															) : (
-																''
-															)
+															matches
+																? 'ft-button--half'
+																: ''
 														}
 														onClick={selectorClickHandler(
 															value

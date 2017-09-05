@@ -5,13 +5,12 @@ import { breakpoints } from '../../config';
 
 const { M } = breakpoints;
 
-const RestartIcon = () => (
+const RestartIcon = () =>
 	<Link to="/people" className="six-deg-restart">
 		<i className="o-icons-icon o-icons-icon--refresh six-deg-icon" />
 		<MediaQuery minWidth={M}>
 			<span className="six-deg-icon-label">Start over</span>
 		</MediaQuery>
-	</Link>
-);
+	</Link>;
 
 export default RestartIcon;

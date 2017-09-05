@@ -80,11 +80,9 @@ const updateConnections = connections => ({
 });
 
 const getUpdatedConnectionsChain = (connectionsChain, rootIdIdx) =>
-	Object.keys(connectionsChain)
-		.slice(0, rootIdIdx + 1)
-		.reduce((agg, id) => {
-			return { ...agg, [id]: connectionsChain[id] };
-		}, {});
+	Object.keys(connectionsChain).slice(0, rootIdIdx + 1).reduce((agg, id) => {
+		return { ...agg, [id]: connectionsChain[id] };
+	}, {});
 
 export const loadConnections = rootId => (dispatch, getState) => {
 	const key = getState().people.dateRange;
