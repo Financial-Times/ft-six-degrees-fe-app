@@ -17,13 +17,16 @@ class ConnectionsGraph extends Component {
 	componentDidUpdate() {
 		const nw = this.network;
 		clearTimeout(this.time);
-		nw.fit();
 		nw.on('stabilized', () => {
 			nw.fit();
 		});
 		this.time = setTimeout(() => {
 			nw.stopSimulation();
 		}, 4000);
+	}
+
+	shouldComponentUpdate(nextProps) {
+		return nextProps.graph !== this.props.graph;
 	}
 
 	render() {
@@ -35,17 +38,19 @@ class ConnectionsGraph extends Component {
 		const { loading, graph, onNodeClick } = this.props;
 
 		return (
-			<div>
+			<div className={this.props.className}>
 				<div className="connections-graph">
-					{loading
-						? <div>Loading...</div>
-						: <Graph
-								style={style}
-								graph={graph}
-								options={graphOptions}
-								events={onNodeClick}
-								getNetwork={this.setNetworkInstance}
-							/>}
+					{loading ? (
+						<div>Loading...</div>
+					) : (
+						<Graph
+							style={style}
+							graph={graph}
+							options={graphOptions}
+							events={onNodeClick}
+							getNetwork={this.setNetworkInstance}
+						/>
+					)}
 				</div>
 			</div>
 		);
