@@ -6,3 +6,9 @@
     z-index: 2;
     background-color: #FFF8EF;
 }
+.connections-graph:focus {
+    outline: none;
+}
+.vis-network:focus {
+    outline: none;
+}
