@@ -7,6 +7,7 @@ const graphOptions = {
 	},
 	autoResize: true,
 	nodes: {
+		borderWidth: 6,
 		color: {
 			background: grey
 		},
