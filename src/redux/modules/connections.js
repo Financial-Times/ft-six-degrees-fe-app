@@ -4,8 +4,11 @@ import findLastKey from 'lodash/findLastKey';
 import find from 'lodash/find';
 import { CALL_API, getJSON } from 'redux-api-middleware';
 import { createSelector } from 'reselect';
-import { API_ROOT, PLACEHOLDER_IMG } from '../../config';
+import { API_ROOT, PLACEHOLDER_IMG, graphOptions } from '../../config';
 import { extractId } from '../../helpers/uuid';
+import { getImageUrl } from '../../helpers/image';
+
+const { teal, grey } = graphOptions.color;
 
 export const CONNECTIONS_REQUEST = 'CONNECTIONS_REQUEST';
 export const CONNECTIONS_SUCCESS = 'CONNECTIONS_SUCCESS';
@@ -80,9 +83,11 @@ const updateConnections = connections => ({
 });
 
 const getUpdatedConnectionsChain = (connectionsChain, rootIdIdx) =>
-	Object.keys(connectionsChain).slice(0, rootIdIdx + 1).reduce((agg, id) => {
-		return { ...agg, [id]: connectionsChain[id] };
-	}, {});
+	Object.keys(connectionsChain)
+		.slice(0, rootIdIdx + 1)
+		.reduce((agg, id) => {
+			return { ...agg, [id]: connectionsChain[id] };
+		}, {});
 
 export const loadConnections = rootId => (dispatch, getState) => {
 	const key = getState().people.dateRange;
@@ -156,14 +161,24 @@ export const resetConnections = () => dispatch => {
 };
 
 const getNodeProps = node => {
+	const rootNodeImg = getImageUrl(node.img || PLACEHOLDER_IMG);
+	const regularImg = getImageUrl(node.img || PLACEHOLDER_IMG, {
+		tint: '#777'
+	});
 	return {
 		id: extractId(node.id),
-		borderWidth: 3,
-		color: node.isRoot ? '#1A636B' : '#B8B5AE',
+		color: {
+			border: node.isRoot ? teal : grey,
+			highlight: {
+				border: teal
+			},
+			hover: {
+				border: node.isRoot ? teal : grey
+			}
+		},
 		label: node.abbrName,
 		size: node.isRoot ? 40 : 20,
-		shape: 'circularImage',
-		image: node.img || PLACEHOLDER_IMG
+		image: node.isRoot ? rootNodeImg : regularImg
 	};
 };
 export const getGraphNodes = () => {
@@ -177,12 +192,14 @@ export const getGraphNodes = () => {
 				person: { ...rootConnection.person, isRoot: true }
 			};
 			rootIds.forEach(rootId => {
-				let conns = connections[rootId]
-					.map(c => ({
+				let conns = connections[rootId].map(c => {
+					const degree = rootIds.indexOf(extractId(c.person.id));
+					const person = {
 						...c.person,
-						isRoot: rootIds.indexOf(extractId(c.person.id)) > -1
-					}))
-					.map(getNodeProps);
+						isRoot: degree > -1
+					};
+					return getNodeProps(person);
+				});
 				graphNodes.push(...conns, getNodeProps(rootConnection.person));
 			});
 			return [...graphNodes];
@@ -193,9 +210,9 @@ export const getGraphNodes = () => {
 const getEdges = (node, rootId) => {
 	return {
 		from: rootId,
-		width: node.isRoot ? 2 : 1,
 		length: node.isRoot ? undefined : 80,
-		color: node.isRoot ? '#1A636B' : '#B8B5AE',
+		width: node.isRoot ? 4 : 2,
+		color: node.isRoot ? teal : grey,
 		to: extractId(node.id)
 	};
 };
@@ -205,12 +222,14 @@ export const getGraphEdges = () => {
 		let graphEdges = [];
 		const rootIds = Object.keys(connections);
 		rootIds.forEach(rootId => {
-			let edges = connections[rootId]
-				.map(c => ({
+			let edges = connections[rootId].map(c => {
+				const degree = rootIds.indexOf(extractId(c.person.id));
+				const person = {
 					...c.person,
-					isRoot: rootIds.indexOf(extractId(c.person.id)) > -1
-				}))
-				.map(person => getEdges(person, rootId));
+					isRoot: degree > -1
+				};
+				return getEdges(person, rootId);
+			});
 			graphEdges.push(...edges);
 		});
 		return [...graphEdges];
