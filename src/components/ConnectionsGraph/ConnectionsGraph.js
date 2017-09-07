@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Graph from 'react-graph-vis';
+import isEqual from 'lodash/isEqual';
 import graphOptions from './graphOptions';
 import './ConnectionsGraph.css';
 
@@ -22,23 +23,31 @@ class ConnectionsGraph extends Component {
 		});
 		this.time = setTimeout(() => {
 			nw.stopSimulation();
-		}, 4000);
+		}, 3000);
 	}
 
 	shouldComponentUpdate(nextProps) {
-		return nextProps.graph !== this.props.graph;
+		return (
+			!isEqual(nextProps.graph, this.props.graph) ||
+			nextProps.activeView !== this.props.activeView
+		);
 	}
 
 	render() {
 		let style = {
 			width: '100%',
-			height: '100%',
-			autoSize: true
+			autoSize: true,
+			height: '500px'
 		};
-		const { loading, graph, onNodeClick } = this.props;
+		const { loading, graph, onNodeClick, activeView } = this.props;
+		const graphClassName =
+			activeView && activeView !== 'connections' ? 'hidden' : '';
+		if (activeView) {
+			style = { ...style, height: '400px' };
+		}
 
 		return (
-			<div className={this.props.className}>
+			<div className={graphClassName}>
 				<div className="connections-graph">
 					{loading ? (
 						<div>Loading...</div>

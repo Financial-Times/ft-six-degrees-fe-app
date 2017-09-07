@@ -44,19 +44,12 @@ class ConnectionsMobileView extends Component {
 	}
 
 	render() {
-		const {
-			getTitleText,
-			getGraph,
-			onNodeClick,
-			relatedContent,
-			getTabsData
-		} = this.props;
+		const { titleText, graph, onNodeClick, tabsData, loading } = this.props;
 		const { activeView, activeStoriesTitle } = this.state;
-		const tabsData = getTabsData(relatedContent);
 		return (
-			<div>
+			<div style={{ height: '100%' }}>
 				{activeView === 'connections' ? (
-					<PageTitle>{getTitleText()}</PageTitle>
+					<PageTitle>{titleText}</PageTitle>
 				) : activeView === 'stories' ? (
 					<PageTitle>
 						{activeStoriesTitle ||
@@ -71,14 +64,14 @@ class ConnectionsMobileView extends Component {
 					activeView={activeView}
 				/>
 				<ConnectionsGraph
-					className={activeView !== 'connections' ? 'hidden' : ''}
-					loading={this.props.connections.isFetching}
-					graph={getGraph()}
-					onNodeClick={onNodeClick()}
+					activeView={activeView}
+					loading={loading}
+					graph={graph}
+					onNodeClick={onNodeClick}
 				/>
 				<RelatedContent
 					onTabClick={this.contentTabClickHandler}
-					className={activeView !== 'stories' ? 'hidden' : ''}
+					activeView={activeView}
 					hideTitle={true}
 					tabsData={tabsData}
 				/>

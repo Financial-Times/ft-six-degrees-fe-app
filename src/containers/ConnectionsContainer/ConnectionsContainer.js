@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import MediaQuery from 'react-responsive';
 import isEmpty from 'lodash/isEmpty';
+import isEqual from 'lodash/isEqual';
 import { getLastName } from '../../helpers/connection';
 import { extractId } from '../../helpers/uuid';
 import { breakpoints } from '../../config';
@@ -61,18 +62,17 @@ class ConnectionsContainer extends Component {
 	onNodeClick() {
 		return {
 			select: event => {
-				let { nodes, edges } = event;
-				console.log('Selected nodes:');
-				console.log(nodes);
-				console.log('Selected edges:');
-				console.log(edges);
+				let { nodes } = event;
 				let rootId = nodes[0];
-				console.log('rootId', rootId);
-				this.props
-					.loadConnections(extractId(rootId))
-					.then(
-						res => res && this.props.setActiveRootConnection(rootId)
-					);
+				if (rootId) {
+					this.props
+						.loadConnections(extractId(rootId))
+						.then(
+							res =>
+								res &&
+								this.props.setActiveRootConnection(rootId)
+						);
+				}
 			}
 		};
 	}
@@ -85,7 +85,10 @@ class ConnectionsContainer extends Component {
 		return (
 			!isEmpty(connectionsChain) &&
 			!isEmpty(activeRootConnection) &&
-			activeRootConnection !== this.props.connections.activeRootConnection
+			!isEqual(
+				activeRootConnection,
+				this.props.connections.activeRootConnection
+			)
 		);
 	}
 
@@ -151,6 +154,10 @@ class ConnectionsContainer extends Component {
 	}
 
 	render() {
+		const tabsData = this.getTabsData(this.props.relatedContent);
+		const graph = this.getGraph();
+		const nodeClickHandler = this.onNodeClick();
+		const titleText = this.getTitleText();
 		return (
 			<MediaQuery minWidth={L}>
 				{matches => {
@@ -159,22 +166,18 @@ class ConnectionsContainer extends Component {
 							<PageTitle>{this.getTitleText()}</PageTitle>
 							<ConnectionsGraph
 								loading={this.props.connections.isFetching}
-								graph={this.getGraph()}
-								onNodeClick={this.onNodeClick()}
+								graph={graph}
+								onNodeClick={nodeClickHandler}
 							/>
-							<RelatedContent
-								tabsData={this.getTabsData(
-									this.props.relatedContent
-								)}
-							/>
+							<RelatedContent tabsData={tabsData} />
 						</div>
 					) : (
 						<ConnectionsMobileViewContainer
-							{...this.props}
-							getTabsData={this.getTabsData}
-							getTitleText={this.getTitleText}
-							getGraph={this.getGraph}
-							onNodeClick={this.onNodeClick}
+							loading={this.props.connections.isFetching}
+							tabsData={tabsData}
+							titleText={titleText}
+							graph={graph}
+							onNodeClick={nodeClickHandler}
 						/>
 					);
 				}}
