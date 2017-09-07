@@ -22,3 +22,4 @@ export { default as ArticleList } from './ArticleList/ArticleList';
 export {
 	default as MobileViewSelector
 } from './MobileViewSelector/MobileViewSelector';
+export { default as Footer } from './Footer/Footer';
