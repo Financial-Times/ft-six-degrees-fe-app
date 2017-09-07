@@ -4,9 +4,20 @@ import { RelatedContentTitle, ArticleList } from '../../components';
 
 class RelatedContent extends Component {
 	render() {
-		const { tabsData, hideTitle, onTabClick } = this.props;
+		const { tabsData, hideTitle, onTabClick, activeView } = this.props;
+		const storiesClassName =
+			activeView && activeView !== 'stories' ? 'hidden' : '';
+		let styleOverride = {};
+		if (activeView) {
+			styleOverride = {
+				height: '100%'
+			};
+		}
 		return (
-			<div className={this.props.className + ' ' + 'o-grid-container'}>
+			<div
+				className={`${storiesClassName} o-grid-container`}
+				style={styleOverride}
+			>
 				<div className="o-grid-row">
 					<div data-o-grid-colspan="12">
 						{tabsData ? tabsData.length > 1 ? (
