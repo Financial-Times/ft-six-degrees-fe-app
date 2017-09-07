@@ -1,61 +1,45 @@
 import React, { Component } from 'react';
 import { FtTabs } from '../Origami';
-import { PageTitle, ArticleList } from '../../components';
-import isEmpty from 'lodash/isEmpty';
-import { getLastName } from '../../helpers/connection';
-import './RelatedContent.css';
+import { RelatedContentTitle, ArticleList } from '../../components';
 
 class RelatedContent extends Component {
-	getTabsData(content) {
-		if (!isEmpty(content)) {
-			const rootIds = Object.keys(content);
-			return rootIds.reduce((agg, rootId, idx) => {
-				let item = {};
-				item['id'] = rootId;
-				item['articles'] = content[rootId].content;
-				item['label'] =
-					idx > 0
-						? `${getLastName(
-								content[rootIds[idx - 1]]
-							)} & ${getLastName(content[rootId])}`
-						: getLastName(content[rootId]);
-				item['title'] =
-					idx > 0
-						? `${getLastName(
-								content[rootIds[idx - 1]]
-							)} appears in ${content[rootId].content
-								.length} articles with ${getLastName(
-								content[rootId]
-							)}`
-						: `${getLastName(content[rootId])} appears in ${content[
-								rootId
-							].content.length} articles`;
-				return [...agg, item];
-			}, []);
-		}
-	}
 	render() {
-		const tabsData = this.getTabsData(this.props.content);
+		const { tabsData, hideTitle, onTabClick, activeView } = this.props;
+		const storiesClassName =
+			activeView && activeView !== 'stories' ? 'hidden' : '';
+		let styleOverride = {};
+		if (activeView) {
+			styleOverride = {
+				height: '100%'
+			};
+		}
 		return (
-			<div className="o-grid-container">
+			<div
+				className={`${storiesClassName} o-grid-container`}
+				style={styleOverride}
+			>
 				<div className="o-grid-row">
 					<div data-o-grid-colspan="12">
-						{tabsData
-							? tabsData.length > 1
-								? <div>
-										<FtTabs content={tabsData} />
-									</div>
-								: <div>
-										<PageTitle>
-											<h1 className="related-content-title">
-												{tabsData[0].title}
-											</h1>
-										</PageTitle>
-										<ArticleList
-											articles={tabsData[0].articles}
-										/>
-									</div>
-							: null}
+						{tabsData ? tabsData.length > 1 ? (
+							<div>
+								<FtTabs
+									onTabClick={onTabClick}
+									hideTitle={hideTitle}
+									content={tabsData}
+								/>
+							</div>
+						) : (
+							<div>
+								{hideTitle === true ? (
+									''
+								) : (
+									<RelatedContentTitle>
+										{tabsData[0].title}
+									</RelatedContentTitle>
+								)}
+								<ArticleList articles={tabsData[0].articles} />
+							</div>
+						) : null}
 					</div>
 				</div>
 			</div>

@@ -1,23 +1,23 @@
 import React from 'react';
 import MediaQuery from 'react-responsive';
 import { breakpoints } from '../../config';
-import './PageTitle.css';
+import './RelatedContentTitle.css';
 
 const { M } = breakpoints;
 let style = {};
 
-const PageTitle = ({ children }) => {
+const RelatedContentTitle = ({ children }) => {
 	return (
 		<MediaQuery minWidth={M}>
 			{matches => {
 				if (matches) {
 					style = {
-						fontSize: '24px',
-						padding: '30px 15px'
+						fontSize: '22px',
+						padding: '20px 0'
 					};
 				}
 				return (
-					<h1 className="page-title" style={style}>
+					<h1 className="related-content-title" style={style}>
 						{children}
 					</h1>
 				);
@@ -26,4 +26,4 @@ const PageTitle = ({ children }) => {
 	);
 };
 
-export default PageTitle;
+export default RelatedContentTitle;

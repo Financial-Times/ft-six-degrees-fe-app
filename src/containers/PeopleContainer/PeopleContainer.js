@@ -34,9 +34,7 @@ class PeopleContainer extends Component {
 
 		return (
 			<div>
-				<PageTitle>
-					{titleText}
-				</PageTitle>
+				<PageTitle>{titleText}</PageTitle>
 				<div className="o-grid-container">
 					<PeopleSlider
 						error={people.error}

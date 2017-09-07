@@ -1,6 +1,7 @@
-.related-content-title {
+h1.related-content-title {
     margin: 0;
-    font-size: 22px;
+    padding: 10px 0;
+    font-size: 18px;
     font-weight: 400;
     text-align: left;
     border-bottom: 1px solid #cec6b9;

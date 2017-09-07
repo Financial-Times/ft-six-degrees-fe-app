@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { ViewPager, Frame, Track, View } from 'react-view-pager';
+import debounce from 'lodash/debounce';
 import PeopleSliderItem from './PeopleSliderItem';
 import { Pager } from '../../components';
 import './PeopleSlider.css';
@@ -20,6 +21,7 @@ class PeopleSlider extends Component {
 	constructor(props) {
 		super(props);
 		this.cardClickHandler = this.cardClickHandler.bind(this);
+		this.onViewChange = this.onViewChange.bind(this);
 	}
 
 	componentDidMount() {
@@ -40,7 +42,10 @@ class PeopleSlider extends Component {
 
 	cardClickHandler(index) {
 		this.track.scrollTo(index);
-		this.props.cardClickHandler(index);
+	}
+
+	onViewChange([idx]) {
+		this.props.cardClickHandler(idx);
 	}
 
 	createPeopleListView(peopleData) {
@@ -78,6 +83,10 @@ class PeopleSlider extends Component {
 											currentView={0}
 											animations={animations}
 											ref={c => (this.track = c)}
+											onViewChange={debounce(
+												this.onViewChange,
+												300
+											)}
 											viewsToShow="auto"
 											align={0.5}
 											className="track"

@@ -1,35 +1,35 @@
 import React, { Component } from 'react';
 import isEmpty from 'lodash/isEmpty';
+import isEqual from 'lodash/isEqual';
 import { ArticleList } from '../../index';
-import { PageTitle } from '../../index';
+import { RelatedContentTitle } from '../../index';
 import './FtTabs.css';
 
-const showTabs = content => {
+const showTabs = (content, onTabClick = () => {}) => {
 	if (!isEmpty(content)) {
 		return content.map((item, idx) => {
 			return (
 				<li
 					key={item.id}
 					role="tab"
+					onClick={() => onTabClick(item.title)}
 					aria-selected={idx === content.length - 1}
 				>
-					<a href={`#${item.id}`}>
-						{item.label}
-					</a>
+					<a href={`#${item.id}`}>{item.label}</a>
 				</li>
 			);
 		});
 	}
 };
-const showTabPanels = content => {
+const showTabPanels = (content, hideTitle = false) => {
 	return content.map(item => {
 		return (
 			<div key={item.id} id={item.id} className="o-tabs__tabpanel">
-				<PageTitle>
-					<h1 className="related-content-title">
-						{item.title}
-					</h1>
-				</PageTitle>
+				{hideTitle ? (
+					''
+				) : (
+					<RelatedContentTitle>{item.title}</RelatedContentTitle>
+				)}
 				<ArticleList articles={item.articles} />
 			</div>
 		);
@@ -39,13 +39,16 @@ class FtTabs extends Component {
 	componentDidMount() {
 		this.tabs = window.Origami['o-tabs'].init()[0];
 	}
+	shouldComponentUpdate(nextProps) {
+		return !isEqual(this.props.content, nextProps.content);
+	}
 	componentDidUpdate() {
 		this.tabs && this.tabs.destroy();
 		this.tabs = window.Origami['o-tabs'].init()[0];
 		this.tabs.selectTab(this.tabs.tabEls.length - 1);
 	}
 	render() {
-		const { content } = this.props;
+		const { content, hideTitle, onTabClick } = this.props;
 		return (
 			<div className="tabs-container">
 				<ul
@@ -53,9 +56,9 @@ class FtTabs extends Component {
 					className="o-tabs o-tabs--buttontabs"
 					role="tablist"
 				>
-					{showTabs(content)}
+					{showTabs(content, onTabClick)}
 				</ul>
-				{showTabPanels(content)}
+				{showTabPanels(content, hideTitle)}
 			</div>
 		);
 	}

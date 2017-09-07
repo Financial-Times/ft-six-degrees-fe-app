@@ -54,3 +54,6 @@
     color: white;
     text-decoration: none;
 }
+.people-card-cta > a:focus {
+    outline: none;
+}
