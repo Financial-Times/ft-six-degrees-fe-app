@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import isEmpty from 'lodash/isEmpty';
+import isEqual from 'lodash/isEqual';
 import { ArticleList } from '../../index';
 import { RelatedContentTitle } from '../../index';
 import './FtTabs.css';
@@ -39,7 +40,7 @@ class FtTabs extends Component {
 		this.tabs = window.Origami['o-tabs'].init()[0];
 	}
 	shouldComponentUpdate(nextProps) {
-		return this.props.content.length !== nextProps.content.length;
+		return !isEqual(this.props.content, nextProps.content);
 	}
 	componentDidUpdate() {
 		this.tabs && this.tabs.destroy();
