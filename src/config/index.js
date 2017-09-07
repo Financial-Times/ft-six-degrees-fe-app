@@ -17,6 +17,8 @@ export const breakpoints = {
 	XL: 1220
 };
 
+export const segmentId = '030ff5ed-1257-f8f8-46fe-5cd1cf5fce7c';
+
 export const graphOptions = {
 	color: {
 		teal: '#2095A4',
