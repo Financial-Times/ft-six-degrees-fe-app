@@ -17,6 +17,13 @@ export const breakpoints = {
 	XL: 1220
 };
 
+export const graphOptions = {
+	color: {
+		teal: '#2095A4',
+		grey: '#B8B5AE'
+	}
+};
+
 export const API_ROOT = isDevOrTest() || 'http://localhost:8080/api';
 export const IMG_SERVICE_URL =
 	'https://www.ft.com/__origami/service/image/v2/images/raw/';
