@@ -1,9 +1,20 @@
+import { PLACEHOLDER_IMG, graphOptions as graphConfig } from '../../config';
+const { grey } = graphConfig.color;
+
 const graphOptions = {
-	height: '500px',
 	layout: {
 		hierarchical: false
 	},
 	autoResize: true,
+	nodes: {
+		color: {
+			background: grey
+		},
+		chosen: { node: false },
+		borderWidthSelected: 0,
+		shape: 'circularImage',
+		brokenImage: PLACEHOLDER_IMG
+	},
 	physics: {
 		timestep: 0.3,
 		forceAtlas2Based: {
@@ -15,8 +26,9 @@ const graphOptions = {
 		solver: 'forceAtlas2Based',
 		stabilization: {
 			enabled: true,
-			iterations: 500,
-			updateInterval: 50,
+			iterations: 2000,
+			onlyDynamicEdges: false,
+			updateInterval: 100,
 			fit: true
 		},
 		adaptiveTimestep: true
@@ -30,13 +42,12 @@ const graphOptions = {
 	edges: {
 		smooth: false,
 		chosen: false,
-		width: 1,
+		width: 2,
 		arrows: {
 			to: { enabled: false },
 			middle: { enabled: false },
 			from: { enabled: false }
-		},
-		color: '#B8B5AE'
+		}
 	}
 };
 
