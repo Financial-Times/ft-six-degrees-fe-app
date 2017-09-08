@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import {
 	HeaderContainer,
 	PeopleContainer,
@@ -15,12 +15,19 @@ class App extends Component {
 				<Router>
 					<div>
 						<HeaderContainer />
-						<Route exact path="/" component={Home} />
-						<Route path="/people" component={PeopleContainer} />
-						<Route
-							path="/connections/:id"
-							component={ConnectionsContainer}
-						/>
+						<Switch>
+							<Route exact path="/" component={Home} />
+							<Route
+								exact
+								path="/people"
+								component={PeopleContainer}
+							/>
+							<Route
+								path="/connections/:id"
+								component={ConnectionsContainer}
+							/>
+							<Route component={PeopleContainer} />
+						</Switch>
 						<Footer />
 					</div>
 				</Router>
