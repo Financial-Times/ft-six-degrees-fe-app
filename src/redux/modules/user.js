@@ -35,7 +35,7 @@ export const getUserData = () => (dispatch, getState) => {
 		return typeof ftSessionCookie === 'string' && ftSessionCookie !== '';
 	};
 	return isLoggedIn()
-		? Promise.resolve(dispatch(fetchUserData(ftSessionCookie)))
+		? dispatch(fetchUserData(ftSessionCookie))
 		: Promise.resolve();
 };
 
