@@ -13,9 +13,9 @@ import { PeopleFilter, PageTitle, PeopleSlider } from '../../components';
 
 class PeopleContainer extends Component {
 	componentDidMount() {
-		const { people, loadPeople, getUserData } = this.props;
+		const { people, loadPeople } = this.props;
 		if (people[`${people.peopleSelector}People`].length === 0) {
-			getUserData().then(() => loadPeople());
+			loadPeople();
 		}
 	}
 

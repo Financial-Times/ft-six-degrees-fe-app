@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { ViewPager, Frame, Track, View } from 'react-view-pager';
-import debounce from 'lodash/debounce';
 import PeopleSliderItem from './PeopleSliderItem';
 import { Pager } from '../../components';
 import './PeopleSlider.css';
@@ -25,10 +24,6 @@ class PeopleSlider extends Component {
 	}
 
 	componentDidMount() {
-		this.track && this.track.scrollTo(this.props.focusedPersonIndex);
-	}
-
-	componentDidUpdate() {
 		this.track && this.track.scrollTo(this.props.focusedPersonIndex);
 	}
 
@@ -83,10 +78,7 @@ class PeopleSlider extends Component {
 											currentView={0}
 											animations={animations}
 											ref={c => (this.track = c)}
-											onViewChange={debounce(
-												this.onViewChange,
-												300
-											)}
+											onViewChange={this.onViewChange}
 											viewsToShow="auto"
 											align={0.5}
 											className="track"

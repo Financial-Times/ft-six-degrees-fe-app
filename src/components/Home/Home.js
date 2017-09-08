@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css';
 
-const Home = props =>
+const Home = props => (
 	<div className="o-grid-container">
 		<div className="o-grid-row">
 			<div data-o-grid-colspan="12">
@@ -21,6 +21,7 @@ const Home = props =>
 				</div>
 			</div>
 		</div>
-	</div>;
+	</div>
+);
 
 export default Home;
