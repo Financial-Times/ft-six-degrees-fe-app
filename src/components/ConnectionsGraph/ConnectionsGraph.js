@@ -18,10 +18,13 @@ class ConnectionsGraph extends Component {
 
 	componentDidUpdate() {
 		const nw = this.network;
+		const { activeView } = this.props;
 		clearTimeout(this.time);
-		nw.on('stabilized', () => {
-			nw.fit();
-		});
+		if (!activeView) {
+			nw.on('stabilized', () => {
+				nw.fit();
+			});
+		}
 		this.time = setTimeout(() => {
 			nw.stopSimulation();
 		}, 3000);
