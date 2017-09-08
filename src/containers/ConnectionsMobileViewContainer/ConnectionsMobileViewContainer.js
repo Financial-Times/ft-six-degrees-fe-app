@@ -19,28 +19,22 @@ class ConnectionsMobileView extends Component {
 	}
 
 	connectionsClickHandler() {
-		this.setState(() => {
-			return {
-				activeView: 'connections',
-				activeStoriesTitle: ''
-			};
-		});
+		this.setState(() => ({
+			activeView: 'connections',
+			activeStoriesTitle: ''
+		}));
 	}
 
 	storiesClickHandler() {
-		this.setState(() => {
-			return {
-				activeView: 'stories'
-			};
-		});
+		this.setState(() => ({
+			activeView: 'stories'
+		}));
 	}
 
 	contentTabClickHandler(title) {
-		this.setState(() => {
-			return {
-				activeStoriesTitle: title
-			};
-		});
+		this.setState(() => ({
+			activeStoriesTitle: title
+		}));
 	}
 
 	render() {

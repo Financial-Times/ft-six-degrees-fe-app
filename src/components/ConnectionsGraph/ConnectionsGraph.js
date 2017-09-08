@@ -9,6 +9,7 @@ class ConnectionsGraph extends Component {
 	constructor() {
 		super();
 		this.setNetworkInstance = this.setNetworkInstance.bind(this);
+		this.getGraphOptions = this.getGraphOptions.bind(this);
 	}
 
 	setNetworkInstance(nw) {
@@ -33,6 +34,16 @@ class ConnectionsGraph extends Component {
 		);
 	}
 
+	getGraphOptions() {
+		const { activeView } = this.props;
+		return activeView
+			? {
+					...graphOptions,
+					interaction: { zoomView: true, dragView: true }
+				}
+			: graphOptions;
+	}
+
 	render() {
 		let style = {
 			width: '100%',
@@ -55,7 +66,7 @@ class ConnectionsGraph extends Component {
 						<Graph
 							style={style}
 							graph={graph}
-							options={graphOptions}
+							options={this.getGraphOptions()}
 							events={onNodeClick}
 							getNetwork={this.setNetworkInstance}
 						/>
