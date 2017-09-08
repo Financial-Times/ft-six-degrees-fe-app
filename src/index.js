@@ -9,11 +9,14 @@ import App from './App';
 
 const middlewares = [thunk, apiMiddleware];
 
+console.log(process.env.NODE_ENV);
 const store = createStore(
 	combineReducers(reducers),
 	compose(
 		applyMiddleware(...middlewares),
-		window.devToolsExtension ? window.devToolsExtension() : f => f
+		process.env.NODE_ENV === 'development' && window.devToolsExtension
+			? window.devToolsExtension()
+			: f => f
 	)
 );
 
