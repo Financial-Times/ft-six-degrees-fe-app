@@ -14,6 +14,13 @@ const showLeftIcon = pathname => {
 };
 
 class HeaderContainer extends Component {
+	constructor() {
+		super();
+		this.state = {
+			showShare: false
+		};
+		this.shareClickHandler = this.shareClickHandler.bind(this);
+	}
 	componentDidMount() {
 		const { getUserData, peopleSelectorChange } = this.props;
 		getUserData().then(userData => {
@@ -21,6 +28,9 @@ class HeaderContainer extends Component {
 				peopleSelectorChange(PEOPLE_SELECTOR.AUTHED.VAL);
 			}
 		});
+	}
+	shareClickHandler() {
+		this.setState(() => ({ showShare: !this.state.showShare }));
 	}
 	loginHandler() {
 		window.location = `https://accounts.ft.com/login?location=${window.location}`;
@@ -32,7 +42,12 @@ class HeaderContainer extends Component {
 					user={this.props.user}
 					onClick={() => this.loginHandler()}
 				/>
-				<Header showLeftIcon={showLeftIcon} {...this.props} />
+				<Header
+					showShare={this.state.showShare}
+					shareClickHandler={this.shareClickHandler}
+					showLeftIcon={showLeftIcon}
+					location={this.props.location}
+				/>
 			</div>
 		);
 	}

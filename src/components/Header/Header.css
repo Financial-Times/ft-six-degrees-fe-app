@@ -2,6 +2,9 @@
     width: 40px;
     height: 40px;
 }
+.six-deg-icon:hover {
+    cursor: pointer;
+}
 .six-deg-icon-label {
     line-height: 40px;
 }
@@ -10,4 +13,7 @@
     color: #000;
     font-size: 18px;
     text-decoration: none;
+}
+.o-header__top-column--right {
+    position: relative;
 }

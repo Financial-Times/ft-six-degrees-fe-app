@@ -1,0 +1,11 @@
+.share-container {
+    text-align: center;
+    position: absolute;
+    right: 0;
+    top: 50px;
+    background-color: #FFF1E1;
+}
+.o-share ul li {
+    margin: 0;
+}
+

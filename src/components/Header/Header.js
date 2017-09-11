@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './Header.css';
 import { Link } from 'react-router-dom';
-import { LogoIcon } from '../../components';
+import { ShareIcon } from '../../components';
+import { Share } from '../Origami';
 
-const Header = ({ showLeftIcon, location }) => {
+const Header = ({ showLeftIcon, location, shareClickHandler, showShare }) => {
 	return (
 		<header
 			className="o-header o-header--simple"
@@ -29,7 +30,8 @@ const Header = ({ showLeftIcon, location }) => {
 							</Link>
 						</div>
 						<div className="o-header__top-column o-header__top-column--right">
-							<LogoIcon />
+							<ShareIcon onShareClick={shareClickHandler} />
+							{showShare ? <Share /> : ''}
 						</div>
 					</div>
 				</div>
