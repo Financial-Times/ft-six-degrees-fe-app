@@ -11,17 +11,13 @@ const Image = props => {
 		userOptions = { ...userOptions, tint: '#777' };
 	}
 
-	return (
-		<img
-			alt={props.alt}
-			src={
-				IMG_SERVICE_URL +
-				encodeURIComponent(props.src || PLACEHOLDER_IMG) +
-				'?' +
-				qs.stringify(userOptions)
-			}
-		/>
-	);
+	const src =
+		IMG_SERVICE_URL +
+		encodeURIComponent(props.src || PLACEHOLDER_IMG) +
+		'?' +
+		qs.stringify(userOptions);
+
+	return <img alt={props.alt} src={src} />;
 };
 
 Image.propTypes = {
