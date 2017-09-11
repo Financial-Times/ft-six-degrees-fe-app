@@ -106,6 +106,12 @@ export const loadPeople = () => (dispatch, getState) => {
 	}
 };
 
+const sortAndFilterPeople = people => {
+	return people
+		.filter(p => parseInt(p.articles, 10) > 0)
+		.sort((a, b) => parseInt(b.articles, 10) - parseInt(a.articles, 10));
+};
+
 export const setFocusedPersonIndex = index => dispatch => {
 	return Promise.resolve(
 		dispatch({
@@ -150,7 +156,9 @@ export default (state = initialState, action) => {
 				...state,
 				isFetching: false,
 				error: '',
-				mentionedPeople: action.payload.people
+				mentionedPeople: sortAndFilterPeople(
+					action.payload.people || action.payload
+				)
 			};
 		case PERSONALISED_PEOPLE_REQUEST:
 			return {
@@ -168,7 +176,9 @@ export default (state = initialState, action) => {
 				...state,
 				isFetching: false,
 				error: '',
-				personalisedPeople: action.payload
+				personalisedPeople: sortAndFilterPeople(
+					action.payload.people || action.payload
+				)
 			};
 		case PEOPLE_SELECTOR_CHANGE:
 			return {

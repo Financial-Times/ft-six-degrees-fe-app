@@ -7,5 +7,5 @@ export const getLastName = connection => {
 	return names.length > 0 ? names[names.length - 1] : '';
 };
 export const getArticleUrl = apiUrl => {
-	return apiUrl.replace('api', 'www');
+	return apiUrl && apiUrl.replace('api', 'www');
 };
