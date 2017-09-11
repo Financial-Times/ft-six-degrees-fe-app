@@ -26,6 +26,8 @@ class HeaderContainer extends Component {
 		getUserData().then(userData => {
 			if (userData && userData.payload && userData.payload.uuid) {
 				peopleSelectorChange(PEOPLE_SELECTOR.AUTHED.VAL);
+			} else {
+				peopleSelectorChange(PEOPLE_SELECTOR.DEFAULT.VAL);
 			}
 		});
 	}

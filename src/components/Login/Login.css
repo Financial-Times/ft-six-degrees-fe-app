@@ -1,5 +1,9 @@
 .login-bar {
     background-color: #33302e;
     text-align: center;
-    padding: 5px 0;
+    padding: 20px 0;
+    color: #fff;
+}
+.login-text {
+    padding-left: 20px;
 }
