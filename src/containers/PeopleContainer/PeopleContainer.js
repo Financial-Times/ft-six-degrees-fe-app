@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import isEqual from 'lodash/isEqual';
 import { PEOPLE_SELECTOR } from '../../config';
-import { getUserData } from '../../redux/modules/user';
 import {
-	loadPeople,
 	setFocusedPersonIndex,
 	peopleSelectorChange,
 	setPeopleError,
@@ -12,13 +11,9 @@ import {
 import { PeopleFilter, PageTitle, PeopleSlider } from '../../components';
 
 class PeopleContainer extends Component {
-	componentDidMount() {
-		const { people, loadPeople } = this.props;
-		if (people[`${people.peopleSelector}People`].length === 0) {
-			loadPeople();
-		}
+	shouldComponentUpdate(nextProps) {
+		return !isEqual(nextProps.people, this.props.people);
 	}
-
 	render() {
 		const {
 			people,
@@ -56,14 +51,13 @@ class PeopleContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-	people: state.people
+	people: state.people,
+	user: state.user
 });
 
 export default connect(mapStateToProps, {
 	setFocusedPersonIndex,
 	setPeopleError,
-	getUserData,
-	loadPeople,
 	peopleSelectorChange,
 	peopleDateRangeChange
 })(PeopleContainer);
