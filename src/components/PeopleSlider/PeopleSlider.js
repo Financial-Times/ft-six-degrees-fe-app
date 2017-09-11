@@ -40,7 +40,9 @@ class PeopleSlider extends Component {
 	}
 
 	onViewChange([idx]) {
-		this.props.cardClickHandler(idx);
+		if (idx !== this.props.focusedPersonIndex) {
+			this.props.cardClickHandler(idx);
+		}
 	}
 
 	createPeopleListView(peopleData) {

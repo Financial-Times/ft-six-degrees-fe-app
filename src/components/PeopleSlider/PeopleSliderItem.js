@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { extractId } from '../../helpers/uuid';
 import { Image } from '../Origami';
 
-const PeopleDataItem = ({ person, personClickHandler }) =>
+const PeopleDataItem = ({ person, personClickHandler }) => (
 	<li className="people-data-card">
 		<div className="people-card-image">
 			<Image
@@ -15,11 +15,9 @@ const PeopleDataItem = ({ person, personClickHandler }) =>
 				src={person.img}
 			/>
 		</div>
-		<div className="people-card-name">
-			{person.abbrName}
-		</div>
+		<div className="people-card-name">{person.abbrName}</div>
 		<div className="people-card-details">
-			{person.articles} articles to read
+			Fetured in {person.articles} stories
 		</div>
 		<div className="people-card-cta">
 			<Link
@@ -29,5 +27,6 @@ const PeopleDataItem = ({ person, personClickHandler }) =>
 				View connections
 			</Link>
 		</div>
-	</li>;
+	</li>
+);
 export default PeopleDataItem;
