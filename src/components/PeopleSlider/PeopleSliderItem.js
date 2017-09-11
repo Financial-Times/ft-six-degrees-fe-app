@@ -17,7 +17,7 @@ const PeopleDataItem = ({ person, personClickHandler }) => (
 		</div>
 		<div className="people-card-name">{person.abbrName}</div>
 		<div className="people-card-details">
-			Fetured in {person.articles} stories
+			Featured in {person.articles} stories
 		</div>
 		<div className="people-card-cta">
 			<Link
