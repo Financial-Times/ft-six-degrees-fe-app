@@ -42,7 +42,7 @@ export const getUserData = () => (dispatch, getState) => {
 const initialState = {
 	isFetching: false,
 	error: '',
-	isAuthed: undefined,
+	isAuthed: false,
 	info: {}
 };
 
