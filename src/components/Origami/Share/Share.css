@@ -3,6 +3,7 @@
     position: absolute;
     right: 0;
     top: 50px;
+    z-index: 3;
     background-color: #FFF1E1;
 }
 .o-share ul li {
