@@ -7,11 +7,11 @@ const Login = ({ user, onClick }) => {
 		<div className="login-bar">
 			<FtButton
 				className="o-buttons--standout o-buttons--big"
-				label="Login"
+				label="Sign In"
 				onClick={onClick}
 			/>
 			<span className="login-text">
-				{'Sign in for a personalised Six Degrees'}
+				{'for a personalised Six Degrees'}
 			</span>
 		</div>
 	);

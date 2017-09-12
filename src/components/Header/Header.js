@@ -4,6 +4,7 @@ import './Header.css';
 import { Link } from 'react-router-dom';
 import { ShareIcon } from '../../components';
 import { Share } from '../Origami';
+import { SHARE_TEXT } from '../../config';
 
 const Header = ({ showLeftIcon, location, shareClickHandler, showShare }) => {
 	return (
@@ -31,7 +32,14 @@ const Header = ({ showLeftIcon, location, shareClickHandler, showShare }) => {
 						</div>
 						<div className="o-header__top-column o-header__top-column--right">
 							<ShareIcon onShareClick={shareClickHandler} />
-							{showShare ? <Share /> : ''}
+							{showShare ? (
+								<Share
+									text={SHARE_TEXT}
+									link={window.location.origin}
+								/>
+							) : (
+								''
+							)}
 						</div>
 					</div>
 				</div>

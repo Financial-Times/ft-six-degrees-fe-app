@@ -19,6 +19,8 @@ export const breakpoints = {
 
 export const segmentId = '030ff5ed-1257-f8f8-46fe-5cd1cf5fce7c';
 
+export const SHARE_TEXT = 'Discover a different way to view the news.';
+
 export const graphOptions = {
 	color: {
 		teal: '#2095A4',
