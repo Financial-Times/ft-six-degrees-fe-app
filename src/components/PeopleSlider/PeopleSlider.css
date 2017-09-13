@@ -4,6 +4,8 @@
 .people-data-wrapper {
     text-align: center;
     position: relative;
+    min-height: 280px;
+    padding: 0;
     z-index: 2;
     background-color: #FFF8EF;
 }

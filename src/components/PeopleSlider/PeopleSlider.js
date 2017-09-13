@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { ViewPager, Frame, Track, View } from 'react-view-pager';
+import MediaQuery from 'react-responsive';
+import { breakpoints } from '../../config';
 import PeopleSliderItem from './PeopleSliderItem';
 import { Pager } from '../../components';
 import './PeopleSlider.css';
@@ -15,6 +17,8 @@ const animations = [
 		stops: [[-200, 0.15], [0, 1], [200, 0.15]]
 	}
 ];
+
+const { L } = breakpoints;
 
 class PeopleSlider extends Component {
 	constructor(props) {
@@ -64,44 +68,62 @@ class PeopleSlider extends Component {
 
 	render() {
 		const { peopleData, loading, error, focusedPersonIndex } = this.props;
+		let peopleDataWrapperStyle = {};
 		return (
-			<div className="o-grid-row o-grid-row--compact">
-				<div data-o-grid-colspan="12">
-					<div className="people-data-wrapper">
-						{error.length > 0 ? (
-							<div>{error}</div>
-						) : loading || !peopleData.length ? (
-							<div>Loading....</div>
-						) : (
-							<div>
-								<ViewPager tag="main">
-									<Frame className="frame">
-										<Track
-											currentView={0}
-											animations={animations}
-											ref={c => (this.track = c)}
-											onViewChange={this.onViewChange}
-											viewsToShow="auto"
-											align={0.5}
-											className="track"
-										>
-											{this.createPeopleListView(
-												peopleData
-											)}
-										</Track>
-									</Frame>
-								</ViewPager>
+			<MediaQuery minWidth={L}>
+				{matches => {
+					if (matches) {
+						peopleDataWrapperStyle = {
+							padding: '20px 0'
+						};
+					}
+					return (
+						<div className="o-grid-row o-grid-row--compact">
+							<div data-o-grid-colspan="12">
+								<div
+									className="people-data-wrapper"
+									style={peopleDataWrapperStyle}
+								>
+									{error.length > 0 ? (
+										<div>{error}</div>
+									) : loading || !peopleData.length ? (
+										<div>Loading....</div>
+									) : (
+										<div>
+											<ViewPager tag="main">
+												<Frame className="frame">
+													<Track
+														currentView={0}
+														animations={animations}
+														ref={c =>
+															(this.track = c)}
+														onViewChange={
+															this.onViewChange
+														}
+														viewsToShow="auto"
+														align={0.5}
+														className="track"
+													>
+														{this.createPeopleListView(
+															peopleData
+														)}
+													</Track>
+												</Frame>
+											</ViewPager>
+										</div>
+									)}
+								</div>
 							</div>
-						)}
-					</div>
-				</div>
-				<div data-o-grid-colspan="12">
-					<Pager
-						pages={peopleData.length}
-						current={focusedPersonIndex + 1}
-					/>
-				</div>
-			</div>
+							<div data-o-grid-colspan="12">
+								<Pager
+									pages={peopleData.length}
+									current={focusedPersonIndex + 1}
+								/>
+							</div>
+						</div>
+					);
+				}}
+			</MediaQuery>
 		);
 	}
 }
