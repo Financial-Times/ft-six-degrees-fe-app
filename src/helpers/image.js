@@ -3,8 +3,8 @@ import qs from 'query-string';
 
 const imageDefaultProps = {
 	source: 'six-degrees',
-	width: 80,
-	height: 80
+	width: 120,
+	height: 120
 };
 
 export const getImageUrl = (url, config = {}) => {

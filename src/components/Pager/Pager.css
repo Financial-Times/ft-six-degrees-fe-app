@@ -1,7 +1,7 @@
 .pager {
     text-align: center;
     position: relative;
-    padding: 10px 0;
+    padding-bottom: 10px;
     background-color: #FFF8F0;
 }
 .pager:after {

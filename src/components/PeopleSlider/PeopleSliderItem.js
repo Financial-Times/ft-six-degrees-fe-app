@@ -8,17 +8,14 @@ const PeopleDataItem = ({ person, personClickHandler }) => (
 		<div className="people-card-image">
 			<Image
 				alt={`Portrait of ${person.abbrName}`}
-				width={80}
+				width={120}
 				gravity="faces"
 				source="six-degrees"
-				height={80}
+				height={120}
 				src={person.img}
 			/>
 		</div>
 		<div className="people-card-name">{person.abbrName}</div>
-		<div className="people-card-details">
-			Featured in {person.articles} stories
-		</div>
 		<div className="people-card-cta">
 			<Link
 				to={`/connections/${extractId(person.id)}`}
