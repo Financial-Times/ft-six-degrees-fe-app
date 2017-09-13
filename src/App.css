@@ -17,6 +17,13 @@ body {
 *:after {
     box-sizing: inherit;
 }
+.go-to-content {
+    font-size: 14px;
+}
+.go-to-content a {
+    text-decoration: none;
+    color: #18757D;
+}
 .hidden {
     display: none;
 }

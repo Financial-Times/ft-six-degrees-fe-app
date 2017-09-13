@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import MediaQuery from 'react-responsive';
@@ -31,6 +32,7 @@ class ConnectionsContainer extends Component {
 		this.getGraph = this.getGraph.bind(this);
 		this.onNodeClick = this.onNodeClick.bind(this);
 		this.getTabsData = this.getTabsData.bind(this);
+		this.scrollToContent = this.scrollToContent.bind(this);
 	}
 	loadData() {
 		const {
@@ -153,6 +155,14 @@ class ConnectionsContainer extends Component {
 		this.props.resetConnections();
 	}
 
+	scrollToContent() {
+		const contentEl = ReactDOM.findDOMNode(this.content);
+		const y = parseInt(contentEl.offsetTop, 10);
+		if (contentEl) {
+			setTimeout(() => window.scrollTo(0, y), 1);
+		}
+	}
+
 	render() {
 		const tabsData = this.getTabsData(this.props.relatedContent);
 		const graph = this.getGraph();
@@ -163,13 +173,26 @@ class ConnectionsContainer extends Component {
 				{matches => {
 					return matches ? (
 						<div>
-							<PageTitle>{this.getTitleText()}</PageTitle>
+							<PageTitle>
+								{this.getTitleText()}
+								<span className="go-to-content">
+									&nbsp; (<a
+										href={'#content'}
+										onClick={this.scrollToContent}
+									>
+										go to articles
+									</a>)
+								</span>
+							</PageTitle>
 							<ConnectionsGraph
 								loading={this.props.connections.isFetching}
 								graph={graph}
 								onNodeClick={nodeClickHandler}
 							/>
-							<RelatedContent tabsData={tabsData} />
+							<RelatedContent
+								ref={content => (this.content = content)}
+								tabsData={tabsData}
+							/>
 						</div>
 					) : (
 						<ConnectionsMobileViewContainer

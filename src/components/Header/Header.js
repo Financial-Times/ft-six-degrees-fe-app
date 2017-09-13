@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Header.css';
-import { Link } from 'react-router-dom';
 import { ShareIcon } from '../../components';
 import { Share } from '../Origami';
 import { SHARE_TEXT } from '../../config';
@@ -20,15 +19,15 @@ const Header = ({ showLeftIcon, location, shareClickHandler, showShare }) => {
 							{showLeftIcon(location.pathname)}
 						</div>
 						<div className="o-header__top-column o-header__top-column--center">
-							<Link
+							<a
 								className="o-header__top-logo"
-								to="/"
-								title="go to homepage"
+								href={'https://ft.com'}
+								title="go to FT.com"
 							>
 								<span className="o-header__visually-hidden">
 									financial times
 								</span>
-							</Link>
+							</a>
 						</div>
 						<div className="o-header__top-column o-header__top-column--right">
 							<ShareIcon onShareClick={shareClickHandler} />
