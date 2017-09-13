@@ -9,7 +9,6 @@ import App from './App';
 
 const middlewares = [thunk, apiMiddleware];
 
-console.log(process.env.NODE_ENV);
 const store = createStore(
 	combineReducers(reducers),
 	compose(
