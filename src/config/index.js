@@ -9,6 +9,13 @@ function isDevOrTest() {
 	return devTestUrl;
 }
 
+export const introText = {
+	default:
+		'Use Six Degrees to see who has been in the news, discover their connections and unearth the stories that link them.',
+	authed:
+		'Use Six Degrees to see who you have been reading about, discover their connections and unearth the stories that link them.'
+};
+
 export const breakpoints = {
 	XS: 240,
 	S: 490,

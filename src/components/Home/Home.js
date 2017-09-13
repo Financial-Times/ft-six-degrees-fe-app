@@ -8,7 +8,7 @@ const { L } = breakpoints;
 
 let homeInfoStyle = {};
 
-const Home = props => (
+const Home = ({ text }) => (
 	<MediaQuery maxWidth={L}>
 		{matches => {
 			if (matches) {
@@ -19,11 +19,7 @@ const Home = props => (
 					<div className="o-grid-row">
 						<div data-o-grid-colspan="12">
 							<div className="home-info" style={homeInfoStyle}>
-								<p>
-									Use Six Degrees to see who you have been
-									reading about, discover their connections
-									and unearth the stories that link them.
-								</p>
+								<p>{text}</p>
 								<Link
 									to="/people"
 									className="o-buttons o-buttons--standout o-buttons--big"
