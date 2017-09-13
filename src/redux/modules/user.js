@@ -36,13 +36,15 @@ export const getUserData = () => (dispatch, getState) => {
 	};
 	return isLoggedIn()
 		? dispatch(fetchUserData(ftSessionCookie))
-		: Promise.resolve();
+		: Promise.resolve(
+				dispatch({ type: USER_FAILURE, payload: { message: '' } })
+			);
 };
 
 const initialState = {
 	isFetching: false,
 	error: '',
-	isAuthed: false,
+	isAuthed: undefined,
 	info: {}
 };
 

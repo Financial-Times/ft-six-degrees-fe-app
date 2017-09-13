@@ -3,7 +3,7 @@ import { FtButton } from '../Origami';
 import './Login.css';
 
 const Login = ({ user, onClick }) => {
-	return user.isAuthed ? null : (
+	return user.isAuthed === false ? (
 		<div className="login-bar">
 			<FtButton
 				className="o-buttons--standout o-buttons--big"
@@ -14,7 +14,7 @@ const Login = ({ user, onClick }) => {
 				{'for a personalised Six Degrees'}
 			</span>
 		</div>
-	);
+	) : null;
 };
 
 export default Login;
