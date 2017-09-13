@@ -180,7 +180,7 @@ class ConnectionsContainer extends Component {
 										href={'#content'}
 										onClick={this.scrollToContent}
 									>
-										go to articles
+										view stories
 									</a>)
 								</span>
 							</PageTitle>
