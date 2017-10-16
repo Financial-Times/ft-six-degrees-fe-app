@@ -11,7 +11,7 @@ const ArticleListItem = ({ article }) => {
 		<div data-o-grid-colspan="12 M6 L4">
 			<div className="article-list-item">
 				<a target="_blank" href={articleUrl}>
-					{article.title}
+					{article.title || article.standfirst}
 				</a>
 				<div className="article-list-item-cta">
 					<FtButton
