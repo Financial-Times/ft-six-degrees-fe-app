@@ -164,7 +164,10 @@ class ConnectionsContainer extends Component {
 	}
 
 	render() {
-		const tabsData = this.getTabsData(this.props.relatedContent);
+		let tabsData = [];
+		if (this.props.relatedContent) {
+			tabsData = this.getTabsData(this.props.relatedContent);
+		}
 		const graph = this.getGraph();
 		const nodeClickHandler = this.onNodeClick();
 		const titleText = this.getTitleText();
