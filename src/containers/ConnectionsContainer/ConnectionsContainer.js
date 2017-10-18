@@ -171,7 +171,18 @@ class ConnectionsContainer extends Component {
 		const graph = this.getGraph();
 		const nodeClickHandler = this.onNodeClick();
 		const titleText = this.getTitleText();
-		return (
+
+		const loading =
+			Object.keys(this.props.relatedContent).length === 0 &&
+			this.props.graphNodes.length === 0;
+
+		return loading ? (
+			<div style={{ marginTop: '30px', textAlign: 'center' }}>
+				<div
+					className={'o-loading o-loading--dark o-loading--medium'}
+				/>
+			</div>
+		) : (
 			<MediaQuery minWidth={L}>
 				{matches => {
 					return matches ? (
