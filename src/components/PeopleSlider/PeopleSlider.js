@@ -5,6 +5,7 @@ import MediaQuery from 'react-responsive';
 import { breakpoints } from '../../config';
 import PeopleSliderItem from './PeopleSliderItem';
 import { Pager } from '../../components';
+import { Loader } from '../Origami';
 import './PeopleSlider.css';
 
 const animations = [
@@ -87,7 +88,7 @@ class PeopleSlider extends Component {
 									{error.length > 0 ? (
 										<div>{error}</div>
 									) : loading || !peopleData.length ? (
-										<div>Loading....</div>
+										<Loader />
 									) : (
 										<div>
 											<ViewPager tag="main">

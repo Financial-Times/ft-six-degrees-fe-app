@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import MediaQuery from 'react-responsive';
 import isEmpty from 'lodash/isEmpty';
 import isEqual from 'lodash/isEqual';
+import { Loader } from '../../components/Origami';
 import { getLastName } from '../../helpers/connection';
 import { extractId } from '../../helpers/uuid';
 import { breakpoints } from '../../config';
@@ -177,11 +178,7 @@ class ConnectionsContainer extends Component {
 			this.props.graphNodes.length === 0;
 
 		return loading ? (
-			<div style={{ marginTop: '30px', textAlign: 'center' }}>
-				<div
-					className={'o-loading o-loading--dark o-loading--medium'}
-				/>
-			</div>
+			<Loader />
 		) : (
 			<MediaQuery minWidth={L}>
 				{matches => {
