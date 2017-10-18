@@ -46,7 +46,7 @@ const fetchConnections = (rootId, key = 'month') => ({
 	}
 });
 
-const fetchContentForRootConnection = (rootId, key = 'month') => ({
+const fetchContentForRootConnection = (rootId, key = 'month', userId) => ({
 	[CALL_API]: {
 		types: [
 			CONTENT_FOR_ROOT_CONNECTION_REQUEST,
@@ -57,7 +57,7 @@ const fetchContentForRootConnection = (rootId, key = 'month') => ({
 			CONTENT_FOR_ROOT_CONNECTION_FAILURE
 		],
 		method: 'GET',
-		endpoint: `${API_ROOT}/person-articles/${key}/${rootId}`
+		endpoint: `${API_ROOT}/person-articles/${key}/${rootId}/${userId}`
 	}
 });
 
@@ -143,8 +143,13 @@ export const setActiveRootConnection = personId => (dispatch, getState) => {
 export const setRootConnection = rootPersonId => (dispatch, getState) => {
 	const rootPerson = getPerson(rootPersonId, getState().people);
 	const key = getState().people.dateRange;
+	const userInfo = getState().user.info;
+	let userId;
+	if (!isEmpty(userInfo)) {
+		userId = userInfo.uuid;
+	}
 	return Promise.resolve(
-		dispatch(fetchContentForRootConnection(rootPersonId, key))
+		dispatch(fetchContentForRootConnection(rootPersonId, key, userId))
 	).then(() => {
 		if (rootPerson) {
 			return Promise.resolve(dispatch(rootConnection(rootPerson)));
