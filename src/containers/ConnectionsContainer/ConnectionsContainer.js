@@ -150,7 +150,6 @@ class ConnectionsContainer extends Component {
 					extractId(rootConnectionPerson.id),
 					this.props.connections.connectionsChain
 				);
-				console.log('degree', degree);
 				if (isArray(degree)) {
 					degree = flattenDeep(degree);
 					degree = min(degree);
