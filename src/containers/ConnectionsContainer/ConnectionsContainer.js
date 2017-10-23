@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 import MediaQuery from 'react-responsive';
 import isEmpty from 'lodash/isEmpty';
 import isEqual from 'lodash/isEqual';
+import flattenDeep from 'lodash/flattenDeep';
+import isArray from 'lodash/isArray';
+import min from 'lodash/min';
 import { Loader } from '../../components/Origami';
 import { getLastName } from '../../helpers/connection';
 import { extractId } from '../../helpers/uuid';
@@ -34,6 +37,8 @@ class ConnectionsContainer extends Component {
 		this.onNodeClick = this.onNodeClick.bind(this);
 		this.getTabsData = this.getTabsData.bind(this);
 		this.scrollToContent = this.scrollToContent.bind(this);
+		this.getDegree = this.getDegree.bind(this);
+		this.getParents = this.getParents.bind(this);
 	}
 	loadData() {
 		const {
@@ -94,13 +99,44 @@ class ConnectionsContainer extends Component {
 			)
 		);
 	}
+	getParents = (id, connections) => {
+		let parents = [];
+		Object.keys(connections).forEach(parentId => {
+			connections[parentId].forEach(({ person }) => {
+				if (extractId(person.id) === id) {
+					parents.push(parentId);
+				}
+			});
+		});
+		let children = [];
+		if (connections.hasOwnProperty(id)) {
+			children = connections[id].map(({ person }) =>
+				extractId(person.id)
+			);
+		}
+		return {
+			parents,
+			children
+		};
+	};
+	getDegree(id, rootId, connections, degree = 1) {
+		let nodes = this.getParents(id, connections);
+		let { children, parents } = nodes;
+		let newNodes = flattenDeep([...children, parents]);
+		if (newNodes.indexOf(rootId) > -1) {
+			return degree;
+		}
+		const newConnections = { ...connections, [id]: [] };
+		return parents.map(p => {
+			return this.getDegree(p, rootId, newConnections, degree + 1);
+		});
+	}
 
 	getTitleText() {
 		const rootConnectionPerson = this.props.connections.rootConnection
 			.person;
 		const activeRootConnectionPerson = this.props.connections
 			.activeRootConnection.person;
-		const rootIds = Object.keys(this.props.connections.connectionsChain);
 		let titleText = '';
 		if (
 			!isEmpty(rootConnectionPerson) &&
@@ -109,11 +145,19 @@ class ConnectionsContainer extends Component {
 			if (rootConnectionPerson.id === activeRootConnectionPerson.id) {
 				titleText = `${rootConnectionPerson.abbrName}'s connections`;
 			} else {
-				const length = rootIds.indexOf(
-					extractId(activeRootConnectionPerson.id)
+				let degree = this.getDegree(
+					extractId(activeRootConnectionPerson.id),
+					extractId(rootConnectionPerson.id),
+					this.props.connections.connectionsChain
 				);
-				const degreeForm = length > 1 ? 'degrees' : 'degree';
-				titleText = `${rootConnectionPerson.abbrName} is ${length} ${degreeForm} of separation away from ${activeRootConnectionPerson.abbrName}`;
+				console.log('degree', degree);
+				if (isArray(degree)) {
+					degree = flattenDeep(degree);
+					degree = min(degree);
+				}
+
+				const degreeForm = degree > 1 ? 'degrees' : 'degree';
+				titleText = `${rootConnectionPerson.abbrName} is ${degree} ${degreeForm} of separation away from ${activeRootConnectionPerson.abbrName}`;
 			}
 		}
 		return titleText;
