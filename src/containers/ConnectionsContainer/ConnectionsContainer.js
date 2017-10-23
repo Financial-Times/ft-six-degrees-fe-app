@@ -114,20 +114,16 @@ class ConnectionsContainer extends Component {
 				extractId(person.id)
 			);
 		}
-		return {
-			parents,
-			children
-		};
+		return [...parents, ...children];
 	};
 	getDegree(id, rootId, connections, degree = 1) {
 		let nodes = this.getParents(id, connections);
-		let { children, parents } = nodes;
-		let newNodes = flattenDeep([...children, parents]);
+		let newNodes = flattenDeep(nodes);
 		if (newNodes.indexOf(rootId) > -1) {
 			return degree;
 		}
 		const newConnections = { ...connections, [id]: [] };
-		return parents.map(p => {
+		return newNodes.map(p => {
 			return this.getDegree(p, rootId, newConnections, degree + 1);
 		});
 	}
