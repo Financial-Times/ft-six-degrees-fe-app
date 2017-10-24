@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './FtButton.css';
 
-const FtButton = ({ className, selected, label, onClick }) => {
+const FtButton = ({ className, selected, label, onClick, ...props }) => {
 	const btnClassName = 'ft-button o-buttons ' + className;
 
 	return (
 		<button
+			{...props}
 			className={btnClassName}
 			aria-selected={selected}
 			onClick={onClick}

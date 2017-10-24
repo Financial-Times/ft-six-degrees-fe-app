@@ -19,6 +19,7 @@ const PeopleDataItem = ({ person, personClickHandler }) => (
 		<div className="people-card-cta">
 			<Link
 				to={`/connections/${extractId(person.id)}`}
+				data-trackable={'people-card'}
 				onClick={personClickHandler}
 			>
 				View connections

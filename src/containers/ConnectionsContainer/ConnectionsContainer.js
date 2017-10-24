@@ -72,6 +72,16 @@ class ConnectionsContainer extends Component {
 			select: event => {
 				let { nodes } = event;
 				let rootId = nodes[0];
+				document.body.dispatchEvent(
+					new CustomEvent('oTracking.event', {
+						detail: {
+							category: 'connection',
+							action: 'click',
+							id: rootId
+						},
+						bubbles: true
+					})
+				);
 				if (rootId) {
 					this.props
 						.loadConnections(extractId(rootId))
@@ -189,6 +199,7 @@ class ConnectionsContainer extends Component {
 
 	componentDidMount() {
 		this.loadData();
+		console.log(window.Origami['o-tracking'].page());
 	}
 
 	componentWillUnmount() {
@@ -227,6 +238,7 @@ class ConnectionsContainer extends Component {
 								{this.getTitleText()}
 								<span className="go-to-content">
 									&nbsp; (<a
+										data-trackable={'view-stories'}
 										href={'#content'}
 										onClick={this.scrollToContent}
 									>

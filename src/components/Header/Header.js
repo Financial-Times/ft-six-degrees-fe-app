@@ -22,6 +22,7 @@ const Header = ({ showLeftIcon, location, shareClickHandler, showShare }) => {
 							<a
 								className="o-header__top-logo"
 								href={'https://ft.com'}
+								data-trackable={'ft.com'}
 								title="go to FT.com"
 							>
 								<span className="o-header__visually-hidden">

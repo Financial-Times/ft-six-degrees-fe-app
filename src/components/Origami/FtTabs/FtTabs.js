@@ -15,7 +15,9 @@ const showTabs = (content, onTabClick = () => {}) => {
 					onClick={() => onTabClick(item.title)}
 					aria-selected={idx === content.length - 1}
 				>
-					<a href={`#${item.id}`}>{item.label}</a>
+					<a data-trackable={item.id} href={`#${item.id}`}>
+						{item.label}
+					</a>
 				</li>
 			);
 		});

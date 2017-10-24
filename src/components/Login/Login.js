@@ -7,6 +7,7 @@ const Login = ({ user, onClick }) => {
 		<div className="login-bar">
 			<FtButton
 				className="o-buttons--standout o-buttons--big"
+				data-trackable={'login'}
 				label="Sign In"
 				onClick={onClick}
 			/>

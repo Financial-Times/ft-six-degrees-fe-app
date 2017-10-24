@@ -51,15 +51,18 @@ const PeopleFilter = ({
 												return (
 													<FtButton
 														key={key}
+														data-trackable={label}
 														selected={
 															peopleSelector ===
 															value
 														}
 														label={label}
 														className={
-															matches
-																? 'ft-button--half'
-																: ''
+															matches ? (
+																'ft-button--half'
+															) : (
+																''
+															)
 														}
 														onClick={selectorClickHandler(
 															value
@@ -83,6 +86,7 @@ const PeopleFilter = ({
 								{PEOPLE_DATE_RANGE.map(r => {
 									return (
 										<FtButton
+											data-trackable={r}
 											key={r}
 											label={r}
 											selected={dateRange === r}
