@@ -4,7 +4,9 @@ function isDevOrTest() {
 	if (href.indexOf('six-degrees-dev.ft.com') !== -1) {
 		devTestUrl = 'https://ft-six-degrees-be-app-develop.herokuapp.com/api';
 	} else if (href.indexOf('six-degrees-test.ft.com') !== -1) {
-		devTestUrl = 'https://ft-six-degrees-be-app-staging.herokuapp.com/api';
+		devTestUrl = 'https://ft-six-degrees-be-app-test.herokuapp.com/api';
+	} else if (window.location.hostname === 'six-degrees.ft.com') {
+		devTestUrl = 'https://ft-six-degrees-be-app-prod.herokuapp.com/api';
 	}
 	return devTestUrl;
 }
