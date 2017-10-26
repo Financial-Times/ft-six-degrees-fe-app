@@ -11,6 +11,7 @@ import min from 'lodash/min';
 import { Loader } from '../../components/Origami';
 import { getLastName } from '../../helpers/connection';
 import { extractId } from '../../helpers/uuid';
+import { getNounForm } from '../../helpers/misc';
 import { breakpoints } from '../../config';
 import {
 	loadConnections,
@@ -185,13 +186,16 @@ class ConnectionsContainer extends Component {
 					idx > 0
 						? `${getLastName(
 								content[rootIds[idx - 1]]
-							)} appears in ${content[rootId].content
-								.length} articles with ${getLastName(
+							)} appears in ${getNounForm(
+								content[rootId].content.length,
+								'article'
+							)} with ${getLastName(content[rootId])}`
+						: `${getLastName(
 								content[rootId]
-							)}`
-						: `${getLastName(content[rootId])} appears in ${content[
-								rootId
-							].content.length} articles`;
+							)} appears in ${getNounForm(
+								content[rootId].content.length,
+								'article'
+							)}`;
 				return [...agg, item];
 			}, []);
 		}
@@ -199,7 +203,6 @@ class ConnectionsContainer extends Component {
 
 	componentDidMount() {
 		this.loadData();
-		console.log(window.Origami['o-tracking'].page());
 	}
 
 	componentWillUnmount() {
