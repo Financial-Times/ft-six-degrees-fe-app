@@ -6,7 +6,7 @@ const Login = ({ user, onClick }) => {
 	return user.isAuthed === false ? (
 		<div className="login-bar">
 			<FtButton
-				className="o-buttons--standout o-buttons--big"
+				className="o-buttons--primary o-buttons--big"
 				data-trackable={'login'}
 				label="Sign In"
 				onClick={onClick}

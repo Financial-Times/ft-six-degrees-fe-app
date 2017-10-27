@@ -7,42 +7,47 @@ const Share = ({ text, link }) => {
 	return (
 		<div className="share-container o-share o-share--vertical">
 			<ul>
-				<li className="o-share__action o-share__action--twitter">
+				<li className="o-share__action">
 					<a
+						data-trackable={'twitter'}
+						className="o-share__icon o-share__icon--twitter"
 						href={`https://twitter.com/intent/tweet?url=${l}&amp;text=${t}&amp;related=&amp;via=FT`}
 						rel="noopener"
 					>
-						<i>Twitter</i>
+						<span className="o-share__text">Twitter</span>
 					</a>
 				</li>
-				<li className="o-share__action o-share__action--facebook">
+				<li className="o-share__action">
 					<a
+						data-trackable={'facebook'}
+						className="o-share__icon o-share__icon--facebook"
 						href={`http://www.facebook.com/sharer.php?u=${l}&amp;t=${t}`}
 						rel="noopener"
 					>
-						<i>Facebook</i>
+						<span className="o-share__text">Facebook</span>
 					</a>
 				</li>
-				<li className="o-share__action o-share__action--linkedin">
+				<li className="o-share__action">
 					<a
-						className="o-share__action--icon"
+						data-trackable={'linkedin'}
+						className="o-share__icon o-share__icon--linkedin"
 						href={`https://www.linkedin.com/shareArticle?mini=true&amp;url=${l};title=${encodeURIComponent(
 							'FT Six Degrees'
 						)}&amp;summary=${t}&amp;source=Financial%20Times`}
 						rel="noopener"
 					>
-						<i>LinkedIn</i>
+						<span className="o-share__text">LinkedIn</span>
 					</a>
 				</li>
-				<li className="o-share__action o-share__action--whatsapp">
+				<li className="o-share__action">
 					<a
-						className="o-share__action--icon"
+						className="o-share__icon o-share__icon--whatsapp"
 						target="_blank"
 						href={`whatsapp://send?text=${t} - ${l}`}
 						data-trackable="whatsapp"
 						rel="noopener"
 					>
-						<i>Whatsapp</i>
+						<span className="o-share__text">Whatsapp</span>
 					</a>
 				</li>
 			</ul>

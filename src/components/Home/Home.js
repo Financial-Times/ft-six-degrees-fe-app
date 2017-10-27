@@ -21,8 +21,9 @@ const Home = ({ text }) => (
 							<div className="home-info" style={homeInfoStyle}>
 								<p>{text}</p>
 								<Link
+									data-trackable={'start'}
 									to="/people"
-									className="o-buttons o-buttons--standout o-buttons--big"
+									className="o-buttons o-buttons--primary o-buttons--big"
 								>
 									Get started
 								</Link>
