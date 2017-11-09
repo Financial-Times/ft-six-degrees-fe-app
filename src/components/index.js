@@ -24,3 +24,4 @@ export {
 } from './MobileViewSelector/MobileViewSelector';
 export { default as Footer } from './Footer/Footer';
 export { default as Login } from './Login/Login';
+export { default as InfoCard } from './InfoCard/InfoCard';

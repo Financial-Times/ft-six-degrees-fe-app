@@ -5,22 +5,25 @@ const MobileViewSelector = ({
 	onConnectionsClick,
 	onStoriesClick,
 	activeView
-}) =>
+}) => (
 	<div className="o-grid-row o-grid-row--compact">
 		<div data-o-grid-colspan="12">
 			<FtButton
 				className="o-buttons--big ft-button--half"
+				data-trackable={'connections-view'}
 				label="Connections"
 				selected={activeView === 'connections'}
 				onClick={onConnectionsClick}
 			/>
 			<FtButton
 				className="o-buttons--big ft-button--half"
+				data-trackable={'stories-view'}
 				selected={activeView === 'stories'}
 				label="Stories"
 				onClick={onStoriesClick}
 			/>
 		</div>
-	</div>;
+	</div>
+);
 
 export default MobileViewSelector;
