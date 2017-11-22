@@ -21,7 +21,17 @@ const Home = ({ text }) => (
 							<div className="home-info" style={homeInfoStyle}>
 								<p>{text}</p>
 								<Link
-									data-trackable={'start'}
+									onClick={() => {
+										document.body.dispatchEvent(
+											new CustomEvent('oTracking.event', {
+												detail: {
+													category: 'start',
+													action: 'click'
+												},
+												bubbles: true
+											})
+										);
+									}}
 									to="/people"
 									className="o-buttons o-buttons--primary o-buttons--big"
 								>
