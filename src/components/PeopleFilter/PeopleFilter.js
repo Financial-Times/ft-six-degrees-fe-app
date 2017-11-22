@@ -16,6 +16,16 @@ const PeopleFilter = ({
 }) => {
 	const selectorClickHandler = val => e => {
 		e.preventDefault();
+		document.body.dispatchEvent(
+			new CustomEvent('oTracking.event', {
+				detail: {
+					category: 'people-filter',
+					action: 'click',
+					id: val
+				},
+				bubbles: true
+			})
+		);
 		peopleSelectorChange(val);
 	};
 	const content = (
@@ -51,7 +61,6 @@ const PeopleFilter = ({
 												return (
 													<FtButton
 														key={key}
-														data-trackable={label}
 														selected={
 															peopleSelector ===
 															value
@@ -86,13 +95,26 @@ const PeopleFilter = ({
 								{PEOPLE_DATE_RANGE.map(r => {
 									return (
 										<FtButton
-											data-trackable={r}
 											key={r}
 											label={r}
 											selected={dateRange === r}
 											className="ft-button--quarter"
 											onClick={e => {
 												e.preventDefault();
+												document.body.dispatchEvent(
+													new CustomEvent(
+														'oTracking.event',
+														{
+															detail: {
+																category:
+																	'date-filter',
+																action: 'click',
+																id: r
+															},
+															bubbles: true
+														}
+													)
+												);
 												peopleDateRangeChange(r);
 											}}
 										/>

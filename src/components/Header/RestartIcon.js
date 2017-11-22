@@ -7,7 +7,17 @@ const { M } = breakpoints;
 
 const RestartIcon = () => (
 	<Link
-		data-trackable={'six-deg-restart'}
+		onClick={() => {
+			document.body.dispatchEvent(
+				new CustomEvent('oTracking.event', {
+					detail: {
+						category: 'people-restart',
+						action: 'click'
+					},
+					bubbles: true
+				})
+			);
+		}}
 		to="/people"
 		className="six-deg-restart"
 	>
