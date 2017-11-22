@@ -10,14 +10,12 @@ const MobileViewSelector = ({
 		<div data-o-grid-colspan="12">
 			<FtButton
 				className="o-buttons--big ft-button--half"
-				data-trackable={'connections-view'}
 				label="Connections"
 				selected={activeView === 'connections'}
 				onClick={onConnectionsClick}
 			/>
 			<FtButton
 				className="o-buttons--big ft-button--half"
-				data-trackable={'stories-view'}
 				selected={activeView === 'stories'}
 				label="Stories"
 				onClick={onStoriesClick}

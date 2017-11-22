@@ -19,6 +19,16 @@ class ConnectionsMobileView extends Component {
 	}
 
 	connectionsClickHandler() {
+		document.body.dispatchEvent(
+			new CustomEvent('oTracking.event', {
+				detail: {
+					category: 'mobile-switch',
+					action: 'click',
+					id: 'connections'
+				},
+				bubbles: true
+			})
+		);
 		this.setState(() => ({
 			activeView: 'connections',
 			activeStoriesTitle: ''
@@ -26,6 +36,16 @@ class ConnectionsMobileView extends Component {
 	}
 
 	storiesClickHandler() {
+		document.body.dispatchEvent(
+			new CustomEvent('oTracking.event', {
+				detail: {
+					category: 'mobile-switch',
+					action: 'click',
+					id: 'stories'
+				},
+				bubbles: true
+			})
+		);
 		this.setState(() => ({
 			activeView: 'stories'
 		}));
