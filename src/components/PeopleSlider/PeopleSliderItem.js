@@ -19,8 +19,19 @@ const PeopleDataItem = ({ person, personClickHandler }) => (
 		<div className="people-card-cta">
 			<Link
 				to={`/connections/${extractId(person.id)}`}
-				data-trackable={'people-card'}
-				onClick={personClickHandler}
+				onClick={e => {
+					document.body.dispatchEvent(
+						new CustomEvent('oTracking.event', {
+							detail: {
+								category: 'root-connection',
+								action: 'click',
+								id: extractId(person.id)
+							},
+							bubbles: true
+						})
+					);
+					personClickHandler(e);
+				}}
 			>
 				View connections
 			</Link>
