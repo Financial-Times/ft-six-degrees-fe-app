@@ -11,7 +11,18 @@ const ArticleListItem = ({ article }) => {
 		<div data-o-grid-colspan="12 M6 L4">
 			<div className="article-list-item">
 				<a
-					data-trackable={'read-article'}
+					onClick={() => {
+						document.body.dispatchEvent(
+							new CustomEvent('oTracking.event', {
+								detail: {
+									category: 'read-article',
+									action: 'click',
+									id: articleUrl
+								},
+								bubbles: true
+							})
+						);
+					}}
 					target="_blank"
 					href={articleUrl}
 				>
@@ -19,9 +30,20 @@ const ArticleListItem = ({ article }) => {
 				</a>
 				<div className="article-list-item-cta">
 					<FtButton
-						data-trackable={'read-article'}
 						label={'View story'}
-						onClick={() => window.open(articleUrl)}
+						onClick={() => {
+							document.body.dispatchEvent(
+								new CustomEvent('oTracking.event', {
+									detail: {
+										category: 'read-article',
+										action: 'click',
+										id: articleUrl
+									},
+									bubbles: true
+								})
+							);
+							window.open(articleUrl);
+						}}
 					/>
 				</div>
 			</div>
