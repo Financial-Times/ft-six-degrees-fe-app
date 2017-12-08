@@ -9,7 +9,6 @@ class ConnectionsGraph extends Component {
 	constructor() {
 		super();
 		this.setNetworkInstance = this.setNetworkInstance.bind(this);
-		this.getGraphOptions = this.getGraphOptions.bind(this);
 	}
 
 	setNetworkInstance(nw) {
@@ -18,13 +17,7 @@ class ConnectionsGraph extends Component {
 
 	componentDidUpdate() {
 		const nw = this.network;
-		const { activeView } = this.props;
 		clearTimeout(this.time);
-		if (!activeView) {
-			nw.on('stabilized', () => {
-				nw.fit();
-			});
-		}
 		this.time = setTimeout(() => {
 			nw.stopSimulation();
 		}, 3000);
@@ -37,31 +30,18 @@ class ConnectionsGraph extends Component {
 		);
 	}
 
-	getGraphOptions() {
-		const { activeView } = this.props;
-		return activeView
-			? {
-					...graphOptions,
-					interaction: { zoomView: true, dragView: true }
-				}
-			: graphOptions;
-	}
-
 	render() {
 		let style = {
 			width: '100%',
 			autoSize: true,
-			height: '500px'
+			height: '100%'
 		};
 		const { loading, graph, onNodeClick, activeView } = this.props;
 		const graphClassName =
 			activeView && activeView !== 'connections' ? 'hidden' : '';
-		if (activeView) {
-			style = { ...style, height: '400px' };
-		}
 
 		return (
-			<div className={graphClassName}>
+			<div className={graphClassName} style={{ height: '100%' }}>
 				<div className="connections-graph">
 					{loading ? (
 						<div>Loading...</div>
@@ -69,7 +49,7 @@ class ConnectionsGraph extends Component {
 						<Graph
 							style={style}
 							graph={graph}
-							options={this.getGraphOptions()}
+							options={graphOptions}
 							events={onNodeClick}
 							getNetwork={this.setNetworkInstance}
 						/>
@@ -80,13 +60,13 @@ class ConnectionsGraph extends Component {
 	}
 }
 
-ConnectionsGraph.PropTypes = {
+ConnectionsGraph.propTypes = {
 	loading: PropTypes.bool.isRequired,
 	graph: PropTypes.shape({
 		nodes: PropTypes.arrayOf(PropTypes.object),
 		edges: PropTypes.arrayOf(PropTypes.object)
 	}).isRequired,
-	onNodeClick: PropTypes.func.isRequired
+	onNodeClick: PropTypes.object.isRequired
 };
 
 export default ConnectionsGraph;
