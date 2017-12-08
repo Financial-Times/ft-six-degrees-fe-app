@@ -7,6 +7,7 @@ import {
 	ConnectionsContainer
 } from './containers';
 import { Footer } from './components';
+import withTracking from './enhancers/withTracking';
 import './App.css';
 
 class App extends Component {
@@ -37,4 +38,4 @@ class App extends Component {
 	}
 }
 
-export default App;
+export default withTracking(App);
