@@ -94,7 +94,9 @@ class PeopleSlider extends Component {
 											<ViewPager tag="main">
 												<Frame className="frame">
 													<Track
-														currentView={0}
+														currentView={
+															focusedPersonIndex
+														}
 														animations={animations}
 														ref={c =>
 															(this.track = c)}
@@ -129,7 +131,7 @@ class PeopleSlider extends Component {
 	}
 }
 
-PeopleSlider.PropTypes = {
+PeopleSlider.propTypes = {
 	error: PropTypes.string.isRequired,
 	loading: PropTypes.bool.isRequired,
 	peopleData: PropTypes.arrayOf(PropTypes.object),
