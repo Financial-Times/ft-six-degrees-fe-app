@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import {
 	PageTitle,
-	MobileViewSelector,
+	ConnectionsViewSelector,
 	ConnectionsGraph,
 	RelatedContent
-} from '../../components';
+} from '../index';
 
-class ConnectionsMobileView extends Component {
+class ConnectionsView extends Component {
 	constructor(props) {
 		super(props);
 		this.connectionsClickHandler = this.connectionsClickHandler.bind(this);
@@ -61,7 +61,7 @@ class ConnectionsMobileView extends Component {
 		const { titleText, graph, onNodeClick, tabsData, loading } = this.props;
 		const { activeView, activeStoriesTitle } = this.state;
 		return (
-			<div style={{ height: '100%' }}>
+			<div style={{ height: '100%', backgroundColor: '#FFF8EF' }}>
 				{activeView === 'connections' ? (
 					<PageTitle>{titleText}</PageTitle>
 				) : activeView === 'stories' ? (
@@ -72,7 +72,7 @@ class ConnectionsMobileView extends Component {
 				) : (
 					''
 				)}
-				<MobileViewSelector
+				<ConnectionsViewSelector
 					onConnectionsClick={this.connectionsClickHandler}
 					onStoriesClick={this.storiesClickHandler}
 					activeView={activeView}
@@ -94,4 +94,4 @@ class ConnectionsMobileView extends Component {
 	}
 }
 
-export default ConnectionsMobileView;
+export default ConnectionsView;
