@@ -20,16 +20,6 @@ const PeopleDataItem = ({ person, personClickHandler }) => (
 			<Link
 				to={`/connections/${extractId(person.id)}`}
 				onClick={e => {
-					document.body.dispatchEvent(
-						new CustomEvent('oTracking.event', {
-							detail: {
-								category: 'root-connection',
-								action: 'click',
-								id: extractId(person.id)
-							},
-							bubbles: true
-						})
-					);
 					personClickHandler(e);
 				}}
 			>

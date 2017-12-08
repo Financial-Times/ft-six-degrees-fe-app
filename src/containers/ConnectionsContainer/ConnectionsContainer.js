@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import MediaQuery from 'react-responsive';
 import isEmpty from 'lodash/isEmpty';
 import isEqual from 'lodash/isEqual';
 import flattenDeep from 'lodash/flattenDeep';
@@ -12,7 +10,6 @@ import { Loader } from '../../components/Origami';
 import { getLastName } from '../../helpers/connection';
 import { extractId } from '../../helpers/uuid';
 import { getNounForm } from '../../helpers/misc';
-import { breakpoints } from '../../config';
 import {
 	loadConnections,
 	setRootConnection,
@@ -22,11 +19,8 @@ import {
 	getRelatedContent,
 	setActiveRootConnection
 } from '../../redux/modules/connections';
-import { ConnectionsMobileViewContainer } from '../';
+import { ConnectionsView } from '../../components';
 import { loadPeople } from '../../redux/modules/people';
-import { PageTitle, ConnectionsGraph, RelatedContent } from '../../components';
-
-const { L } = breakpoints;
 
 class ConnectionsContainer extends Component {
 	constructor() {
@@ -37,7 +31,6 @@ class ConnectionsContainer extends Component {
 		this.getGraph = this.getGraph.bind(this);
 		this.onNodeClick = this.onNodeClick.bind(this);
 		this.getTabsData = this.getTabsData.bind(this);
-		this.scrollToContent = this.scrollToContent.bind(this);
 		this.getDegree = this.getDegree.bind(this);
 		this.getParents = this.getParents.bind(this);
 	}
@@ -203,18 +196,16 @@ class ConnectionsContainer extends Component {
 
 	componentDidMount() {
 		this.loadData();
+		document.body.dispatchEvent(
+			new CustomEvent('oTracking.page', {
+				detail: {},
+				bubbles: true
+			})
+		);
 	}
 
 	componentWillUnmount() {
 		this.props.resetConnections();
-	}
-
-	scrollToContent() {
-		const contentEl = ReactDOM.findDOMNode(this.content);
-		const y = parseInt(contentEl.offsetTop, 10);
-		if (contentEl) {
-			setTimeout(() => window.scrollTo(0, y), 1);
-		}
 	}
 
 	render() {
@@ -233,52 +224,22 @@ class ConnectionsContainer extends Component {
 		return loading ? (
 			<Loader />
 		) : (
-			<MediaQuery minWidth={L}>
-				{matches => {
-					return matches ? (
-						<div>
-							<PageTitle>
-								{this.getTitleText()}
-								<span className="go-to-content">
-									&nbsp; (<a
-										data-trackable={'view-stories'}
-										href={'#content'}
-										onClick={this.scrollToContent}
-									>
-										view stories
-									</a>)
-								</span>
-							</PageTitle>
-							<ConnectionsGraph
-								loading={this.props.connections.isFetching}
-								graph={graph}
-								onNodeClick={nodeClickHandler}
-							/>
-							<RelatedContent
-								ref={content => (this.content = content)}
-								tabsData={tabsData}
-							/>
-						</div>
-					) : (
-						<ConnectionsMobileViewContainer
-							loading={this.props.connections.isFetching}
-							tabsData={tabsData}
-							titleText={titleText}
-							graph={graph}
-							onNodeClick={nodeClickHandler}
-						/>
-					);
-				}}
-			</MediaQuery>
+			<ConnectionsView
+				loading={this.props.connections.isFetching}
+				tabsData={tabsData}
+				titleText={titleText}
+				graph={graph}
+				onNodeClick={nodeClickHandler}
+			/>
 		);
 	}
 }
 
-const makeMapStateToProps = (state, ownProps) => {
+const makeMapStateToProps = () => {
 	const graphNodes = getGraphNodes();
 	const graphEdges = getGraphEdges();
 	const relatedContent = getRelatedContent();
-	return (state, ownProps) => ({
+	return state => ({
 		graphNodes: graphNodes(state.connections),
 		graphEdges: graphEdges(state.connections),
 		relatedContent: relatedContent(state.connections),

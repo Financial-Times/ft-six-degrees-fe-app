@@ -14,6 +14,14 @@ class PeopleContainer extends Component {
 	shouldComponentUpdate(nextProps) {
 		return !isEqual(nextProps.people, this.props.people);
 	}
+	componentDidMount() {
+		document.body.dispatchEvent(
+			new CustomEvent('oTracking.page', {
+				detail: {},
+				bubbles: true
+			})
+		);
+	}
 	render() {
 		const {
 			people,

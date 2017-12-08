@@ -23,29 +23,12 @@ class HeaderContainer extends Component {
 	}
 	componentDidMount() {
 		const { getUserData, peopleSelectorChange } = this.props;
-		const oTracking = window.Origami['o-tracking'];
-		let oTrackingConfig = {
-			server: 'https://spoor-api.ft.com/px.gif',
-			context: {
-				product: 'sixdegrees'
-			}
-		};
 		getUserData().then(userData => {
 			if (userData && userData.payload && userData.payload.uuid) {
 				peopleSelectorChange(PEOPLE_SELECTOR.AUTHED.VAL);
-				oTrackingConfig = {
-					...oTrackingConfig,
-					user: {
-						ft_session: oTracking.utils.getValueFromCookie(
-							/FTSession=([^;]+)/
-						)
-					}
-				};
 			} else {
 				peopleSelectorChange(PEOPLE_SELECTOR.DEFAULT.VAL);
 			}
-			oTracking.init(oTrackingConfig);
-			oTracking.page();
 		});
 	}
 	shareClickHandler() {
