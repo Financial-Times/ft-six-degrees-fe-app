@@ -4,6 +4,3 @@ export { default as HeaderContainer } from './HeaderContainer/HeaderContainer';
 export {
 	default as ConnectionsContainer
 } from './ConnectionsContainer/ConnectionsContainer';
-export {
-	default as ConnectionsMobileViewContainer
-} from './ConnectionsMobileViewContainer/ConnectionsMobileViewContainer';
