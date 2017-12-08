@@ -35,8 +35,8 @@ const graphOptions = {
 		adaptiveTimestep: true
 	},
 	interaction: {
-		dragView: false,
-		zoomView: false,
+		dragView: true,
+		zoomView: true,
 		hover: true,
 		selectable: true
 	},
