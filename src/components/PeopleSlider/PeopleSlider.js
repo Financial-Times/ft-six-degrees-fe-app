@@ -86,7 +86,9 @@ class PeopleSlider extends Component {
 									style={peopleDataWrapperStyle}
 								>
 									{error.length > 0 ? (
-										<div>{error}</div>
+										<div style={{ paddingTop: '20px' }}>
+											{error}
+										</div>
 									) : loading || !peopleData.length ? (
 										<Loader />
 									) : (
@@ -117,12 +119,14 @@ class PeopleSlider extends Component {
 									)}
 								</div>
 							</div>
-							<div data-o-grid-colspan="12">
-								<Pager
-									pages={peopleData.length}
-									current={focusedPersonIndex + 1}
-								/>
-							</div>
+							{peopleData.length > 0 && (
+								<div data-o-grid-colspan="12">
+									<Pager
+										pages={peopleData.length}
+										current={focusedPersonIndex + 1}
+									/>
+								</div>
+							)}
 						</div>
 					);
 				}}
