@@ -10,7 +10,8 @@ class RelatedContent extends Component {
 		let styleOverride = {};
 		if (activeView) {
 			styleOverride = {
-				height: '100%'
+				height: '100%',
+				minHeight: '600px'
 			};
 		}
 		return (
