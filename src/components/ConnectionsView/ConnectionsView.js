@@ -22,7 +22,7 @@ class ConnectionsView extends Component {
 		document.body.dispatchEvent(
 			new CustomEvent('oTracking.event', {
 				detail: {
-					category: 'mobile-switch',
+					category: 'view-switcher',
 					action: 'click',
 					id: 'connections'
 				},
@@ -39,7 +39,7 @@ class ConnectionsView extends Component {
 		document.body.dispatchEvent(
 			new CustomEvent('oTracking.event', {
 				detail: {
-					category: 'mobile-switch',
+					category: 'view-switcher',
 					action: 'click',
 					id: 'stories'
 				},
