@@ -55,7 +55,17 @@ export const loadPersonalisedPeople = () => (dispatch, getState) => {
 	}
 	return Promise.resolve(
 		dispatch(fetchPersonalised(userInfo.uuid, dateRange))
-	);
+	).then(({ payload }) => {
+		const personalisedPeople = payload.people || payload;
+		if (personalisedPeople.length > 0) {
+			return personalisedPeople;
+		}
+		return dispatch(
+			setPeopleError(
+				'You’ve not read quite enough articles to see your personalised connections. Click on ‘in stories on FT.com’ to see the most mentioned people on FT.com.'
+			)
+		);
+	});
 };
 
 export const peopleSelectorChange = val => dispatch => {
