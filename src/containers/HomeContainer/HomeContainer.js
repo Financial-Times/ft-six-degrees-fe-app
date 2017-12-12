@@ -4,6 +4,14 @@ import { Home, InfoCard } from '../../components';
 import { introText } from '../../config';
 
 class HomeContainer extends Component {
+	componentDidMount() {
+		document.body.dispatchEvent(
+			new CustomEvent('oTracking.page', {
+				detail: {},
+				bubbles: true
+			})
+		);
+	}
 	render() {
 		const infoStyle = {
 			maxWidth: '400px'
