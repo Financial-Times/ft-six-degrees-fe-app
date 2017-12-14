@@ -72,7 +72,8 @@ const rootConnection = connection => ({
 });
 
 const getPerson = (personId, people) => {
-	return people[`${people.peopleSelector}People`].find(
+	return find(
+		people[`${people.peopleSelector}People`],
 		c => extractId(c.id) === personId
 	);
 };
@@ -124,7 +125,7 @@ export const loadConnections = rootId => (dispatch, getState) => {
 
 const findActiveRootConnection = (id, connectionsChain) => {
 	const haystack = [].concat(...values(connectionsChain));
-	return haystack.find(c => extractId(c.person.id) === id);
+	return find(haystack, c => extractId(c.person.id) === id);
 };
 
 export const setActiveRootConnection = personId => (dispatch, getState) => {
