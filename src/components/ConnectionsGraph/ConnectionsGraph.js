@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Graph from 'react-graph-vis';
+import MediaQuery from 'react-responsive';
 import isEqual from 'lodash/isEqual';
+import { breakpoints } from '../../config';
 import graphOptions from './graphOptions';
 import './ConnectionsGraph.css';
+
+const { M } = breakpoints;
 
 class ConnectionsGraph extends Component {
 	constructor() {
@@ -41,21 +45,34 @@ class ConnectionsGraph extends Component {
 			activeView && activeView !== 'connections' ? 'hidden' : '';
 
 		return (
-			<div className={graphClassName} style={{ height: '100%' }}>
-				<div className="connections-graph">
-					{loading ? (
-						<div>Loading...</div>
-					) : (
-						<Graph
-							style={style}
-							graph={graph}
-							options={graphOptions}
-							events={onNodeClick}
-							getNetwork={this.setNetworkInstance}
-						/>
-					)}
-				</div>
-			</div>
+			<MediaQuery minWidth={M}>
+				{matches => {
+					const graphElementHeight = matches ? '600px' : '400px';
+					return (
+						<div
+							className={graphClassName}
+							style={{ height: '100%' }}
+						>
+							<div
+								className="connections-graph"
+								style={{ height: graphElementHeight }}
+							>
+								{loading ? (
+									<div>Loading...</div>
+								) : (
+									<Graph
+										style={style}
+										graph={graph}
+										options={graphOptions}
+										events={onNodeClick}
+										getNetwork={this.setNetworkInstance}
+									/>
+								)}
+							</div>
+						</div>
+					);
+				}}
+			</MediaQuery>
 		);
 	}
 }
