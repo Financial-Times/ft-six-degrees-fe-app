@@ -7,7 +7,7 @@ import { peopleSelectorChange } from '../../redux/modules/people';
 import { Header, RestartIcon, Login } from '../../components';
 
 const showLeftIcon = pathname => {
-	if (pathname.includes('/connections')) {
+	if (pathname.indexOf('/connections') !== -1) {
 		return <RestartIcon />;
 	}
 	return null;
