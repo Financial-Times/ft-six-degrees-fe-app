@@ -62,6 +62,7 @@ class ConnectionsContainer extends Component {
 	}
 
 	onNodeClick() {
+		const { loadConnections, setActiveRootConnection } = this.props;
 		return {
 			select: event => {
 				let { nodes } = event;
@@ -77,13 +78,9 @@ class ConnectionsContainer extends Component {
 					})
 				);
 				if (rootId) {
-					this.props
-						.loadConnections(extractId(rootId))
-						.then(
-							res =>
-								res &&
-								this.props.setActiveRootConnection(rootId)
-						);
+					loadConnections(extractId(rootId)).then(
+						res => res && setActiveRootConnection(rootId)
+					);
 				}
 			}
 		};
@@ -219,7 +216,7 @@ class ConnectionsContainer extends Component {
 
 		const loading =
 			Object.keys(this.props.relatedContent).length === 0 &&
-			this.props.graphNodes.length === 0;
+			(this.props.graphNodes.length === 0 || graph.nodes.length === 0);
 
 		return loading ? (
 			<Loader />
