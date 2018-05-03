@@ -1,0 +1,18 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/ft-six-degrees-fe-app
+    docker:
+      - image: node:6
+        environment:
+          CI: true
+    steps:
+      - checkout
+      - run:
+          name: npm tests
+          command: npm test
+workflows:
+  version: 2
+  test-project:
+    jobs:
+      - build
