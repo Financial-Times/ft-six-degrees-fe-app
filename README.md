@@ -1,5 +1,7 @@
 # Six Degrees
 
+[![Circle CI](https://circleci.com/gh/Financial-Times/ft-six-degrees-fe-app/tree/master.png?style=shield)](https://circleci.com/gh/Financial-Times/ft-six-degrees-fe-app/tree/master)
+
 This is the front-end app for [http://six-degrees.ft.com](http://six-degrees.ft.com)
 
 Generated with [create-react-app](https://github.com/facebookincubator/create-react-app) and it's not ejected yet. Please eject only if it's the last resort.
