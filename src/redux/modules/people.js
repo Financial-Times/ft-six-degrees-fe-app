@@ -1,4 +1,3 @@
-import isEmpty from 'lodash/isEmpty';
 import { CALL_API, getJSON } from 'redux-api-middleware';
 import { API_ROOT, PEOPLE_SELECTOR } from '../../config';
 
@@ -15,21 +14,6 @@ const PEOPLE_DATE_RANGE_CHANGE = 'PEOPLE_DATE_RANGE_CHANGE';
 const SET_PEOPLE_ERROR = 'SET_PEOPLE_ERROR';
 const SET_FOCUSED_PERSON_INDEX = 'SET_FOCUSED_PERSON_INDEX';
 
-const fetchPersonalised = (userId, key = 'month') => ({
-	[CALL_API]: {
-		types: [
-			PERSONALISED_PEOPLE_REQUEST,
-			{
-				type: PERSONALISED_PEOPLE_SUCCESS,
-				payload: (action, state, res) => res.ok && getJSON(res)
-			},
-			PERSONALISED_PEOPLE_FAILURE
-		],
-		method: 'GET',
-		endpoint: `${API_ROOT}/people-history/${key}/${userId}`
-	}
-});
-
 const fetchMentioned = (key = 'month') => ({
 	[CALL_API]: {
 		types: [
@@ -44,29 +28,6 @@ const fetchMentioned = (key = 'month') => ({
 		endpoint: `${API_ROOT}/mentioned/${key}`
 	}
 });
-
-export const loadPersonalisedPeople = () => (dispatch, getState) => {
-	const dateRange = getState().people.dateRange;
-	const userInfo = getState().user.info;
-	if (isEmpty(userInfo)) {
-		return Promise.reject({
-			message: 'You must be logged in to ft.com to perform this action'
-		});
-	}
-	return Promise.resolve(
-		dispatch(fetchPersonalised(userInfo.uuid, dateRange))
-	).then(({ payload }) => {
-		const personalisedPeople = payload.people || payload;
-		if (personalisedPeople.length > 0) {
-			return personalisedPeople;
-		}
-		return dispatch(
-			setPeopleError(
-				'You’ve not read quite enough articles to see your personalised connections. Click on ‘in stories on FT.com’ to see the most mentioned people on FT.com.'
-			)
-		);
-	});
-};
 
 export const peopleSelectorChange = val => dispatch => {
 	return Promise.resolve(
@@ -104,13 +65,6 @@ export const loadPeople = () => (dispatch, getState) => {
 	switch (peopleSelector) {
 		case PEOPLE_SELECTOR.DEFAULT.VAL:
 			return dispatch(loadMentionedPeople());
-		case PEOPLE_SELECTOR.AUTHED.VAL:
-			return dispatch(loadPersonalisedPeople()).catch(e =>
-				dispatch({
-					type: PERSONALISED_PEOPLE_FAILURE,
-					payload: e
-				})
-			);
 		default:
 			return Promise.resolve();
 	}
@@ -137,7 +91,6 @@ const initialState = {
 	dateRange: 'month',
 	peopleSelector: PEOPLE_SELECTOR.DEFAULT.VAL,
 	mentionedPeople: [],
-	personalisedPeople: [],
 	focusedPersonIndex: 0
 };
 

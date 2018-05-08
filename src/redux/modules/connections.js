@@ -28,7 +28,6 @@ export const UPDATE_CONNECTIONS = 'UPDATE_CONNECTIONS';
 
 const getConnections = (state, props) => state.connectionsChain;
 const getRootConnection = (state, props) => state.rootConnection;
-// const getActiveRootConnection = (state, props) => state.activeRootConnection;
 
 const fetchConnections = (rootId, key = 'month') => ({
 	[CALL_API]: {
@@ -144,13 +143,8 @@ export const setActiveRootConnection = personId => (dispatch, getState) => {
 export const setRootConnection = rootPersonId => (dispatch, getState) => {
 	const rootPerson = getPerson(rootPersonId, getState().people);
 	const key = getState().people.dateRange;
-	const userInfo = getState().user.info;
-	let userId;
-	if (!isEmpty(userInfo)) {
-		userId = userInfo.uuid;
-	}
 	return Promise.resolve(
-		dispatch(fetchContentForRootConnection(rootPersonId, key, userId))
+		dispatch(fetchContentForRootConnection(rootPersonId, key))
 	).then(() => {
 		if (rootPerson) {
 			return Promise.resolve(dispatch(rootConnection(rootPerson)));
@@ -280,11 +274,11 @@ export default (state = initialState, action) => {
 						...state,
 						isFetching: false,
 						error: action.payload.message
-					}
+				  }
 				: {
 						...state,
 						isFetching: true
-					};
+				  };
 		case CONNECTIONS_FAILURE:
 			return {
 				...state,
@@ -309,8 +303,7 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				isFetching: false,
-				error:
-					'Something went wrong while getting articles for root connection'
+				error: 'Something went wrong while getting articles for root connection'
 			};
 		case CONTENT_FOR_ROOT_CONNECTION_SUCCESS:
 			return {

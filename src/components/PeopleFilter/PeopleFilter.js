@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MediaQuery from 'react-responsive';
 import { FtButton } from '../../components';
-import { PEOPLE_SELECTOR, PEOPLE_DATE_RANGE, breakpoints } from '../../config';
+import { PEOPLE_DATE_RANGE, breakpoints } from '../../config';
 import './PeopleFilter.css';
 
-const { M, L } = breakpoints;
+const { M } = breakpoints;
 let peopleFilterWrapperStyles = {};
 
 const PeopleFilter = ({
@@ -14,83 +14,18 @@ const PeopleFilter = ({
 	peopleSelectorChange,
 	peopleDateRangeChange
 }) => {
-	const selectorClickHandler = val => e => {
-		e.preventDefault();
-		document.body.dispatchEvent(
-			new CustomEvent('oTracking.event', {
-				detail: {
-					category: 'people-filter',
-					action: 'click',
-					id: val
-				},
-				bubbles: true
-			})
-		);
-		peopleSelectorChange(val);
-	};
 	const content = (
 		<div className="o-grid-row o-grid-row--compact">
 			<div
-				data-o-grid-colspan="12 S10 M8 XL7 center"
+				data-o-grid-colspan="12 S10 M8 L6 center"
 				className="people-filter-wrapper"
 				style={peopleFilterWrapperStyles}
 			>
 				<form className="people-filter-form">
 					<fieldset>
 						<legend>FILTER</legend>
-						<div
-							className="people-filter-section"
-							data-o-grid-colspan="12 L6"
-						>
-							<div className="people-filter-label">
-								Select people that appear
-							</div>
-							<MediaQuery maxWidth={L}>
-								{matches => {
-									return (
-										<div className="o-buttons__group">
-											{Object.keys(
-												PEOPLE_SELECTOR
-											).map(key => {
-												const label =
-													PEOPLE_SELECTOR[key][
-														'LABEL'
-													];
-												const value =
-													PEOPLE_SELECTOR[key]['VAL'];
-												return (
-													<FtButton
-														key={key}
-														selected={
-															peopleSelector ===
-															value
-														}
-														label={label}
-														className={
-															matches ? (
-																'ft-button--half'
-															) : (
-																''
-															)
-														}
-														onClick={selectorClickHandler(
-															value
-														)}
-													/>
-												);
-											})}
-										</div>
-									);
-								}}
-							</MediaQuery>
-						</div>
-						<div
-							className="people-filter-section"
-							data-o-grid-colspan="12 L6"
-						>
-							<div className="people-filter-label">
-								from the last
-							</div>
+						<div className="people-filter-section" data-o-grid-colspan="12">
+							<div className="people-filter-label">from the last</div>
 							<div className="o-buttons__group">
 								{PEOPLE_DATE_RANGE.map(r => {
 									return (
@@ -102,18 +37,14 @@ const PeopleFilter = ({
 											onClick={e => {
 												e.preventDefault();
 												document.body.dispatchEvent(
-													new CustomEvent(
-														'oTracking.event',
-														{
-															detail: {
-																category:
-																	'date-filter',
-																action: 'click',
-																id: r
-															},
-															bubbles: true
-														}
-													)
+													new CustomEvent('oTracking.event', {
+														detail: {
+															category: 'date-filter',
+															action: 'click',
+															id: r
+														},
+														bubbles: true
+													})
 												);
 												peopleDateRangeChange(r);
 											}}

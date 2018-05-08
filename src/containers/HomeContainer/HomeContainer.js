@@ -16,12 +16,9 @@ class HomeContainer extends Component {
 		const infoStyle = {
 			maxWidth: '400px'
 		};
-		const { user } = this.props;
 		return (
 			<div>
-				<Home
-					text={user.isAuthed ? introText.authed : introText.default}
-				/>
+				<Home text={introText.default} />
 				<InfoCard style={infoStyle} />
 			</div>
 		);
